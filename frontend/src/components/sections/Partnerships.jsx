@@ -1,11 +1,31 @@
 import { motion } from "framer-motion";
 
 const partners = [
-  { name: "Fisiy Foundation", role: "Social Impact Lead", logo: "⚖️" },
-  { name: "World Bank Network", role: "Development Partner", logo: "🌐" },
-  { name: "Limbe Artisanal Guild", role: "Sustainable Sourcing", logo: "🎨" },
-  { name: "Starlink Business", role: "Connectivity Partner", logo: "🛰️" },
-  { name: "Cameroon Green Initiative", role: "Eco-Certification", logo: "🍃" }
+  { 
+    name: "Fisiy Foundation", 
+    role: "Social Impact Lead", 
+    logo: "⚖️" 
+  },
+  { 
+    name: "Global Policy Network", 
+    role: "Strategic Partner", 
+    logo: "🌍" 
+  },
+  { 
+    name: "Limbe Artisanal Guild", 
+    role: "Sustainable Sourcing", 
+    logo: "🎨" 
+  },
+  { 
+    name: "Fiber-Optic Backbone", 
+    role: "High-Speed Connectivity", 
+    logo: "⚡" 
+  },
+  { 
+    name: "Cameroon Green Initiative", 
+    role: "Eco-Certification", 
+    logo: "🍃" 
+  }
 ];
 
 export default function Partnerships() {
