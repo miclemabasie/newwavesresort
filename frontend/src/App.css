@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@theme {
+  /* --- Typography --- */
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  /* --- Limbe Resort Color Palette --- */
+  --color-ocean: #1a5f7a; /* Deep Atlantic Blue */
+  --color-sand: #f4f1ea; /* Warm Beach Sand */
+  --color-volcanic: #2d2d2d; /* Limbe Black Sand / Dark Slate */
+  --color-lush: #2e7d32; /* Mt. Cameroon Greenery */
+
+  /* --- UI Polish --- */
+  --shadow-resort: 0 4px 20px rgba(26, 95, 122, 0.08);
+}
+
+/* --- Base Styles --- */
+@layer base {
+  html,
+  body {
+    @apply bg-sand text-volcanic antialiased;
+    scroll-behavior: smooth;
+  }
+
+  /* Typography Defaults */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-bold tracking-tight text-ocean;
+    line-height: 1.2;
+  }
+
+  h1 {
+    @apply text-4xl md:text-6xl mb-6;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl mb-4;
+  }
+
+  p {
+    @apply mb-4 leading-relaxed opacity-90;
+  }
+
+  /* Standard Link Style */
+  a {
+    @apply transition-colors duration-300;
+    color: var(--color-ocean);
+    text-decoration: none;
+  }
+
+  a:hover {
+    @apply text-lush;
+  }
+
+  /* Button Base Reset */
+  button {
+    @apply cursor-pointer transition-all duration-300 active:scale-95;
+    font-family: inherit;
+  }
+}
+
+/* --- Component Shortcuts --- */
+@layer components {
+  .btn-primary {
+    @apply px-8 py-4 bg-ocean text-white rounded-lg font-semibold 
+           hover:bg-volcanic hover:shadow-lg inline-block text-center;
+  }
+
+  .btn-outline {
+    @apply px-8 py-4 border-2 border-ocean text-ocean rounded-lg font-semibold 
+           hover:bg-ocean hover:text-white inline-block text-center;
+  }
+
+  .container {
+    @apply max-w-7xl mx-auto px-6 md:px-12;
+  }
+
+  .nav-link {
+    @apply text-sm font-medium text-volcanic/80 hover:text-ocean transition-colors py-2;
+  }
+
+  .nav-link.active {
+    @apply text-ocean border-b-2 border-ocean;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl p-6 shadow-[var(--shadow-resort)];
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+}
