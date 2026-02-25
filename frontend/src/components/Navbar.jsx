@@ -56,7 +56,7 @@ export default function Navbar() {
         {/* Action Button & Hamburger */}
         <div className="flex items-center gap-4">
           <Link to="/book" className="btn-primary !py-2 !px-5 text-xs md:text-sm">
-            Book Now
+            Plan Your Stay
           </Link>
           
           <button 

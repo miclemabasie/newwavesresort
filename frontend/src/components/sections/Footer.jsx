@@ -47,7 +47,7 @@ export default function Footer() {
           <div>
             <h5 className="text-white text-[10px] uppercase tracking-[0.3em] font-bold mb-6">Concierge</h5>
             <ul className="space-y-3 text-sm opacity-60">
-              <li><Link to="/rooms" className="hover:text-lush">Book a Suite</Link></li>
+              <li><Link to="/rooms" className="hover:text-lush">Reserve a Suite</Link></li>
               <li><Link to="/nomads" className="hover:text-lush">Nomad Programs</Link></li>
               <li><Link to="/contact" className="hover:text-lush">Inquiries</Link></li>
             </ul>

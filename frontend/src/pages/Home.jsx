@@ -5,10 +5,12 @@ import ImpactSection from "../components/sections/ImpactSection";
 import Infrastructure from "../components/sections/Infrastructure"; 
 import Cultinary from "../components/sections/Cultinary"; 
 import Suites from "../components/sections/Suites"; 
-import HomeGallery from "../components/sections/HomeGallery"; 
+import GalleryPreview from "../components/sections/GalleryPreview"; 
+import Parnershtips from "../components/sections/Partnerships"; 
 import { motion } from "framer-motion";
 import ServiceDiscoveryCard from "../components/ui/ServiceDiscoveryCard";
 import Footer from "../components/sections/Footer";
+import Testimonials from "../components/sections/Testimonials";
 
 
 export default function Home() {
@@ -95,7 +97,11 @@ export default function Home() {
 
         
         {/* Gallery section */}
-        <HomeGallery />
+        <GalleryPreview />
+        
+        <Testimonials />
+        {/* Partnerships section */}
+        <Parnershtips />
       <Footer />
     </div>
   );

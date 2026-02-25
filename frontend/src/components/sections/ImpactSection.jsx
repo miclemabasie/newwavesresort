@@ -27,7 +27,10 @@ export default function ImpactSection() {
               </li>
             ))}
           </ul>
-          <button className="btn-outline">Our Foundation Story</button>
+          <button
+           className="btn-outline"
+           onClick={() => window.open('https://fisiyfoundation.org/', '_blank')}
+           >Our Foundation Story</button>
         </motion.div>
         
         <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
