@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import ServiceDiscoveryCard from "../components/ui/ServiceDiscoveryCard";
 import Footer from "../components/sections/Footer";
 import Testimonials from "../components/sections/Testimonials";
+import Principles from "../components/sections/Principles";
 
 
 export default function Home() {
@@ -54,6 +55,9 @@ export default function Home() {
 
         {/* The Intellectual/Social Mission */}
         <ImpactSection />
+
+        {/* Principles */}
+        <Principles />
 
         {/* Professional Utility */}
         <Infrastructure />

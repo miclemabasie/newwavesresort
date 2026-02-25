@@ -50,13 +50,13 @@ export default function ContactPage() {
                 className="h-[450px] rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white relative group"
               >
                 <iframe
-                  title="Ngeme Resort Location"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.8!2d9.1!3d4.0!" 
-                  className="w-full h-full grayscale contrast-125 brightness-110 sepia-[.1] hover:grayscale-0 transition-all duration-1000"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                ></iframe>
+                title="Ngeme Resort Location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15917.436324269153!2d9.1868!3d4.0108!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x106131498e8f8193%3A0x6a0a0a0a0a0a0a0a!2sLimbe%2C%20Cameroon!5e0!3m2!1sen!2s!4v1710000000000!5m2!1sen!2s"
+                className="w-full h-full grayscale contrast-125 brightness-110 sepia-[.2] hover:grayscale-0 transition-all duration-700"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+              ></iframe>
                 <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-ocean/5">
                   <p className="text-ocean font-bold text-[10px] uppercase tracking-[0.2em] mb-1">Coastal Residency</p>
                   <p className="text-volcanic/70 text-sm font-serif italic">Ngeme, Mile 4 Coastal Road, Limbe, Cameroon</p>
