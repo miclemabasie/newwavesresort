@@ -3,6 +3,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home'; 
 import GalleryPage from './pages/GalleryPage';
+import ContactPage from './pages/Contact';
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
       <Route path="/gallery" element={<GalleryPage />} />
       <Route path="story" element={<GalleryPage />} />
       <Route path="rooms" element={<GalleryPage />} />
-      <Route path="contact" element={<GalleryPage />} />
+      <Route path="contact" element={<ContactPage />} />
       <Route path="dialogues" element={<GalleryPage />} />
       <Route path="foundation" element={<GalleryPage />} />
       <Route path="experiences" element={<GalleryPage />} />
