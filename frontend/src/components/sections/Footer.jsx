@@ -1,15 +1,16 @@
 import { Link } from "react-router";
+import logo from "../../assets/general/logo.png";
 
 export default function Footer() {
   return (
     <footer className="bg-volcanic pt-24 pb-12 text-sand overflow-hidden relative">
-      {/* Background Decorative Accent */}
-      <div className="absolute top-0 right-0 text-[15rem] font-bold text-white/[0.03] leading-none pointer-events-none select-none">
-        NGEME
+      {/* Background Decorative Accent - Updated to NEW WAVES */}
+      <div className="absolute top-0 right-0 text-[12rem] font-bold text-white/[0.02] leading-none pointer-events-none select-none whitespace-nowrap">
+        NEW WAVES
       </div>
 
       <div className="container relative z-10">
-        {/* Newsletter Section - Fixed Flexibility */}
+        {/* Newsletter Section */}
         <div className="bg-ocean rounded-3xl p-8 md:p-16 mb-24 flex flex-col lg:flex-row items-center justify-between gap-12 shadow-2xl border border-white/10">
           <div className="max-w-md text-center lg:text-left">
             <h3 className="text-white text-3xl font-serif mb-4">Stay Informed</h3>
@@ -18,14 +19,12 @@ export default function Footer() {
             </p>
           </div>
           
-          {/* Changed 'flex' to 'flex-col sm:flex-row' to stack on tiny screens */}
           <form className="w-full max-w-md flex flex-col sm:flex-row gap-3">
             <input 
               type="email" 
               placeholder="Your Professional Email" 
               className="w-full flex-1 bg-white/10 border border-white/30 rounded-lg px-6 py-4 text-white placeholder:text-white/40 focus:outline-none focus:border-lush transition-colors"
             />
-            {/* Added 'flex-shrink-0' to ensure the button doesn't squish */}
             <button className="bg-white text-ocean hover:bg-lush hover:text-white px-8 py-4 rounded-lg font-bold transition-all uppercase text-[10px] tracking-widest whitespace-nowrap flex-shrink-0">
               Join
             </button>
@@ -35,7 +34,15 @@ export default function Footer() {
         {/* Footer Navigation */}
         <div className="grid md:grid-cols-4 gap-12 mb-20 border-b border-white/10 pb-20">
           <div className="col-span-2">
-            <h4 className="text-white text-2xl font-serif mb-6">Ngeme Resort</h4>
+            {/* Branding Section: Logo + Name */}
+            <div className="flex items-center gap-4 mb-6">
+              <img 
+                src={logo}
+                alt="New Waves Logo" 
+                className="w-12 h-12 object-contain" 
+              />
+              <h4 className="text-white text-2xl font-serif">New Waves Resort</h4>
+            </div>
             <p className="max-w-sm text-sm text-white/70 leading-relaxed">
               A premier nomadic hub and hospitality sanctuary in Limbe, Cameroon. 
               As a vehicle for the Fisiy Foundation, we believe in the power of connection and social inclusivity.
@@ -78,7 +85,7 @@ export default function Footer() {
           <span className="flex items-center gap-2">
             <span className="text-lush">✦</span> Limbe, South West Region, Cameroon
           </span>
-          <span>© 2026 Ngeme Resort — All Rights Reserved</span>
+          <span>© 2026 New Waves Resort — All Rights Reserved</span>
           <div className="flex gap-8">
             <a href="#" className="text-white/40 hover:text-white transition-colors">LinkedIn</a>
             <a href="#" className="text-white/40 hover:text-white transition-colors">Instagram</a>
