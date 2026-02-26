@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function Culinary() {
   const dishes = [
@@ -39,7 +40,8 @@ export default function Culinary() {
               </div>
             ))}
           </div>
-          <button className="btn-outline mt-12">View Full Menu</button>
+          
+          <Link to="/dining" className="btn-outline mt-12">View Full Menu</Link>
         </div>
       </div>
     </section>
