@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link, useLocation } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
+import logo from "../assets/general/logo.png";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,14 +35,8 @@ export default function Navbar() {
         
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 z-[70]">
-          <div className="w-9 h-9 border-2 border-ocean flex items-center justify-center rounded-sm">
-            <svg viewBox="0 0 24 24" className="w-5 h-5 stroke-ocean fill-none stroke-2 text-ocean">
-              <path d="M2 12c.5.5 1.5.5 2 0s1.5-.5 2 0 1.5.5 2 0 1.5-.5 2 0 1.5.5 2 0 1.5-.5 2 0 1.5.5 2 0 1.5-.5 2 0" />
-            </svg>
-          </div>
-          <span className="text-lg font-bold tracking-tighter text-ocean uppercase hidden sm:inline-block">
-            The NewWaveResort
-          </span>
+          <img src={logo} alt="Ngeme Logo" className="w-12 h-12" />
+          {/* <span className="text-3xl font-bold text-ocean">Ngeme</span> */}
         </Link>
 
         {/* Desktop Links */}

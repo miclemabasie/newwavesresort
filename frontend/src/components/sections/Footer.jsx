@@ -3,13 +3,13 @@ import { Link } from "react-router";
 export default function Footer() {
   return (
     <footer className="bg-volcanic pt-24 pb-12 text-sand overflow-hidden relative">
-      {/* Background Decorative Accent - Very subtle dark gray so it doesn't distract */}
+      {/* Background Decorative Accent */}
       <div className="absolute top-0 right-0 text-[15rem] font-bold text-white/[0.03] leading-none pointer-events-none select-none">
         NGEME
       </div>
 
       <div className="container relative z-10">
-        {/* Newsletter Section - High Contrast White Text */}
+        {/* Newsletter Section - Fixed Flexibility */}
         <div className="bg-ocean rounded-3xl p-8 md:p-16 mb-24 flex flex-col lg:flex-row items-center justify-between gap-12 shadow-2xl border border-white/10">
           <div className="max-w-md text-center lg:text-left">
             <h3 className="text-white text-3xl font-serif mb-4">Stay Informed</h3>
@@ -17,19 +17,22 @@ export default function Footer() {
               Join our exclusive network for updates on the Ocean-Side Dialogues and Fisiy Foundation progress.
             </p>
           </div>
-          <form className="w-full max-w-md flex gap-2">
+          
+          {/* Changed 'flex' to 'flex-col sm:flex-row' to stack on tiny screens */}
+          <form className="w-full max-w-md flex flex-col sm:flex-row gap-3">
             <input 
               type="email" 
               placeholder="Your Professional Email" 
-              className="flex-1 bg-white/10 border border-white/30 rounded-lg px-6 py-4 text-white placeholder:text-white/40 focus:outline-none focus:border-lush transition-colors"
+              className="w-full flex-1 bg-white/10 border border-white/30 rounded-lg px-6 py-4 text-white placeholder:text-white/40 focus:outline-none focus:border-lush transition-colors"
             />
-            <button className="bg-white text-ocean hover:bg-lush hover:text-white px-8 py-4 rounded-lg font-bold transition-all uppercase text-[10px] tracking-widest">
+            {/* Added 'flex-shrink-0' to ensure the button doesn't squish */}
+            <button className="bg-white text-ocean hover:bg-lush hover:text-white px-8 py-4 rounded-lg font-bold transition-all uppercase text-[10px] tracking-widest whitespace-nowrap flex-shrink-0">
               Join
             </button>
           </form>
         </div>
 
-        {/* Footer Navigation - Improved Legibility */}
+        {/* Footer Navigation */}
         <div className="grid md:grid-cols-4 gap-12 mb-20 border-b border-white/10 pb-20">
           <div className="col-span-2">
             <h4 className="text-white text-2xl font-serif mb-6">Ngeme Resort</h4>
@@ -39,7 +42,6 @@ export default function Footer() {
             </p>
           </div>
           
-          {/* Column 1: The Legacy */}
           <div>
             <h5 className="text-white text-[11px] uppercase tracking-[0.3em] font-bold mb-8">The Legacy</h5>
             <ul className="space-y-4 text-sm">
@@ -55,7 +57,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 2: Concierge */}
           <div>
             <h5 className="text-white text-[11px] uppercase tracking-[0.3em] font-bold mb-8">Concierge</h5>
             <ul className="space-y-4 text-sm">
@@ -72,7 +73,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Credits - High Contrast Gray */}
+        {/* Bottom Credits */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] uppercase tracking-[0.25em] text-white/40 font-medium">
           <span className="flex items-center gap-2">
             <span className="text-lush">✦</span> Limbe, South West Region, Cameroon
