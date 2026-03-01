@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import GalleryPage from './pages/GalleryPage';
 import ContactPage from './pages/Contact';
 import ComingSoon from './pages/ComingSoon';
+import OurStory from './pages/OurStory';
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
     <Routes>`1`
       <Route path="/" element={<Home />} />
       <Route path="/gallery" element={<GalleryPage />} />
-      <Route path="story" element={<ComingSoon />} />
+      <Route path="story" element={<OurStory />} />
       <Route path="rooms" element={<ComingSoon />} />
       <Route path="contact" element={<ContactPage />} />
       <Route path="dialogues" element={<ComingSoon />} />

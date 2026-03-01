@@ -6,12 +6,18 @@ const slides = [
     image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1920",
     upperTitle: "Established Excellence",
     title: "New Waves Resort",
-    subtitle: "A sanctuary for the global nomad where luxury meets a legacy of social impact.",
+    subtitle: "A digital nomad sanctuary for the global citizen where luxury meets a legacy of social impact.",
   },
   {
-    image: "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&q=80&w=1920",
+    image: "https://images.unsplash.com/photo-1506929197414-43407987248b?auto=format&fit=crop&q=80&w=1920", // Coastal aesthetic
+    upperTitle: "The Volcanic Oasis",
+    title: "Paradise away from Home", // New Title requested
+    subtitle: "Where dreams are made and relived. Discover our Unique Stone Beach for adventurers.", // New Sub-text requested
+  },
+  {
+    image: "https://images.apache.org/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&q=80&w=1920",
     upperTitle: "The Intellectual Hub",
-    title: "Nomad Sanctuary",
+    title: "Digital Nomad Sanctuary", // Added "Digital" as requested
     subtitle: "Experience the unique synergy of volcanic coastlines and professional infrastructure.",
   },
   {
@@ -21,7 +27,6 @@ const slides = [
     subtitle: "Freshness redefined. Savor the spirit of Limbe through our curated dining experience.",
   }
 ];
-
 export default function Hero() {
   const [current, setCurrent] = useState(0);
   const [isAuto, setIsAuto] = useState(true);

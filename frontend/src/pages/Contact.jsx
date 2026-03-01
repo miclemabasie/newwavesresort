@@ -7,10 +7,10 @@ export default function ContactPage() {
   const [formStatus, setFormStatus] = useState("idle");
 
   return (
-    <div className="bg-sand min-h-screen">
+    <div className="bg-sand min-h-screen ">
       <Navbar />
 
-      <main className="relative pt-32 pb-24">
+      <main className="relative pt-32 pb-24 w-full lg:max-w-5xl xl:max-w-7xl mx-auto px-6">
         <div className="container px-6">
           
           {/* Header Section - Preserving the Strategic Discussion */}
@@ -49,14 +49,9 @@ export default function ContactPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="h-[450px] rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white relative group"
               >
-                <iframe
-                title="Ngeme Resort Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15917.436324269153!2d9.1868!3d4.0108!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x106131498e8f8193%3A0x6a0a0a0a0a0a0a0a!2sLimbe%2C%20Cameroon!5e0!3m2!1sen!2s!4v1710000000000!5m2!1sen!2s"
-                className="w-full h-full grayscale contrast-125 brightness-110 sepia-[.2] hover:grayscale-0 transition-all duration-700"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-              ></iframe>
+                
+
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1610.7763101181245!2d9.159385823659113!3d4.009544453200413!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1066b5034e01f339%3A0xa9a344da83006564!2sSt%20Michael&#39;s%20Nursery%2C%20Primary%20and%20Secondary%20School%2C%20Ngeme%20Limbe!5e0!3m2!1sen!2scm!4v1772144084660!5m2!1sen!2scm" width="600" height="450" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                 <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-ocean/5">
                   <p className="text-ocean font-bold text-[10px] uppercase tracking-[0.2em] mb-1">Coastal Residency</p>
                   <p className="text-volcanic/70 text-sm font-serif italic">Ngeme, Mile 4 Coastal Road, Limbe, Cameroon</p>
@@ -71,9 +66,10 @@ export default function ContactPage() {
               >
                 <h4 className="font-serif italic text-xl mb-3">Secure Infrastructure</h4>
                 <p className="text-[11px] leading-relaxed opacity-80 uppercase tracking-widest font-medium">
-                  Equipped with redundant fiber-optic lines to ensure 24/7 high-speed connectivity for international nomads and global professional missions.
+                  Equipped with high speed WiFi to ensure 24/7 high-speed connectivity for international nomads and global professional missions.
                 </p>
               </motion.div>
+
 
               {/* Direct Contacts */}
               <div className="grid grid-cols-2 gap-4">

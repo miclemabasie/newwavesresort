@@ -12,7 +12,8 @@ import ServiceDiscoveryCard from "../components/ui/ServiceDiscoveryCard";
 import Footer from "../components/sections/Footer";
 import Testimonials from "../components/sections/Testimonials";
 import Principles from "../components/sections/Principles";
-
+import Facilities from "../components/sections/Facilities";
+import Values from "../components/sections/Values";
 
 export default function Home() {
      const services = [
@@ -56,6 +57,8 @@ export default function Home() {
         {/* The Intellectual/Social Mission */}
         <ImpactSection />
 
+        <Values />
+
         {/* Principles */}
         <Principles />
 
@@ -80,6 +83,8 @@ export default function Home() {
         ))}
       </div>
         </section>
+
+        <Facilities />
 
 
         {/* Thought Leadership Teaser */}

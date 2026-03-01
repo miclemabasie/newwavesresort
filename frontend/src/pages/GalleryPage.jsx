@@ -1,14 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/sections/Footer";
-import SmartImage from "../components/ui/SmartImage";
 import { galleryData } from "../data/galleryData";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function GalleryPage() {
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const [activeCategory, setActiveCategory] = useState("All");
 
-  // Close lightbox on Escape key
+  const categories = useMemo(() => {
+    return ["All", ...new Set(galleryData.map((item) => item.category))];
+  }, []);
+
+  const filteredImages = useMemo(() => {
+    return activeCategory === "All"
+      ? galleryData
+      : galleryData.filter((img) => img.category === activeCategory);
+  }, [activeCategory]);
+
   useEffect(() => {
     const handleEsc = (e) => { if (e.key === "Escape") setSelectedIndex(null); };
     window.addEventListener("keydown", handleEsc);
@@ -16,41 +26,103 @@ export default function GalleryPage() {
   }, []);
 
   return (
-    <div className="bg-sand min-h-screen">
+    <div className="bg-sand/30 min-h-screen">
       <Navbar />
       
-      <header className="container py-24 text-center">
+      <header className="container mx-auto pt-32 pb-12 text-center lg:max-w-5xl">
         <motion.span 
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }}
-          className="text-lush font-bold tracking-[0.4em] uppercase text-xs"
+          className="text-lush font-extrabold tracking-[0.5em] uppercase text-[10px]"
         >
           Visual Legacy
         </motion.span>
         <motion.h1 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="text-5xl md:text-7xl font-serif mt-6 text-ocean"
+          className="text-5xl md:text-7xl font-serif mt-6 text-volcanic tracking-tight"
         >
           The Ngeme Perspective
         </motion.h1>
       </header>
 
-      <main className="container pb-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {galleryData.map((item, index) => (
-            <div key={item.id} onClick={() => setSelectedIndex(index)}>
-              <SmartImage item={item} />
-            </div>
+      {/* STICKY CATEGORY NAV */}
+      <nav className="sticky top-[70px] z-40 bg-sand/80 backdrop-blur-md border-y border-volcanic/5 mb-12">
+        <div className="container mx-auto overflow-x-auto no-scrollbar py-4 px-6 flex justify-start md:justify-center items-center gap-8 md:gap-12">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`relative whitespace-nowrap text-[11px] font-black uppercase tracking-[0.3em] transition-all duration-300 ${
+                activeCategory === cat ? "text-lush" : "text-volcanic/40 hover:text-volcanic"
+              }`}
+            >
+              {cat}
+              {activeCategory === cat && (
+                <motion.div 
+                  layoutId="activeUnderline"
+                  className="absolute -bottom-2 left-0 right-0 h-0.5 bg-lush"
+                />
+              )}
+            </button>
           ))}
         </div>
+      </nav>
+
+     {/* 4-COLUMN GRID SECTION */}
+      <main className="container mx-auto pb-32 lg:max-w-[1440px]">
+        <LayoutGroup>
+          <motion.div 
+            layout
+            /* Changed to lg:grid-cols-4 for smaller, tighter desktop view */
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+          >
+            <AnimatePresence mode="popLayout">
+              {filteredImages.map((item, index) => (
+                <motion.div 
+                  layout
+                  key={item.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.4 }}
+                  onClick={() => setSelectedIndex(index)}
+                  className="cursor-pointer group relative"
+                >
+                  {/* Tighter aspect ratio for 4-column layout */}
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-volcanic/5 border border-volcanic/5 shadow-sm transition-transform duration-500 group-hover:scale-[1.03]">
+                    
+                    <div className="w-full h-full">
+                      <img 
+                        src={item.image} 
+                        alt={item.title}
+                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                      />
+                    </div>
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-volcanic/90 via-volcanic/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    <div className="absolute inset-0 p-6 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+                       <span className="text-lush font-black uppercase tracking-[0.3em] text-[8px] mb-1">
+                         {item.category}
+                       </span>
+                       <h3 className="text-white text-lg font-serif italic leading-tight">
+                         {item.title}
+                       </h3>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        </LayoutGroup>
       </main>
 
-      {/* The Smart Lightbox Overlay */}
+      {/* Lightbox remains full-screen for detailed viewing */}
       <AnimatePresence>
         {selectedIndex !== null && (
           <Lightbox 
-            images={galleryData} 
+            images={filteredImages} 
             index={selectedIndex} 
             setIndex={setSelectedIndex} 
             close={() => setSelectedIndex(null)} 
@@ -63,7 +135,6 @@ export default function GalleryPage() {
   );
 }
 
-// Internal Lightbox Component for clean engineering
 function Lightbox({ images, index, setIndex, close }) {
   const next = () => setIndex((index + 1) % images.length);
   const prev = () => setIndex((index - 1 + images.length) % images.length);
@@ -73,56 +144,42 @@ function Lightbox({ images, index, setIndex, close }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] bg-volcanic/95 backdrop-blur-xl flex items-center justify-center touch-none"
+      className="fixed inset-0 z-[100] bg-volcanic/98 backdrop-blur-2xl flex items-center justify-center touch-none"
     >
-      {/* Close Button */}
       <button 
         onClick={close}
-        className="absolute top-10 right-10 z-[110] text-white hover:text-lush transition-colors p-4"
+        className="absolute top-6 right-6 z-[110] text-white/50 hover:text-lush transition-all p-3 bg-white/5 rounded-full"
       >
-        <svg viewBox="0 0 24 24" className="w-8 h-8 fill-none stroke-current stroke-2">
-          <path d="M18 6L6 18M6 6l12 12" />
-        </svg>
+        <X size={28} strokeWidth={1.5} />
       </button>
 
-      {/* Navigation Controls (Desktop) */}
-      <div className="absolute inset-x-10 flex justify-between items-center pointer-events-none">
-        <button onClick={prev} className="pointer-events-auto p-4 text-white/50 hover:text-white transition-all">
-          <svg viewBox="0 0 24 24" className="w-10 h-10 fill-none stroke-current stroke-1"><path d="M15 18l-6-6 6-6" /></svg>
+      <div className="hidden md:flex absolute inset-x-8 justify-between items-center pointer-events-none">
+        <button onClick={prev} className="pointer-events-auto p-4 text-white/20 hover:text-white transition-all bg-white/10 rounded-full">
+          <ChevronLeft size={32} strokeWidth={1} />
         </button>
-        <button onClick={next} className="pointer-events-auto p-4 text-white/50 hover:text-white transition-all">
-          <svg viewBox="0 0 24 24" className="w-10 h-10 fill-none stroke-current stroke-1"><path d="M9 18l6-6-6-6" /></svg>
+        <button onClick={next} className="pointer-events-auto p-4 text-white/20 hover:text-white transition-all bg-white/10 rounded-full">
+          <ChevronRight size={32} strokeWidth={1} />
         </button>
       </div>
 
-      {/* Swipeable Image Container */}
-      <div className="relative w-full max-w-5xl h-[70vh] px-4 flex items-center justify-center">
+      <div className="relative w-full max-w-5xl h-[80vh] px-4 flex flex-col items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            onDragEnd={(e, { offset, velocity }) => {
-              if (offset.x > 100) prev();
-              else if (offset.x < -100) next();
-            }}
-            className="w-full h-full cursor-grab active:cursor-grabbing flex flex-col items-center"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.02 }}
+            className="w-full h-full flex flex-col items-center"
           >
             <img 
               src={images[index].image} 
               alt={images[index].title}
-              className="w-full h-full object-contain drop-shadow-2xl"
+              className="w-full h-full object-contain"
             />
-            
-            {/* Image Meta Data */}
             <div className="mt-8 text-center">
-              <h3 className="text-white text-2xl font-serif">{images[index].title}</h3>
-              <p className="text-lush uppercase tracking-[0.3em] text-[10px] mt-2">
-                {images[index].category} — {index + 1} / {images.length}
+              <h3 className="text-white text-2xl font-serif italic">{images[index].title}</h3>
+              <p className="text-lush font-black uppercase tracking-[0.4em] text-[9px] mt-2">
+                {images[index].category}
               </p>
             </div>
           </motion.div>

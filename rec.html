@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Maps Platform - Receipt (Mubaku HighTech)</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #f2f4f8;
+        font-family: "Google Sans", "Segoe UI", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+      .receipt {
+        max-width: 780px;
+        width: 100%;
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        padding: 40px 40px 35px;
+        border: 1px solid #e0e0e0;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+      .logo h1 {
+        font-size: 30px;
+        font-weight: 500;
+        color: #1a73e8;
+        margin: 0;
+      }
+      .logo p {
+        color: #5f6368;
+        font-size: 14px;
+      }
+      .paid-badge {
+        background: #34a853;
+        color: white;
+        padding: 6px 22px;
+        border-radius: 40px;
+        font-size: 15px;
+        font-weight: 500;
+      }
+      .transaction-panel {
+        background: #f1f8fe;
+        border-radius: 16px;
+        padding: 18px 24px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        border-left: 6px solid #1a73e8;
+      }
+      .txn-id .label {
+        color: #5f6368;
+        font-size: 13px;
+      }
+      .txn-id .value {
+        font-size: 18px;
+        font-weight: 500;
+        color: #202124;
+      }
+      .txn-date .label {
+        color: #5f6368;
+        font-size: 13px;
+      }
+      .txn-date .value {
+        font-size: 18px;
+        font-weight: 500;
+        color: #202124;
+      }
+      .billing-address {
+        background: white;
+        border: 1px solid #dadce0;
+        border-radius: 16px;
+        padding: 22px 25px;
+        margin-bottom: 30px;
+      }
+      .billing-address .title {
+        color: #5f6368;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 0.3px;
+        margin-bottom: 12px;
+      }
+      .billing-address .name {
+        font-size: 18px;
+        font-weight: 700;
+        color: #202124;
+      }
+      .billing-address .address {
+        color: #3c4043;
+        margin-top: 6px;
+      }
+      .payment-info {
+        display: flex;
+        gap: 30px;
+        background: #f8f9fa;
+        border-radius: 16px;
+        padding: 18px 25px;
+        margin-bottom: 25px;
+      }
+      .payment-info .method .label {
+        color: #5f6368;
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+      .payment-info .method .value {
+        font-weight: 500;
+        color: #202124;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0 25px;
+      }
+      th {
+        text-align: left;
+        padding: 14px 0;
+        border-bottom: 2px solid #dadce0;
+        color: #5f6368;
+        font-weight: 500;
+      }
+      td {
+        padding: 18px 0;
+        border-bottom: 1px solid #e8eaed;
+      }
+      td:last-child {
+        text-align: right;
+        font-weight: 500;
+      }
+      .usage-detail {
+        color: #5f6368;
+        font-size: 13px;
+      }
+      .summary {
+        margin-top: 25px;
+        border-top: 1px solid #dadce0;
+        padding-top: 20px;
+        text-align: right;
+      }
+      .summary .line {
+        display: flex;
+        justify-content: flex-end;
+        gap: 40px;
+        padding: 5px 0;
+        color: #202124;
+      }
+      .summary .line .label {
+        color: #5f6368;
+      }
+      .summary .grand {
+        display: flex;
+        justify-content: flex-end;
+        gap: 40px;
+        font-size: 22px;
+        font-weight: 700;
+        color: #202124;
+        border-top: 2px solid #202124;
+        margin-top: 15px;
+        padding-top: 15px;
+      }
+      .footer {
+        margin-top: 45px;
+        text-align: center;
+        color: #5f6368;
+        font-size: 12px;
+        border-top: 1px solid #e8eaed;
+        padding-top: 22px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="receipt">
+      <div class="header">
+        <div class="logo">
+          <h1>Google Maps Platform</h1>
+          <p>Location APIs & Services</p>
+        </div>
+        <div class="paid-badge">PAID</div>
+      </div>
+
+      <div class="transaction-panel">
+        <div class="txn-id">
+          <div class="label">Transaction ID</div>
+          <div class="value">GCP-API-260925</div>
+        </div>
+        <div class="txn-date">
+          <div class="label">Date</div>
+          <div class="value">26 September 2025</div>
+        </div>
+      </div>
+
+      <div class="billing-address">
+        <div class="title">billed to</div>
+        <div class="name">Mubaku HighTech Incoporation</div>
+        <div class="address">
+          123 Boulevard de la République, Buea, Cameroon
+        </div>
+      </div>
+
+      <div class="payment-info">
+        <div class="method">
+          <div class="label">payment method</div>
+          <div class="value">Virtual Card ···· 3337</div>
+        </div>
+        <div class="method">
+          <div class="label">project</div>
+          <div class="value">mubaku-locations-api</div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>SKU / Description</th>
+            <th>Usage</th>
+            <th>Amount (XAF)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div>Places API (Basic)</div>
+              <div class="usage-detail">15,000 calls</div>
+            </td>
+            <td>Sep 2025</td>
+            <td>42,000</td>
+          </tr>
+          <tr>
+            <td>
+              <div>Geocoding API</div>
+              <div class="usage-detail">8,500 calls</div>
+            </td>
+            <td>Sep 2025</td>
+            <td>23,000</td>
+          </tr>
+          <tr>
+            <td>
+              <div>Maps JavaScript API</div>
+              <div class="usage-detail">Monthly flat fee</div>
+            </td>
+            <td>Sep 2025</td>
+            <td>15,000</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="summary">
+        <div class="line">
+          <span class="label">Subtotal</span>
+          <span>80,000 XAF</span>
+        </div>
+        <div class="line">
+          <span class="label">Tax (VAT 19.25%)</span>
+          <span>0 XAF</span>
+        </div>
+        <div class="grand">
+          <span class="label">Total paid</span>
+          <span>80,000 XAF</span>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>
+          This receipt covers Google Maps Platform usage for the loan solution
+          project.<br />For detailed billing, visit Google Cloud Console.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

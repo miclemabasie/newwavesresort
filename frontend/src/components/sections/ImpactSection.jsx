@@ -21,7 +21,7 @@ export default function ImpactSection() {
             As a project born from the <strong>Fisiy Foundation</strong>, your stay contributes directly to community empowerment in Cameroon.
           </p>
           <ul className="space-y-4 mb-10">
-            {['Proceeds support local education', 'Socially inclusive employment', 'Sustainable ecosystem growth'].map((text) => (
+            {['Proceeds support local education', 'Socially inclusive employment', 'Sustainable ecosystem growth', 'Prepares Youth to move to Opportunity (through digital training sponsored by FFLC)'].map((text) => (
               <li key={text} className="flex items-center gap-3 text-sm font-medium text-volcanic/70">
                 <span className="w-1.5 h-1.5 bg-lush rounded-full"></span> {text}
               </li>
