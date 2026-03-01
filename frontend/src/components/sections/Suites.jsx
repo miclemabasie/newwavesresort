@@ -13,7 +13,7 @@ export default function Suites() {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-xl">
             <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">Accommodations</span>
-            <h2 className="text-4xl md:text-5xl font-serif mt-4 italic text-ocean">Designed for Excellence</h2>
+            <h2 className="text-4xl md:text-4xl font-serif mt-4 italic text-ocean">Designed for Luxury & Excellence</h2>
           </div>
           <p className="text-volcanic/60 max-w-xs text-sm">
             Whether for a high-level summit or a nomadic retreat, our suites offer a sanctuary of productivity.

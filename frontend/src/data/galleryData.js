@@ -48,4 +48,20 @@ export const galleryData = [
     description: "Where intellectual leaders gather.",
   },
   // Add more as needed for the full gallery page...
+  {
+    id: 7,
+    title: "Coastal Culinary",
+    category: "Dining",
+    image:
+      "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&q=80&w=1200",
+    description: "Fresh seafood served on the volcanic sand terrace.",
+  },
+  {
+    id: 8,
+    title: "Executive Nomad Suite",
+    category: "Interiors",
+    image:
+      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=1200",
+    description: "Equipped with ergonomic workstations and Atlantic views.",
+  },
 ];

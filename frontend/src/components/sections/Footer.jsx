@@ -70,7 +70,6 @@ export default function Footer() {
             <ul className="space-y-4 text-sm">
               <li><Link to="/foundation" className="text-white/50 hover:text-lush transition-colors duration-300 block">Fisiy Foundation</Link></li>
               <li><Link to="/dialogues" className="text-white/50 hover:text-lush transition-colors duration-300 block">Ocean-Side Dialogues</Link></li>
-              <li><Link to="/sustainability" className="text-white/50 hover:text-lush transition-colors duration-300 block">Sustainability Report</Link></li>
             </ul>
           </div>
 
@@ -78,7 +77,7 @@ export default function Footer() {
             <h5 className="text-white text-[11px] uppercase tracking-[0.3em] font-bold mb-8">Concierge</h5>
             <ul className="space-y-4 text-sm">
               <li><Link to="/rooms" className="text-white/50 hover:text-lush transition-colors duration-300 block">Book a Suite</Link></li>
-              <li><Link to="/nomads" className="text-white/50 hover:text-lush transition-colors duration-300 block">Nomad Programs</Link></li>
+              
               <li><Link to="/contact" className="text-white/50 hover:text-lush transition-colors duration-300 block">Direct Inquiries</Link></li>
             </ul>
           </div>
@@ -90,7 +89,7 @@ export default function Footer() {
                 <MapPin size={16} className="text-lush shrink-0 mt-0.5" />
                 <span>Limbe, South West Region, Cameroon</span>
               </li>
-              <li>concierge@newwaves.com</li>
+              <li>info@newwavesresort.com</li>
               <li>+237 000 000 000</li>
             </ul>
           </div>

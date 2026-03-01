@@ -29,7 +29,7 @@ export default function GalleryPage() {
     <div className="bg-sand/30 min-h-screen">
       <Navbar />
       
-      <header className="container mx-auto pt-32 pb-12 text-center lg:max-w-5xl">
+      <header className="container mx-auto pt-20 pb-12 text-center lg:max-w-5xl">
         <motion.span 
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }}
@@ -40,7 +40,7 @@ export default function GalleryPage() {
         <motion.h1 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="text-5xl md:text-7xl font-serif mt-6 text-volcanic tracking-tight"
+          className="text-5xl md:text-7xl font-serif mt-6 text-ocean tracking-tight"
         >
           The Ngeme Perspective
         </motion.h1>

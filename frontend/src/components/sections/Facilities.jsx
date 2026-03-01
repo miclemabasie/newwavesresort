@@ -49,14 +49,14 @@ export default function Facilities() {
   const activeCategory = facilityCategories.find(c => c.id === activeTab);
 
   return (
-    <section className="py-24 md:py-32 bg-white border-y border-sand overflow-hidden">
+    <section className="py-24 md:py-20 bg-white border-y border-sand overflow-hidden">
       <div className="container mx-auto px-6 lg:max-w-7xl">
         
         {/* Header - Using YOUR 'ocean' and 'lush' */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8">
           <div className="max-w-2xl">
             <span className="text-lush font-bold tracking-[0.4em] uppercase text-[10px]">Unparalleled Provisions</span>
-            <h2 className="text-4xl md:text-7xl font-serif mt-4 text-ocean leading-[1.1] tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-serif mt-4 text-ocean leading-[1.1] tracking-tight">
               World-Class <br className="hidden md:block" /> Amenities
             </h2>
           </div>

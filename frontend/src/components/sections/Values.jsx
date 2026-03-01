@@ -84,7 +84,7 @@ export default function ValuesSection() {
                   <span className={`text-[10px] font-bold tracking-widest transition-colors duration-300 ${hoveredId === v.id ? 'text-lush' : 'text-white/20'}`}>
                     0{values.indexOf(v) + 1}
                   </span>
-                  <h3 className={`text-3xl md:text-5xl font-serif transition-all duration-500 ${hoveredId === v.id ? 'text-white translate-x-4' : 'text-white/30 group-hover:text-white/60'}`}>
+                  <h3 className={`text-3xl md:text-4xl font-serif transition-all duration-500 ${hoveredId === v.id ? 'text-white translate-x-4' : 'text-white/30 group-hover:text-white/60'}`}>
                     {v.title}
                   </h3>
                 </div>
