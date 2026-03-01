@@ -71,11 +71,8 @@
            hover:bg-ocean hover:text-white inline-block text-center;
   }
 
-  /* --- THE FIX: Constraining the width for a premium look --- */
   .container {
-    @apply mx-auto px-6 md:px-12 lg:px-24 xl:px-32;
-    /* We limit the content to 1440px to prevent "edge-to-edge" stretching on big monitors */
-    max-width: 1440px;
+    @apply max-w-7xl mx-auto px-6 md:px-12;
   }
 
   .nav-link {
