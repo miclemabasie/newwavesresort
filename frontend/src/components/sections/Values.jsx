@@ -40,51 +40,57 @@ const values = [
 ];
 
 export default function ValuesSection() {
-  const [hoveredId, setHoveredId] = useState(values[0].id);
+  const [activeId, setActiveId] = useState(values[0].id);
 
-  const activeValue = values.find(v => v.id === hoveredId);
+  const activeValue = values.find(v => v.id === activeId);
 
   return (
-    <section className="relative w-full min-h-[700px] flex items-center overflow-hidden bg-volcanic">
-      {/* Dynamic Background Image */}
+    // Replaced min-h-700 with h-auto and large padding for mobile flexibility
+    <section className="relative w-full min-h-[800px] flex items-center py-20 overflow-hidden bg-volcanic">
+      
+      {/* Background Image - Adjusted opacity for mobile legibility */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={hoveredId}
+          key={activeId}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.4 }}
+          animate={{ opacity: 0.3 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8 }}
           className="absolute inset-0 z-0"
         >
           <img 
             src={activeValue.image} 
-            className="w-full h-full object-cover grayscale-[40%]" 
+            className="w-full h-full object-cover grayscale-[20%]" 
             alt="Background"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-volcanic via-volcanic/60 to-transparent" />
+          {/* Gradient: Top-to-bottom on mobile, Left-to-right on Desktop */}
+          <div className="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-volcanic via-volcanic/80 lg:via-volcanic/60 to-transparent" />
         </motion.div>
       </AnimatePresence>
 
-      <div className="container relative z-10 mx-auto px-6 lg:max-w-7xl grid lg:grid-cols-2 gap-12 items-center">
+      {/* Container: Increased max-width to 1800px for browser expansion */}
+      <div className="w-full relative z-10 mx-auto px-6 lg:px-20 max-w-[1800px] grid lg:grid-cols-2 gap-16 items-center">
         
-        {/* Left: The List (Interactive) */}
+        {/* Left: Interactive List */}
         <div className="space-y-4">
-          <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">
-            Our Values
+          <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-8 block">
+            The Residency Pillars
           </span>
           
           <div className="flex flex-col">
-            {values.map((v) => (
+            {values.map((v, index) => (
               <button
                 key={v.id}
-                onMouseEnter={() => setHoveredId(v.id)}
-                className="group py-4 text-left relative"
+                // onClick for Mobile + onMouseEnter for Desktop
+                onClick={() => setActiveId(v.id)}
+                onMouseEnter={() => setActiveId(v.id)}
+                className="group py-5 text-left relative outline-none"
               >
                 <div className="flex items-center gap-6">
-                  <span className={`text-[10px] font-bold tracking-widest transition-colors duration-300 ${hoveredId === v.id ? 'text-lush' : 'text-white/20'}`}>
-                    0{values.indexOf(v) + 1}
+                  <span className={`text-[11px] font-black tracking-widest transition-colors duration-300 ${activeId === v.id ? 'text-lush' : 'text-white/20'}`}>
+                    0{index + 1}
                   </span>
-                  <h3 className={`text-3xl md:text-4xl font-serif transition-all duration-500 ${hoveredId === v.id ? 'text-white translate-x-4' : 'text-white/30 group-hover:text-white/60'}`}>
+                  <h3 className={`text-3xl md:text-5xl lg:text-7xl font-serif transition-all duration-500 ${activeId === v.id ? 'text-white translate-x-4 md:translate-x-8' : 'text-white/20 group-hover:text-white/40'}`}>
                     {v.title}
                   </h3>
                 </div>
@@ -93,23 +99,29 @@ export default function ValuesSection() {
           </div>
         </div>
 
-        {/* Right: The Detail Card */}
-        <div className="hidden lg:block">
+        {/* Right: The Detail Card - Now Visible on Mobile as a "Slide-up" effect */}
+        <div className="relative mt-8 lg:mt-0">
           <AnimatePresence mode="wait">
             <motion.div
-              key={hoveredId}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="bg-white/5 backdrop-blur-xl border border-white/10 p-12 rounded-[3rem] max-w-md"
+              key={activeId}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="bg-white/5 backdrop-blur-2xl border border-white/10 p-10 md:p-14 rounded-[2rem] md:rounded-[3.5rem] w-full max-w-xl mx-auto lg:ml-auto"
             >
-              <p className="text-lush font-black uppercase tracking-[0.3em] text-[10px] mb-4">
+              <span className="text-lush font-black uppercase tracking-[0.4em] text-[10px] mb-6 block">
                 {activeValue.label}
-              </p>
-              <p className="text-white/80 text-lg leading-relaxed font-light">
+              </span>
+              <p className="text-white text-xl md:text-2xl leading-relaxed font-light">
                 {activeValue.desc}
               </p>
-              <div className="mt-8 h-px w-12 bg-lush" />
+              
+              <div className="mt-10 flex items-center gap-4">
+                <div className="h-px w-12 bg-lush" />
+                <span className="text-white/30 text-[9px] uppercase tracking-widest font-black">
+                  Refining the Sanctuary
+                </span>
+              </div>
             </motion.div>
           </AnimatePresence>
         </div>
