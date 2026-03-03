@@ -58,7 +58,7 @@ export default function Facilities() {
             <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-4 block">
                 The Infrastructure
             </span>
-            <h2 className="text-4xl md:text-7xl font-serif text-ocean leading-[1] tracking-tight mb-6">
+            <h2 className="text-4xl md:text-5xl font-serif text-ocean leading-[1] tracking-tight mb-6">
               World-Class <br /> Amenities
             </h2>
           </div>
