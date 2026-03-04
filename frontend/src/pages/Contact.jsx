@@ -25,7 +25,7 @@ export default function ContactPage() {
             <motion.h1 
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              className="text-5xl md:text-7xl font-serif mt-6 text-ocean leading-tight"
+              className="text-5xl md:text-7xl font-serif mt-6 text-volcanic leading-tight"
             >
               Begin Your <br />Atlantic Residency
             </motion.h1>
@@ -62,9 +62,9 @@ export default function ContactPage() {
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-8 rounded-[2rem] bg-ocean text-white shadow-xl"
+                className="p-8 rounded-[2rem] bg-volcanic text-white shadow-xl"
               >
-                <h4 className="font-serif italic text-xl mb-3">Secure Infrastructure</h4>
+                <h4 className="font-serif italic text-xl mb-3 text-lush">Secure Infrastructure</h4>
                 <p className="text-[11px] leading-relaxed opacity-80 uppercase tracking-widest font-medium">
                   Equipped with high speed WiFi to ensure 24/7 high-speed connectivity for international nomads and global professional missions.
                 </p>
@@ -108,7 +108,7 @@ export default function ContactPage() {
                     <div className="grid md:grid-cols-2 gap-8">
                       <FormInput label="Phone / WhatsApp" placeholder="+237 ..." />
                       <div className="space-y-2">
-                        <label className="text-[10px] uppercase tracking-widest font-bold text-ocean/40 ml-1">Nature of Inquiry</label>
+                        <label className="text-[10px] uppercase tracking-widest font-bold text-lush/40 ml-1">Nature of Inquiry</label>
                         <select className="w-full bg-sand/50 border-none rounded-xl px-5 py-4 text-sm focus:ring-2 focus:ring-lush outline-none appearance-none">
                           <option>Executive Residency (1 week+)</option>
                           <option>Corporate Summit / Retreat</option>
@@ -118,11 +118,11 @@ export default function ContactPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest font-bold text-ocean/40 ml-1">Special Requirements</label>
+                      <label className="text-[10px] uppercase tracking-widest font-bold text-lush/40 ml-1">Special Requirements</label>
                       <textarea rows="5" className="w-full bg-sand/50 border-none rounded-2xl px-5 py-4 text-sm focus:ring-2 focus:ring-lush outline-none resize-none" placeholder="Workspace needs, security coordination, or dietary standards..."></textarea>
                     </div>
 
-                    <button type="submit" className="w-full bg-ocean hover:bg-volcanic text-white font-bold py-6 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-4 uppercase text-[10px] tracking-[0.4em] group">
+                    <button type="submit" className="w-full bg-lush hover:bg-volcanic text-white font-bold py-6 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-4 uppercase text-[10px] tracking-[0.4em] group">
                       {formStatus === "sending" ? "Processing..." : "Send Secure Inquiry"}
                       <span className="group-hover:translate-x-2 transition-transform">→</span>
                     </button>
@@ -144,7 +144,7 @@ export default function ContactPage() {
 function FormInput({ label, type = "text", placeholder }) {
   return (
     <div className="space-y-2">
-      <label className="text-[10px] uppercase tracking-widest font-bold text-ocean/40 ml-1">{label}</label>
+      <label className="text-[10px] uppercase tracking-widest font-bold text-lush/40 ml-1">{label}</label>
       <input type={type} required className="w-full bg-sand/50 border-none rounded-xl px-5 py-4 text-sm focus:ring-2 focus:ring-lush transition-all outline-none" placeholder={placeholder} />
     </div>
   );
