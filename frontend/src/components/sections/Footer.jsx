@@ -19,7 +19,7 @@ export default function Footer() {
 
       <div className="container relative z-10 mx-auto px-6 lg:max-w-7xl">
         {/* Newsletter Section */}
-        <div className="bg-ocean rounded-3xl p-8 md:p-16 mb-24 flex flex-col lg:flex-row items-center justify-between gap-12 shadow-2xl border border-white/10">
+        <div className="bg-lush rounded-3xl p-8 md:p-16 mb-24 flex flex-col lg:flex-row items-center justify-between gap-12 shadow-2xl border border-white/10">
           <div className="max-w-md text-center lg:text-left">
             <h3 className="text-white text-3xl font-serif mb-4 italic">Stay Informed</h3>
             <p className="text-white/80 text-sm leading-relaxed">

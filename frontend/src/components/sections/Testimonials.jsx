@@ -50,7 +50,7 @@ export default function Testimonials() {
           >
             Client Perspectives
           </motion.span>
-          <h2 className="text-4xl md:text-5xl font-serif mt-4 text-ocean italic">
+          <h2 className="text-4xl md:text-5xl font-serif mt-4 text-volcanic italic">
             Trusted by the Global Community
           </h2>
           <div className="h-1 w-12 bg-lush mx-auto mt-8" />

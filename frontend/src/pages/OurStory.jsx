@@ -222,7 +222,7 @@ export default function OurStory() {
                                 </p>
                                 <div className="flex items-center gap-4 text-volcanic">
                                     <div className="w-12 h-px bg-lush/50" />
-                                    <span className="text-sm font-bold uppercase tracking-widest">Founder</span>
+                                    <span className="text-sm font-bold uppercase tracking-widest">The Visionary Founder</span>
                                 </div>
                             </motion.div>
                         </div>
@@ -347,44 +347,8 @@ export default function OurStory() {
                         </div>
                     </div>
                 </section>
-
-                {/* ===== FINAL CALL TO ACTION ===== */}
-                <section className="py-40 bg-volcanic text-white text-center relative overflow-hidden">
-                    <div className="container mx-auto px-6 max-w-4xl relative z-10">
-                        <h2 className="text-5xl md:text-7xl font-serif mb-10 leading-[1.1]">Stay with <span className="italic text-lush">Purpose.</span></h2>
-                        <p className="text-white/70 text-xl mb-12 leading-relaxed font-medium max-w-2xl mx-auto">
-                            Your reservation at Ngeme directly supports accountable governance, vocational training, and community infrastructure across Africa. Join us in renewing the social contract, one unforgettable stay at a time.
-                        </p>
-                        
-                        <Link
-                            to="/contact"
-                            className="group relative inline-flex items-center gap-4 bg-lush text-volcanic px-14 py-6 rounded-full overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-1"
-                        >
-                            <span className="relative z-10 text-[12px] font-black uppercase tracking-[0.4em]">Inquire About Residencies</span>
-                            <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-2 transition-transform duration-500" />
-                        </Link>
-                    </div>
-                </section>
-
                 {/* ===== FOOTER (resort + foundation) ===== */}
-                <footer className="bg-volcanic text-white/60 py-16 border-t border-white/10">
-                    <div className="container mx-auto px-6">
-                        <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-                            <div className="text-2xl font-serif text-white">Ngeme Resort</div>
-                            <div className="flex gap-8">
-                                <Link to="/" className="hover:text-lush transition-colors">Home</Link>
-                                <Link to="/our-story" className="hover:text-lush transition-colors">Our Story</Link>
-                                <Link to="/contact" className="hover:text-lush transition-colors">Contact</Link>
-                                <a href="https://fisiyfoundation.org" target="_blank" rel="noopener noreferrer" className="hover:text-lush transition-colors">Foundation ↗</a>
-                            </div>
-                        </div>
-                        <div className="text-center text-sm space-y-2">
-                            <p>In partnership with the Fisiy Foundation and Leadership Center, a 501(c)(3) nonprofit (Tax ID 46-4985177).</p>
-                            <p>Ngeme Resort · Limbe, Cameroon · Inquiries: reservations@ngeme.com</p>
-                            <p>© {new Date().getFullYear()} Ngeme Resort. All rights reserved.</p>
-                        </div>
-                    </div>
-                </footer>
+                <Footer />
             </main>
         </div>
     );

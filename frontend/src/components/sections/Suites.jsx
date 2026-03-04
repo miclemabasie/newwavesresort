@@ -13,7 +13,7 @@ export default function Suites() {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-xl">
             <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">Accommodations</span>
-            <h2 className="text-4xl md:text-4xl font-serif mt-4 italic text-ocean">Designed for Luxury & Excellence</h2>
+            <h2 className="text-4xl md:text-4xl font-serif mt-4 italic text-volcanic">Designed for Luxury & Excellence</h2>
           </div>
           <p className="text-volcanic/60 max-w-xs text-sm">
             Whether for a high-level summit or a nomadic retreat, our suites offer a sanctuary of productivity.
@@ -26,7 +26,7 @@ export default function Suites() {
               <div className="aspect-[4/5] overflow-hidden rounded-2xl mb-6 bg-volcanic/5 shadow-resort">
                 <img src={suite.img} alt={suite.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               </div>
-              <h3 className="text-xl font-serif">{suite.name}</h3>
+              <h3 className="text-xl font-serif text-volcanic">{suite.name}</h3>
               <div className="flex justify-between items-center mt-2 pb-4 border-b border-ocean/10 text-xs tracking-widest uppercase opacity-60">
                 <span>{suite.size}</span>
                 <span>From {suite.price} / Night</span>

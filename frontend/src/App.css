@@ -67,8 +67,8 @@
   }
 
   .btn-outline {
-    @apply px-8 py-4 border-2 border-ocean text-ocean rounded-lg font-semibold 
-           hover:bg-ocean hover:text-white inline-block text-center;
+    @apply px-8 py-4 border-2 border-volcanic text-volcanic rounded-lg font-semibold 
+           hover:bg-lush hover:text-white inline-block text-center;
   }
 
   .container {
@@ -76,11 +76,11 @@
   }
 
   .nav-link {
-    @apply text-sm font-medium text-volcanic/80 hover:text-ocean transition-colors py-2;
+    @apply text-sm font-medium text-volcanic/80 hover:text-lush transition-colors py-2;
   }
 
   .nav-link.active {
-    @apply text-ocean border-b-2 border-ocean;
+    @apply text-lush border-b-2 border-lush;
   }
 
   .card {

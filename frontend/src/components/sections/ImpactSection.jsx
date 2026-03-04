@@ -15,7 +15,7 @@ export default function ImpactSection() {
             <span className="h-px w-8 bg-lush"></span>
             <span className="text-lush font-bold tracking-[0.3em] uppercase text-xs">Fisiy Foundation Partnership</span>
           </div>
-          <h2 className="text-5xl font-serif mb-8 leading-tight text-ocean">A Purpose-Driven Presence</h2>
+          <h2 className="text-5xl font-serif mb-8 leading-tight text-volcanic">A Purpose-Driven Presence</h2>
           <p className="text-lg text-volcanic/80 mb-6 leading-relaxed">
             Ngeme translates to "Sun of the Sea". More than a resort, this is a center for social inclusivity. 
             As a project born from the <strong>Fisiy Foundation</strong>, your stay contributes directly to community empowerment in Cameroon.

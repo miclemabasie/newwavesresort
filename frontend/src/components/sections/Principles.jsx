@@ -58,7 +58,7 @@ export default function Principles() {
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-serif text-ocean mt-4 italic"
+            className="text-4xl md:text-5xl font-serif text-lush mt-4 italic"
           >
             Our Guiding Principles
           </motion.h2>

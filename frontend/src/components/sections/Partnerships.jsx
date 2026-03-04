@@ -37,7 +37,7 @@ export default function Partnerships() {
           {/* Left Side: Strategic Text */}
           <div className="lg:col-span-1">
             <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">Strategic Synergy</span>
-            <h2 className="text-4xl font-serif mt-4 text-ocean leading-tight">
+            <h2 className="text-4xl font-serif mt-4 text-volcanic leading-tight">
               A Network of <br /> Global Excellence
             </h2>
             <p className="text-volcanic/70 mt-6 leading-relaxed text-sm">
@@ -65,7 +65,7 @@ export default function Partnerships() {
                   <div className="text-3xl mb-4 grayscale group-hover:grayscale-0 transition-all">
                     {partner.logo}
                   </div>
-                  <h4 className="text-sm font-bold text-ocean uppercase tracking-tighter">
+                  <h4 className="text-sm font-bold text-volcanic uppercase tracking-tighter">
                     {partner.name}
                   </h4>
                   <p className="text-[10px] text-lush font-medium mt-1 uppercase tracking-widest">
@@ -77,7 +77,7 @@ export default function Partnerships() {
               {/* "Become a Partner" CTA Box */}
               <motion.div
                 whileHover={{ scale: 0.98 }}
-                className="p-8 bg-ocean rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer"
+                className="p-8 bg-lush rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer"
               >
                 <p className="text-white font-serif italic text-lg mb-2">Join the Mission</p>
                 <span className="text-[9px] text-sand/60 uppercase tracking-[0.2em]">Partner with us</span>

@@ -40,7 +40,7 @@ export default function ServiceGrid() {
           <span className="text-lush font-black tracking-[0.4em] uppercase text-[10px]">
             Excellence in Service
           </span>
-          <h2 className="text-4xl md:text-5xl font-serif mt-4 text-ocean leading-tight">
+          <h2 className="text-4xl md:text-5xl font-serif mt-4 text-volcanic leading-tight">
             Everything you need, <br />
             <span className="italic">Expertly handled.</span>
           </h2>

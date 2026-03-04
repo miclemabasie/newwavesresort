@@ -24,7 +24,7 @@ export default function Culinary() {
 
         <div>
           <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">Gastronomy</span>
-          <h2 className="text-4xl md:text-5xl font-serif mt-4 mb-8 text-ocean">Atlantic Flavors & Local Soul</h2>
+          <h2 className="text-4xl md:text-5xl font-serif mt-4 mb-8 text-volcanic">Atlantic Flavors & Local Soul</h2>
           
           <p className="text-volcanic/70 text-lg leading-relaxed mb-6">
             Our kitchen is a tribute to the Gulf of Guinea. We blend traditional Cameroonian 
@@ -54,7 +54,7 @@ export default function Culinary() {
             ))}
           </div>
           
-          <Link to="/dining" className="btn-outline mt-12 inline-block">View Full Menu</Link>
+          <Link to="/dining" className="btn-outline hover:text-lush hover:outline-lush mt-12 inline-block">View Full Menu</Link>
         </div>
       </div>
     </section>
