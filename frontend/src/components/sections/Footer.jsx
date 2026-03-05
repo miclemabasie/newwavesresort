@@ -105,8 +105,8 @@ export default function Footer() {
           </div>
           <p>© 2026 New Waves Resort — All Rights Reserved</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Stay</a>
+            <a href="#" className="hover:text-white transition-colors text-lush">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors text-lush">Terms of Stay</a>
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@ export const menuItems = [
     name: "Mbongo Tchobi Prawns",
     category: "appetizers",
     description:
-      "Juicy prawns simmered in a dark, aromatic Cameroonian spice broth—traditionally made with fresh crayfish and bitter herbs.",
+      "Juicy prawns simmered in a dark, aromatic Cameroonian spice both, traditionally made with fresh crayfish and bitter herbs.",
     price: 2400,
     dietary: ["gluten-free"],
     image:

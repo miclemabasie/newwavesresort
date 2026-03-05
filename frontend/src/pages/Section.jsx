@@ -12,7 +12,8 @@ import {
   Wifi,
   ArrowUpRight,
   Wind,
-  Leaf
+  Leaf,
+  BookOpen,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -39,7 +40,7 @@ const services = [
     category: "Transport",
     icon: <PlaneTakeoff className="w-8 h-8" />,
     description: "Seamless airport pickups from Douala International. We handle the logistics so your transition from the world to the sanctuary is effortless.",
-    image: "https://images.unsplash.com/photo-1436491865332-7a61a109c0f3?auto=format&fit=crop&q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80&w=1000"
   },
   {
     id: "tours",
@@ -58,13 +59,13 @@ const services = [
     image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1000"
   },
   {
-    id: "security",
-    title: "Sovereign Security",
-    category: "Peace of Mind",
-    icon: <ShieldCheck className="w-8 h-8" />,
-    description: "Unobtrusive but absolute security. 24/7 surveillance and on-site professional safety teams for high-profile residents.",
-    image: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=1000"
-  }
+    id: "library",
+    title: "The Fisiy Research Library",
+    category: "Knowledge Hub",
+    icon: <BookOpen className="w-8 h-8" />, // Make sure to import BookOpen from lucide-react
+    description: "A private collection of African literature, law, and social science. A quiet sanctuary for deep work, research, and cross-continental dialogue.",
+    image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=1000"
+  },
 ];
 
 export default function Services() {
@@ -190,8 +191,8 @@ export default function Services() {
               </h2>
               <p className="text-white/60 text-lg mb-12 leading-relaxed">
                 Our concierge team is trained in diplomatic protocol. Whether you require a private 
-                translator, specialized research assistance, or specific dietary logistics — 
-                from volcanic soil produce to rare archival materials — we are here to facilitate.
+                translator, specialized research assistance, or specific dietary logistics,
+                from volcanic soil produce to rare archival materials, we are here to facilitate.
               </p>
               <button onClick={() => navigate('/contact')} className="bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-[11px] hover:bg-white hover:scale-105 transition-all shadow-xl hover:shadow-2xl">
                 Contact the Concierge

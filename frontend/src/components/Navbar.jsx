@@ -50,13 +50,13 @@ export default function Navbar() {
 
         {/* Action Button & Hamburger */}
         <div className="flex items-center gap-4">
-          <Link to="/book" className="btn-primary !py-2 !px-5 text-xs md:text-sm">
+          <Link to="/book" className="btn-primary bg-lush border-lush hover:bg-white hover:text-lush !py-2 !px-5 text-xs md:text-sm">
             Plan Your Stay
           </Link>
           
           <button 
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden z-[70] p-2 text-ocean focus:outline-none"
+            className="lg:hidden z-[70] p-2 text-lush focus:outline-none"
             aria-label="Toggle Menu"
           >
             <div className="w-6 h-5 relative flex flex-col justify-between">
@@ -112,7 +112,7 @@ export default function Navbar() {
                         to={item.to} 
                         className={({ isActive }) => 
                           `text-3xl font-serif block transition-colors ${
-                            isActive ? "text-ocean" : "text-volcanic hover:text-ocean"
+                            isActive ? "text-lush" : "text-volcanic hover:text-lush"
                           }`
                         }
                       >

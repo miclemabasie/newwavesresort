@@ -64,23 +64,28 @@ export default function Dining() {
       <main className="pt-32 pb-20">
         {/* Hero */}
         <section className="container mx-auto px-6 mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl"
-          >
-            <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">
-              Volcanic Harvest
-            </span>
-            <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">
-              Atlantic Gastronomy, <span className="italic text-lush">Rooted in Cameroon</span>
-            </h1>
-            <p className="text-volcanic/70 text-xl max-w-2xl leading-relaxed">
-              Our menu is a tribute to the volcanic soils and coastal waters of Limbe. Each dish is crafted with ingredients sourced from local farmers, fishermen, and foragers, bringing you the true taste of Cameroon.
-            </p>
-          </motion.div>
-        </section>
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="max-w-4xl"
+            >
+                <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">
+                Volcanic Harvest & Purity
+                </span>
+                <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">
+                Atlantic Gastronomy, <br />
+                <span className="italic text-lush">100% Organic by Nature.</span>
+                </h1>
+                <p className="text-volcanic/70 text-xl max-w-2xl leading-relaxed">
+                Our menu is a sanctuary for the health-conscious mind. Every ingredient is 
+                strictly <spand className="text-volcanic">organic and pesticide-free</spand>, harvested directly from the nutrient-rich 
+                volcanic soils of the Fako region. From our unadulterated cold-pressed oils 
+                to our daily coastal catch, we serve only what is pure, seasonal, and 
+                chemically untouched, bringing you the true, vibrant energy of Cameroon.
+                </p>
+            </motion.div>
+            </section>
 
         {/* Filters Bar */}
         <section className="container mx-auto px-6 mb-12">
@@ -237,7 +242,7 @@ export default function Dining() {
             <div className="relative z-10 max-w-3xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-serif mb-6 italic">A Letter from the Chef</h2>
               <p className="text-white/70 text-lg leading-relaxed mb-8">
-                "Every dish tells the story of our land—the volcanic richness that grows our spices, the Atlantic that gives us fish, and the hands of local farmers who have cultivated these flavors for generations. I invite you to taste Cameroon with us."
+                "Every dish tells the story of our land, the volcanic richness that grows our spices, the Atlantic that gives us fish, and the hands of local farmers who have cultivated these flavors for generations. I invite you to taste Cameroon with us."
               </p>
               <div className="flex items-center justify-center gap-3">
                 <div className="w-12 h-px bg-lush/50" />

@@ -40,9 +40,9 @@ export default function GalleryPage() {
         <motion.h1 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="text-5xl md:text-7xl font-serif mt-6 text-ocean tracking-tight"
+          className="text-5xl md:text-7xl font-serif mt-6 text-volcanic tracking-tight"
         >
-          The Ngeme Perspective
+          Visualize the <span className="italic text-lush">Legacy.</span>
         </motion.h1>
       </header>
 
