@@ -50,7 +50,7 @@ export default function Navbar() {
 
         {/* Action Button & Hamburger */}
         <div className="flex items-center gap-4">
-          <Link to="/book" className="btn-primary bg-lush border-lush hover:bg-white hover:text-lush !py-2 !px-5 text-xs md:text-sm">
+          <Link to="/book" className="btn-pay py-2! px-5! text-xs md:text-sm">
             Plan Your Stay
           </Link>
           

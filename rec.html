@@ -1,285 +1,282 @@
 <!doctype html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Google Maps Platform - Receipt (Mubaku HighTech)</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
+    <title>Three Receipts - Mubaku High Tech Inc</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
       body {
-        background: #f2f4f8;
-        font-family: "Google Sans", "Segoe UI", sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f0f3f7;
+        margin: 0;
+        padding: 30px 15px;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
-        min-height: 100vh;
-        padding: 20px;
+      }
+      .receipt-container {
+        max-width: 1000px;
+        width: 100%;
       }
       .receipt {
-        max-width: 780px;
-        width: 100%;
         background: white;
-        border-radius: 24px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-        padding: 40px 40px 35px;
-        border: 1px solid #e0e0e0;
+        border: 1px solid #aaa;
+        padding: 25px 25px 20px 25px;
+        margin-bottom: 40px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        page-break-after: always;
       }
-      .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
+      h2 {
+        font-size: 22px;
+        margin: 0 0 5px 0;
+        color: #1e3a5f;
       }
-      .logo h1 {
-        font-size: 30px;
-        font-weight: 500;
-        color: #1a73e8;
-        margin: 0;
-      }
-      .logo p {
-        color: #5f6368;
+      .company-line {
         font-size: 14px;
-      }
-      .paid-badge {
-        background: #34a853;
-        color: white;
-        padding: 6px 22px;
-        border-radius: 40px;
-        font-size: 15px;
-        font-weight: 500;
-      }
-      .transaction-panel {
-        background: #f1f8fe;
-        border-radius: 16px;
-        padding: 18px 24px;
+        color: #333;
+        border-bottom: 2px solid #666;
+        padding-bottom: 8px;
+        margin-bottom: 15px;
         display: flex;
         justify-content: space-between;
-        margin-bottom: 30px;
-        border-left: 6px solid #1a73e8;
       }
-      .txn-id .label {
-        color: #5f6368;
-        font-size: 13px;
-      }
-      .txn-id .value {
-        font-size: 18px;
-        font-weight: 500;
-        color: #202124;
-      }
-      .txn-date .label {
-        color: #5f6368;
-        font-size: 13px;
-      }
-      .txn-date .value {
-        font-size: 18px;
-        font-weight: 500;
-        color: #202124;
-      }
-      .billing-address {
-        background: white;
-        border: 1px solid #dadce0;
-        border-radius: 16px;
-        padding: 22px 25px;
-        margin-bottom: 30px;
-      }
-      .billing-address .title {
-        color: #5f6368;
-        text-transform: uppercase;
-        font-size: 12px;
-        letter-spacing: 0.3px;
-        margin-bottom: 12px;
-      }
-      .billing-address .name {
-        font-size: 18px;
-        font-weight: 700;
-        color: #202124;
-      }
-      .billing-address .address {
-        color: #3c4043;
-        margin-top: 6px;
-      }
-      .payment-info {
+      .invoice-meta {
         display: flex;
-        gap: 30px;
-        background: #f8f9fa;
-        border-radius: 16px;
-        padding: 18px 25px;
-        margin-bottom: 25px;
+        justify-content: space-between;
+        font-size: 14px;
+        margin-bottom: 20px;
+        background: #f5f5f5;
+        padding: 8px 12px;
       }
-      .payment-info .method .label {
-        color: #5f6368;
-        font-size: 12px;
-        text-transform: uppercase;
-      }
-      .payment-info .method .value {
-        font-weight: 500;
-        color: #202124;
+      .bill-to {
+        font-size: 14px;
+        margin-bottom: 20px;
+        border-left: 4px solid #3a6d8c;
+        padding-left: 12px;
       }
       table {
         width: 100%;
         border-collapse: collapse;
-        margin: 20px 0 25px;
+        margin: 15px 0 20px 0;
+        font-size: 14px;
       }
       th {
         text-align: left;
-        padding: 14px 0;
-        border-bottom: 2px solid #dadce0;
-        color: #5f6368;
-        font-weight: 500;
+        border-bottom: 2px solid #333;
+        padding: 8px 4px;
       }
       td {
-        padding: 18px 0;
-        border-bottom: 1px solid #e8eaed;
+        padding: 8px 4px;
+        border-bottom: 1px solid #ccc;
       }
-      td:last-child {
-        text-align: right;
-        font-weight: 500;
-      }
-      .usage-detail {
-        color: #5f6368;
-        font-size: 13px;
-      }
-      .summary {
-        margin-top: 25px;
-        border-top: 1px solid #dadce0;
-        padding-top: 20px;
+      td:last-child,
+      th:last-child {
         text-align: right;
       }
-      .summary .line {
-        display: flex;
-        justify-content: flex-end;
-        gap: 40px;
-        padding: 5px 0;
-        color: #202124;
+      .totals {
+        text-align: right;
+        margin: 20px 0 25px 0;
+        font-size: 14px;
       }
-      .summary .line .label {
-        color: #5f6368;
+      .totals div {
+        margin: 5px 0;
       }
-      .summary .grand {
-        display: flex;
-        justify-content: flex-end;
-        gap: 40px;
-        font-size: 22px;
-        font-weight: 700;
-        color: #202124;
-        border-top: 2px solid #202124;
-        margin-top: 15px;
+      .grand-total {
+        font-size: 18px;
+        font-weight: bold;
+        border-top: 2px solid #000;
+        padding-top: 8px;
+        margin-top: 8px;
+      }
+      .payment-info {
+        border-top: 1px dashed #888;
         padding-top: 15px;
+        font-size: 13px;
+        display: flex;
+        justify-content: space-between;
       }
       .footer {
-        margin-top: 45px;
-        text-align: center;
-        color: #5f6368;
         font-size: 12px;
-        border-top: 1px solid #e8eaed;
-        padding-top: 22px;
+        color: #555;
+        margin-top: 20px;
+        text-align: center;
+      }
+      .summary-box {
+        background: #e9eff5;
+        border: 1px solid #7f9fbb;
+        padding: 15px 25px;
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+      }
+      hr {
+        margin: 30px 0;
+        border: none;
+        border-top: 2px dotted #7a8c9e;
       }
     </style>
   </head>
   <body>
-    <div class="receipt">
-      <div class="header">
-        <div class="logo">
-          <h1>Google Maps Platform</h1>
-          <p>Location APIs & Services</p>
+    <div class="receipt-container">
+      <!-- RECEIPT 1: SSL CERTIFICATE - DIGICERT -->
+      <div class="receipt">
+        <h2>DIGICERT INC.</h2>
+        <div class="company-line">
+          <span>123 Security Avenue, Lehi, UT 84043, United States</span>
+          <span>+1 (800) 555-0199</span>
         </div>
-        <div class="paid-badge">PAID</div>
-      </div>
 
-      <div class="transaction-panel">
-        <div class="txn-id">
-          <div class="label">Transaction ID</div>
-          <div class="value">GCP-API-260925</div>
+        <div class="invoice-meta">
+          <span><strong>INVOICE:</strong> INV-DC-2026-042</span>
+          <span><strong>DATE:</strong> 10 Febuary 2026</span>
+          <span><strong>STATUS:</strong> PAID</span>
         </div>
-        <div class="txn-date">
-          <div class="label">Date</div>
-          <div class="value">26 September 2025</div>
-        </div>
-      </div>
 
-      <div class="billing-address">
-        <div class="title">billed to</div>
-        <div class="name">Mubaku HighTech Incoporation</div>
-        <div class="address">
-          123 Boulevard de la République, Buea, Cameroon
+        <div class="bill-to">
+          <strong>BILL TO:</strong> Mubaku High Tech Inc<br />
+          Kmer Highway, Mvog-Mbi, Yaoundé, Cameroon<br />
+          Customer VAT: CM-P12345678
         </div>
-      </div>
 
-      <div class="payment-info">
-        <div class="method">
-          <div class="label">payment method</div>
-          <div class="value">Virtual Card ···· 3337</div>
-        </div>
-        <div class="method">
-          <div class="label">project</div>
-          <div class="value">mubaku-locations-api</div>
-        </div>
-      </div>
-
-      <table>
-        <thead>
+        <table>
           <tr>
-            <th>SKU / Description</th>
-            <th>Usage</th>
-            <th>Amount (XAF)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div>Places API (Basic)</div>
-              <div class="usage-detail">15,000 calls</div>
-            </td>
-            <td>Sep 2025</td>
-            <td>42,000</td>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Unit Price</th>
+            <th>Amount</th>
           </tr>
           <tr>
-            <td>
-              <div>Geocoding API</div>
-              <div class="usage-detail">8,500 calls</div>
-            </td>
-            <td>Sep 2025</td>
-            <td>23,000</td>
+            <td>SSL Wildcard Certificate - Secure Site Pro (2 years)</td>
+            <td>1</td>
+            <td>126,168 F CFA</td>
+            <td>126,168 F CFA</td>
           </tr>
-          <tr>
-            <td>
-              <div>Maps JavaScript API</div>
-              <div class="usage-detail">Monthly flat fee</div>
-            </td>
-            <td>Sep 2025</td>
-            <td>15,000</td>
-          </tr>
-        </tbody>
-      </table>
+        </table>
 
-      <div class="summary">
-        <div class="line">
-          <span class="label">Subtotal</span>
-          <span>80,000 XAF</span>
+        <div class="totals">
+          <div><span>Subtotal:</span> <span>126,168 F CFA</span></div>
+          <div><span>VAT (7%):</span> <span>8,832 F CFA</span></div>
+          <div class="grand-total">
+            <span>TOTAL:</span> <span>135,000 F CFA</span>
+          </div>
         </div>
-        <div class="line">
-          <span class="label">Tax (VAT 19.25%)</span>
-          <span>0 XAF</span>
+
+        <div class="payment-info">
+          <span><strong>Payment method:</strong> Visa •••• 4242</span>
+          <span><strong>Transaction ID:</strong> 8G7H2J9K</span>
+          <span><strong>Paid:</strong> 10 Feb 2026</span>
         </div>
-        <div class="grand">
-          <span class="label">Total paid</span>
-          <span>80,000 XAF</span>
+
+        <div style="font-size: 13px; margin-top: 12px; color: #2f4f6f">
+          <span>Certificate: *.mubakuhightech.com | Expires: 02 Mar 2028</span>
         </div>
       </div>
 
-      <div class="footer">
-        <p>
-          This receipt covers Google Maps Platform usage for the loan solution
-          project.<br />For detailed billing, visit Google Cloud Console.
-        </p>
+      <!-- RECEIPT 2: SENDGRID EMAIL PLAN -->
+      <div class="receipt">
+        <h2>SENDGRID, INC.</h2>
+        <div class="company-line">
+          <span>1801 California Street, Suite 500, Denver, CO 80202, USA</span>
+          <span>+1 (800) 555-0123</span>
+        </div>
+
+        <div class="invoice-meta">
+          <span><strong>INVOICE:</strong> INV-SG-2026-0032</span>
+          <span><strong>DATE:</strong> 02 Febuary 2026</span>
+          <span><strong>STATUS:</strong> PAID</span>
+        </div>
+
+        <div class="bill-to">
+          <strong>BILL TO:</strong> Mubaku High Tech Inc<br />
+          P.O. Box 15487, Yaoundé, Cameroon<br />
+          Account: MUBAKU-HITECH
+        </div>
+
+        <table>
+          <tr>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Unit Price</th>
+            <th>Amount</th>
+          </tr>
+          <tr>
+            <td>Email API Premium Plan - 100,000 emails/month</td>
+            <td>1</td>
+            <td>125,000 F CFA</td>
+            <td>125,000 F CFA</td>
+          </tr>
+        </table>
+
+        <div class="totals">
+          <div><span>Subtotal:</span> <span>125,000 F CFA</span></div>
+          <div><span>VAT (8%):</span> <span>10,000 F CFA</span></div>
+          <div class="grand-total">
+            <span>TOTAL:</span> <span>135,000 F CFA</span>
+          </div>
+        </div>
+
+        <div class="payment-info">
+          <span><strong>Payment method:</strong> MasterCard •••• 5678</span>
+          <span><strong>Auth code:</strong> AUTH-6773-9942</span>
+          <span><strong>Paid:</strong> 02 Feb 2026</span>
+        </div>
+
+        <div style="font-size: 13px; margin-top: 12px; color: #2f4f6f">
+          <span>Plan includes: 100k emails, dedicated IP, 24/7 support</span>
+        </div>
+      </div>
+
+      <!-- RECEIPT 3: TWILIO SMS PLAN -->
+      <div class="receipt">
+        <h2>TWILIO INC.</h2>
+        <div class="company-line">
+          <span>101 Spear Street, Suite 500, San Francisco, CA 94105, USA</span>
+          <span>+1 (415) 390-2337</span>
+        </div>
+
+        <div class="invoice-meta">
+          <span><strong>INVOICE:</strong> INV-TW-2026-0157</span>
+          <span><strong>DATE:</strong> 02 January 2026</span>
+          <span><strong>STATUS:</strong> PAID</span>
+        </div>
+
+        <div class="bill-to">
+          <strong>BILL TO:</strong> Mubaku High Tech Inc<br />
+          Bastos District, Yaoundé, Cameroon<br />
+          Customer ID: TW-MUBAKU-001
+        </div>
+
+        <table>
+          <tr>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Unit Price</th>
+            <th>Amount</th>
+          </tr>
+          <tr>
+            <td>SMS Bundle (10,000 messages) + Toll-Free Number</td>
+            <td>1</td>
+            <td>135,945 F CFA</td>
+            <td>135,945 F CFA</td>
+          </tr>
+        </table>
+
+        <div class="totals">
+          <div><span>Subtotal:</span> <span>135,945 F CFA</span></div>
+          <div><span>VAT (10%):</span> <span>13,595 F CFA</span></div>
+          <div class="grand-total">
+            <span>TOTAL:</span> <span>149,540 F CFA</span>
+          </div>
+        </div>
+
+        <div class="payment-info">
+          <span><strong>Payment method:</strong> Wire Transfer #WT2803</span>
+          <span><strong>Reference:</strong> WF-44-9981-22</span>
+          <span><strong>Cleared:</strong> 02 Feb 2026</span>
+        </div>
+
+        <div style="font-size: 13px; margin-top: 12px; color: #2f4f6f">
+          <span>10,000 SMS (US/CAN) | Toll-free: +1 (833) 555-0178</span>
+        </div>
       </div>
     </div>
   </body>

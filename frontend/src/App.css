@@ -66,6 +66,11 @@
            hover:bg-volcanic hover:shadow-lg inline-block text-center;
   }
 
+  .btn-pay {
+    @apply px-8 py-4 bg-lush! text-volcanic rounded-lg font-semibold 
+           hover:bg-volcanic! hover:text-white hover:shadow-lg inline-block text-center;
+  }
+
   .btn-outline {
     @apply px-8 py-4 border-2 border-volcanic text-volcanic rounded-lg font-semibold 
            hover:bg-lush hover:text-white inline-block text-center;
