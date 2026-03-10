@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/sections/Footer";
 import { 
@@ -19,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 
 const services = [
   {
-    id: "intellectual",
+    id: "intellectual-talks",
     title: "Ocean-Side Intellectual Talks",
     category: "Thought Leadership",
     icon: <Mic2 className="w-8 h-8" />,
@@ -35,7 +36,7 @@ const services = [
     image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=1000"
   },
   {
-    id: "logistics",
+    id: "transfers",
     title: "Diplomatic Transfers",
     category: "Transport",
     icon: <PlaneTakeoff className="w-8 h-8" />,
@@ -43,7 +44,7 @@ const services = [
     image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80&w=1000"
   },
   {
-    id: "tours",
+    id: "expeditions",
     title: "Volcanic Expeditions",
     category: "Exploration",
     icon: <Compass className="w-8 h-8" />,
@@ -51,7 +52,7 @@ const services = [
     image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1000"
   },
   {
-    id: "rentals",
+    id: "fleet",
     title: "Premium Fleet",
     category: "Mobility",
     icon: <Car className="w-8 h-8" />,
@@ -62,21 +63,19 @@ const services = [
     id: "library",
     title: "The Fisiy Research Library",
     category: "Knowledge Hub",
-    icon: <BookOpen className="w-8 h-8" />, // Make sure to import BookOpen from lucide-react
+    icon: <BookOpen className="w-8 h-8" />,
     description: "A private collection of African literature, law, and social science. A quiet sanctuary for deep work, research, and cross-continental dialogue.",
     image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=1000"
   },
 ];
 
 export default function Services() {
-
   const navigate = useNavigate();
   return (
     <div className="bg-sand/30 min-h-screen">
       <Navbar />
-
       <main className="pt-32 pb-20">
-        {/* --- Hero Header with Volcanic & Lush accents --- */}
+        {/* Hero Header */}
         <section className="container mx-auto px-6 mb-24">
           <div className="max-w-4xl">
             <motion.span 
@@ -101,14 +100,14 @@ export default function Services() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-volcanic/70 text-xl max-w-2xl leading-relaxed"
             >
-              At New Waves Resort, service is a silent partner to your productivity. We provide the 
+              At Ngeme Resort, service is a silent partner to your productivity. We provide the 
               logistics, security, and nourishment required for high-stakes intellectual work,
               all while honoring the volcanic soul of Cameroon.
             </motion.p>
           </div>
         </section>
 
-        {/* --- Services Grid with volcanic/lush theme --- */}
+        {/* Services Grid */}
         <section className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
@@ -121,10 +120,8 @@ export default function Services() {
                 whileHover={{ y: -8 }}
                 className="group bg-white rounded-[2.5rem] overflow-hidden border border-sand/50 shadow-lg hover:shadow-2xl transition-all duration-500 relative"
               >
-                {/* Lush gradient overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-t from-lush/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10" />
                 
-                {/* Image Wrap */}
                 <div className="h-64 overflow-hidden relative">
                   <img 
                     src={service.image} 
@@ -137,7 +134,6 @@ export default function Services() {
                   </div>
                 </div>
 
-                {/* Content */}
                 <div className="p-10 relative z-20">
                   <span className="text-lush font-bold uppercase tracking-[0.3em] text-[10px] mb-3 block">
                     {service.category}
@@ -149,16 +145,19 @@ export default function Services() {
                     {service.description}
                   </p>
                   
-                  <button className="flex items-center gap-2 text-volcanic font-black uppercase tracking-widest text-[9px] border-b border-lush pb-2 group-hover:gap-4 transition-all group-hover:text-lush">
-                    Inquire Details <ArrowUpRight className="w-4 h-4 text-lush group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                  </button>
+                  <Link 
+                    to={`/services/${service.id}`}
+                    className="inline-flex items-center gap-2 text-volcanic font-black uppercase tracking-widest text-[9px] border-b border-lush pb-2 group-hover:gap-4 transition-all group-hover:text-lush"
+                  >
+                    Discover More <ArrowUpRight className="w-4 h-4 text-lush group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </Link>
                 </div>
               </motion.div>
             ))}
           </div>
         </section>
 
-        {/* --- Bespoke Concierge Section with volcanic/lush drama --- */}
+        {/* Bespoke Concierge Section */}
         <section className="container mx-auto px-6 mt-32">
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
@@ -174,7 +173,6 @@ export default function Services() {
               backgroundSize: '60px 60px'
             }} />
             
-            {/* Abstract wave elements */}
             <div className="absolute top-0 right-0 opacity-10">
               <Waves className="w-96 h-96 text-white" />
             </div>
@@ -201,7 +199,7 @@ export default function Services() {
           </motion.div>
         </section>
 
-        {/* --- Additional Service Philosophy --- */}
+        {/* Service Philosophy */}
         <section className="container mx-auto px-6 mt-32">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
