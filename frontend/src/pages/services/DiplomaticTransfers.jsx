@@ -69,7 +69,7 @@ export default function DiplomaticTransfers() {
           <div className="bg-white rounded-[3rem] p-12 md:p-20 shadow-xl border border-sand/40">
             <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">The Transfer Experience</h2>
             <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">
-              More than a ride—we manage every detail so you can arrive refreshed.
+              More than a ride, we manage every detail so you can arrive refreshed.
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {fleetFeatures.map((feat, idx) => (

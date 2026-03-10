@@ -31,7 +31,7 @@ export default function FisiyLibrary() {
                 The Fisiy <span className="italic text-lush">Research Library</span>
               </h1>
               <p className="text-volcanic/70 text-xl leading-relaxed mb-6">
-                A sanctuary for the serious mind. Our library houses a private collection of African literature, law, social science, and rare archival materials—curated over decades by Dr. Cyprian Fisiy and colleagues.
+                A sanctuary for the serious mind. Our library houses a private collection of African literature, law, social science, and rare archival materials, curated over decades by Dr. Cyprian Fisiy and colleagues.
               </p>
               <p className="text-volcanic/60 text-lg leading-relaxed mb-8">
                 With reading rooms overlooking the Atlantic, high‑speed internet, and a librarian on hand, it's the perfect environment for deep work, writing, and cross‑continental dialogue.
@@ -113,7 +113,7 @@ export default function FisiyLibrary() {
               <div>
                 <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">Scholar Residencies</h2>
                 <p className="text-white/70 text-lg leading-relaxed mb-6">
-                  We offer dedicated workspace and accommodation packages for researchers, writers, and academics. Stay for a week or a month—immerse yourself in the collection and the landscape.
+                  We offer dedicated workspace and accommodation packages for researchers, writers, and academics. Stay for a week or a month, immerse yourself in the collection and the landscape.
                 </p>
                 <ul className="space-y-3 text-white/80">
                   <li>• Private study carrels with ocean views</li>

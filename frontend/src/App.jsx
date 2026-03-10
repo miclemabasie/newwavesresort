@@ -10,6 +10,11 @@ import Services from './pages/Section';
 import Dining from './pages/Dining';
 import Accommodations from './pages/Accomodations';
 import IntellectualTalks from './pages/services/IntellectualTalk';
+import AtlanticGastronomy from './pages/services/AtlanticGastronomy';
+import DiplomaticTransfers from './pages/services/DiplomaticTransfers';
+import VolcanicExpeditions from './pages/services/VolcanicExpeditions';
+import PremiumFleet from './pages/services/PremiumFleet';
+import FisiyLibrary from './pages/services/FisiyLibrary';
 
 
 function App() {
@@ -23,14 +28,14 @@ function App() {
       <Route path="dialogues" element={<ComingSoon />} />
       <Route path="foundation" element={<ComingSoon />} />
       <Route path="experiences" element={<Services />} />
-      <Route path="dining" element={<Dining />} />
+      <Route path="services/dining" element={<Dining />} />
 
       <Route path="/services/intellectual-talks" element={<IntellectualTalks />} />
-      <Route path="/services/culinary" element={<IntellectualTalks />} />
-      <Route path="/services/transfers" element={<IntellectualTalks />} />
-      <Route path="/services/expeditions" element={<IntellectualTalks />} />
-      <Route path="/services/fleet" element={<IntellectualTalks />} />
-      <Route path="/services/library" element={<IntellectualTalks />} />
+      <Route path="/services/culinary" element={<AtlanticGastronomy />} />
+      <Route path="/services/transfers" element={<DiplomaticTransfers />} />
+      <Route path="/services/expeditions" element={<VolcanicExpeditions />} />
+      <Route path="/services/fleet" element={<PremiumFleet />} />
+      <Route path="/services/library" element={<FisiyLibrary />} />
     </Routes>
   );
 }

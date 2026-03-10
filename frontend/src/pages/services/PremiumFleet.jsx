@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/sections/Footer";
-import { Car, Fuel, Settings, Users, Wifi, Shield, ArrowRight, Star } from "lucide-react";
+import { Car, Fuel, Settings, Users, Wifi, Shield, ArrowRight, Map, Star } from "lucide-react";
 
 const vehicles = [
   { name: "Land Rover Defender", type: "4x4", capacity: 5, features: ["Off-road ready", "AC", "Bluetooth"], image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=600" },
@@ -11,7 +11,7 @@ const vehicles = [
 ];
 
 const services = [
-  { icon: <Car className="w-6 h-6" />, title: "Self-Drive", description: "For those who prefer independence—fully insured, delivered to the resort." },
+  { icon: <Car className="w-6 h-6" />, title: "Self-Drive", description: "For those who prefer independence, fully insured, delivered to the resort." },
   { icon: <Users className="w-6 h-6" />, title: "Chauffeur-Driven", description: "Professional local driver who doubles as a guide." },
   { icon: <Map className="w-6 h-6" />, title: "Regional Travel", description: "Available for trips to Yaoundé, Kribi, or further." },
 ];
@@ -33,7 +33,7 @@ export default function PremiumFleet() {
                 Explore Cameroon at your own pace with our meticulously maintained fleet of luxury vehicles. Whether you prefer the independence of self‑drive or the insight of a local chauffeur, we provide the wheels for your journey.
               </p>
               <p className="text-volcanic/60 text-lg leading-relaxed mb-8">
-                All vehicles are equipped for the region—high clearance, air conditioning, and modern safety features. We deliver to the resort and handle all paperwork.
+                All vehicles are equipped for the region,high clearance, air conditioning, and modern safety features. We deliver to the resort and handle all paperwork.
               </p>
             </motion.div>
             <motion.div

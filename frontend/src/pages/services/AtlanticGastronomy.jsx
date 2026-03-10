@@ -18,12 +18,12 @@ const menuHighlights = [
 
 const diningExperiences = [
   { icon: <Sun className="w-6 h-6" />, title: "Beachfront Breakfast", description: "Start your day with fresh pastries, tropical fruit, and volcanic coffee steps from the Atlantic." },
-  { icon: <Sunset className="w-6 h-6" />, title: "Sundowner Sessions", description: "Cocktails and small plates as the sun sets over the water—a nightly ritual." },
+  { icon: <Sunset className="w-6 h-6" />, title: "Sundowner Sessions", description: "Cocktails and small plates as the sun sets over the water, a nightly ritual." },
   { icon: <Moon className="w-6 h-6" />, title: "Private Moonlit Dinners", description: "An intimate multi‑course feast on the beach, just for you." },
 ];
 
 const testimonials = [
-  { quote: "The most memorable meal of our lives—not just for the food, but for the setting and the stories behind every ingredient.", author: "— The Thompson Family, UK" },
+  { quote: "The most memorable meal of our lives, not just for the food, but for the setting and the stories behind every ingredient.", author: "— The Thompson Family, UK" },
   { quote: "Chef Mireille’s tasting menu is a journey through Cameroon. Don’t miss the plantain crisps with kati‑kati.", author: "— Dr. Amina S., Nigeria" },
 ];
 
@@ -44,7 +44,7 @@ export default function AtlanticGastronomy() {
                 Our culinary philosophy is simple: honor the volcanic soil that grows our spices, the Atlantic that provides our catch, and the hands that have cultivated these flavors for generations.
               </p>
               <p className="text-volcanic/60 text-lg leading-relaxed mb-8">
-                Every dish tells a story—of farmers who practice terraced agriculture on Mount Cameroon’s slopes, of fishermen who still launch their pirogues by hand, and of recipes passed down through centuries. We invite you to taste Cameroon.
+                Every dish tells a story, of farmers who practice terraced agriculture on Mount Cameroon’s slopes, of fishermen who still launch their pirogues by hand, and of recipes passed down through centuries. We invite you to taste Cameroon.
               </p>
               <div className="flex flex-wrap gap-6">
                 <div className="flex items-center gap-3">
@@ -83,7 +83,7 @@ export default function AtlanticGastronomy() {
           <div className="bg-white rounded-[3rem] p-12 md:p-20 shadow-xl border border-sand/40">
             <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">Ways to Dine</h2>
             <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">
-              From sunrise coffee to moonlit feasts—choose the setting that suits your mood.
+              From sunrise coffee to moonlit feasts, choose the setting that suits your mood.
             </p>
             <div className="grid md:grid-cols-3 gap-8">
               {diningExperiences.map((exp, idx) => (

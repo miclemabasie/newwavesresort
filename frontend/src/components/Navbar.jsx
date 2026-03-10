@@ -23,7 +23,7 @@ export default function Navbar() {
     { name: "Home", to: "/" },
     { name: "Our Story", to: "/story" },
     { name: "Experiences", to: "/experiences" },
-    { name: "Dining", to: "/dining" },
+    { name: "Dining", to: "/services/dining" },
     { name: "Accommodations", to: "/rooms" },
     { name: "Gallery", to: "/gallery" },
     { name: "Contact", to: "/contact" },

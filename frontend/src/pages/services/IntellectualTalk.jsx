@@ -16,7 +16,7 @@ const pastTalks = [
     speaker: "Dr. Ngozi Okonjo-Iweala",
     speakerTitle: "WTO Director-General",
     date: "March 12, 2026",
-    description: "In this powerful address, Dr. Okonjo-Iweala explores how digital transformation is reshaping governance across the continent—from blockchain voting systems to AI-driven public service delivery. She argues that Africa has a unique opportunity to leapfrog traditional bureaucratic models and build institutions that are more transparent, accountable, and inclusive than those in the West.",
+    description: "In this powerful address, Dr. Okonjo-Iweala explores how digital transformation is reshaping governance across the continent, from blockchain voting systems to AI-driven public service delivery. She argues that Africa has a unique opportunity to leapfrog traditional bureaucratic models and build institutions that are more transparent, accountable, and inclusive than those in the West.",
     youtubeId: "5Aa9Mc1VqKE", // Replace with actual YouTube IDs
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600",
     duration: "54:32",
@@ -28,7 +28,7 @@ const pastTalks = [
     speaker: "Prof. Achille Mbembe",
     speakerTitle: "Philosopher & Political Theorist",
     date: "February 8, 2026",
-    description: "Professor Mbembe delivers a profound meditation on Africa's relationship to the planet—how the continent's ecological wisdom, forged over millennia, offers vital lessons for a world facing climate catastrophe. He challenges the audience to rethink development not as extraction but as reciprocal care between human and non-human worlds.",
+    description: "Professor Mbembe delivers a profound meditation on Africa's relationship to the planet, how the continent's ecological wisdom, forged over millennia, offers vital lessons for a world facing climate catastrophe. He challenges the audience to rethink development not as extraction but as reciprocal care between human and non-human worlds.",
     youtubeId: "5Aa9Mc1VqKE",
     image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&q=80&w=600",
     duration: "1:12:18",
@@ -40,7 +40,7 @@ const pastTalks = [
     speaker: "Chimamanda Ngozi Adichie",
     speakerTitle: "Author",
     date: "January 19, 2026",
-    description: "Building on her legendary TED Talk, Chimamanda engages in a intimate conversation about the power of stories to shape perceptions—and the responsibility of African writers to tell their own tales. She reads from unpublished work and discusses how literature can heal the wounds of colonial historiography.",
+    description: "Building on her legendary TED Talk, Chimamanda engages in a intimate conversation about the power of stories to shape perceptions, and the responsibility of African writers to tell their own tales. She reads from unpublished work and discusses how literature can heal the wounds of colonial historiography.",
     youtubeId: "5Aa9Mc1VqKE",
     image: "https://images.unsplash.com/photo-1544717301-9cdcb1f5940f?auto=format&fit=crop&q=80&w=600",
     duration: "1:08:45",
@@ -52,7 +52,7 @@ const pastTalks = [
     speaker: "Judge Albie Sachs",
     speakerTitle: "Former Justice, Constitutional Court of South Africa",
     date: "December 5, 2025",
-    description: "Judge Sachs shares riveting stories from the Truth and Reconciliation Commission and reflects on how societies torn by conflict can begin to heal. He argues that true justice is not punitive but restorative—a lesson as urgent for divided democracies today as it was in 1994.",
+    description: "Judge Sachs shares riveting stories from the Truth and Reconciliation Commission and reflects on how societies torn by conflict can begin to heal. He argues that true justice is not punitive but restorative, a lesson as urgent for divided democracies today as it was in 1994.",
     youtubeId: "5Aa9Mc1VqKE",
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600",
     duration: "1:24:09",
@@ -64,7 +64,7 @@ const pastTalks = [
     speaker: "Dr. Fei-Fei Li (via satellite)",
     speakerTitle: "Co-Director, Stanford Human-Centered AI Institute",
     date: "November 22, 2025",
-    description: "In a historic satellite link, Dr. Li discusses how artificial intelligence can be harnessed for public good—from predicting disease outbreaks to optimizing crop yields. She emphasizes the need for African leadership in shaping AI ethics, ensuring that algorithms reflect the continent's diverse cultures and values.",
+    description: "In a historic satellite link, Dr. Li discusses how artificial intelligence can be harnessed for public good, from predicting disease outbreaks to optimizing crop yields. She emphasizes the need for African leadership in shaping AI ethics, ensuring that algorithms reflect the continent's diverse cultures and values.",
     youtubeId: "5Aa9Mc1VqKE",
     image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600",
     duration: "1:05:22",
@@ -107,10 +107,10 @@ export default function IntellectualTalks() {
                 Ocean-Side <span className="italic text-lush">Intellectual Talks</span>
               </h1>
               <p className="text-volcanic/70 text-xl leading-relaxed mb-6">
-                Where the Atlantic meets the avant‑garde. Our signature series brings together the world's brightest minds for intimate dialogues under the stars. Each session is a deep dive into the ideas shaping our continent and our century—from philosophy and governance to technology and the arts.
+                Where the Atlantic meets the avant‑garde. Our signature series brings together the world's brightest minds for intimate dialogues under the stars. Each session is a deep dive into the ideas shaping our continent and our century, from philosophy and governance to technology and the arts.
               </p>
               <p className="text-volcanic/60 text-lg leading-relaxed mb-8">
-                What began in 2023 as intimate conversations around a fire pit has grown into a globally recognized forum. Past speakers include Nobel laureates, heads of state, and cultural icons—all invited not for their titles, but for their willingness to think out loud, to question orthodoxy, and to engage with our guests as equals.
+                What began in 2023 as intimate conversations around a fire pit has grown into a globally recognized forum. Past speakers include Nobel laureates, heads of state, and cultural icons, all invited not for their titles, but for their willingness to think out loud, to question orthodoxy, and to engage with our guests as equals.
               </p>
               <div className="flex flex-wrap gap-6">
                 <div className="flex items-center gap-3">
@@ -153,7 +153,7 @@ export default function IntellectualTalks() {
           <div className="bg-white rounded-[3rem] p-12 md:p-20 shadow-xl border border-sand/40">
             <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6 text-center">More Than a Lecture</h2>
             <p className="text-volcanic/60 text-lg text-center max-w-3xl mx-auto mb-12">
-              We reject the passive auditorium model. Our talks are designed for genuine intellectual exchange—where the distance between speaker and audience dissolves, and ideas flow freely.
+              We reject the passive auditorium model. Our talks are designed for genuine intellectual exchange, where the distance between speaker and audience dissolves, and ideas flow freely.
             </p>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
@@ -161,7 +161,7 @@ export default function IntellectualTalks() {
                   <Users className="w-8 h-8 text-lush" />
                 </div>
                 <h3 className="text-xl font-serif text-volcanic mb-3">Intimate Setting</h3>
-                <p className="text-volcanic/60">Limited to 30 guests, allowing genuine exchange between audience and speaker. No podiums, no barriers—just chairs arranged in a circle under the stars.</p>
+                <p className="text-volcanic/60">Limited to 30 guests, allowing genuine exchange between audience and speaker. No podiums, no barriers, just chairs arranged in a circle under the stars.</p>
               </div>
               <div className="text-center">
                 <div className="bg-lush/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -175,7 +175,7 @@ export default function IntellectualTalks() {
                   <BookOpen className="w-8 h-8 text-lush" />
                 </div>
                 <h3 className="text-xl font-serif text-volcanic mb-3">Lasting Archive</h3>
-                <p className="text-volcanic/60">Every talk is professionally recorded and made available on our YouTube channel—building a growing library of African intellectual thought for the world.</p>
+                <p className="text-volcanic/60">Every talk is professionally recorded and made available on our YouTube channel, building a growing library of African intellectual thought for the world.</p>
               </div>
             </div>
           </div>
@@ -203,7 +203,7 @@ export default function IntellectualTalks() {
               <Youtube className="w-16 h-16 text-lush/30 mx-auto mb-6" />
               <h3 className="text-2xl font-serif text-volcanic mb-3">Coming Soon</h3>
               <p className="text-volcanic/50 text-lg max-w-md mx-auto mb-6">
-                Our inaugural talk series launches in June 2026. We're curating an extraordinary lineup of thinkers—subscribe to be notified.
+                Our inaugural talk series launches in June 2026. We're curating an extraordinary lineup of thinkers, subscribe to be notified.
               </p>
               <button className="bg-lush text-volcanic px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all">
                 Get Notified
@@ -277,7 +277,7 @@ export default function IntellectualTalks() {
             <div className="relative z-10">
               <h2 className="text-4xl md:text-5xl font-serif text-white mb-4 text-center">Upcoming Dialogues</h2>
               <p className="text-white/60 text-lg text-center max-w-2xl mx-auto mb-12">
-                Join us under the stars for these upcoming conversations. Space is limited—reservations recommended.
+                Join us under the stars for these upcoming conversations. Space is limited, reservations recommended.
               </p>
               <div className="space-y-4 max-w-3xl mx-auto">
                 {upcomingEvents.map((event, idx) => (
@@ -302,7 +302,7 @@ export default function IntellectualTalks() {
                 ))}
               </div>
               <p className="text-white/40 text-center mt-8 text-sm max-w-2xl mx-auto">
-                All talks are complimentary for resort guests. External attendance is available by prior arrangement—please contact our concierge.
+                All talks are complimentary for resort guests. External attendance is available by prior arrangement, please contact our concierge.
               </p>
             </div>
           </div>
@@ -317,13 +317,13 @@ export default function IntellectualTalks() {
               </span>
               <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">Why Intellectual Talks?</h2>
               <p className="text-volcanic/70 text-lg leading-relaxed mb-6">
-                In an age of soundbites and algorithms, we believe in the power of slow, sustained thought. The most urgent problems facing Africa and the world—climate change, inequality, democratic backsliding—cannot be solved by quick fixes. They require deep, interdisciplinary dialogue.
+                In an age of soundbites and algorithms, we believe in the power of slow, sustained thought. The most urgent problems facing Africa and the world, climate change, inequality, democratic backsliding, cannot be solved by quick fixes. They require deep, interdisciplinary dialogue.
               </p>
               <p className="text-volcanic/70 text-lg leading-relaxed mb-6">
-                Our talks are designed to model what that dialogue looks like: rigorous, respectful, and radically open. We invite speakers not to deliver a monologue, but to enter into conversation with our guests, with local thinkers, and with the place itself—the volcanic shores of Limbe, where Africa meets the Atlantic.
+                Our talks are designed to model what that dialogue looks like: rigorous, respectful, and radically open. We invite speakers not to deliver a monologue, but to enter into conversation with our guests, with local thinkers, and with the place itself, the volcanic shores of Limbe, where Africa meets the Atlantic.
               </p>
               <p className="text-volcanic/70 text-lg leading-relaxed">
-                Each talk is recorded and archived, creating a growing digital library of African intellectual thought—accessible to anyone, anywhere, for free. Because the conversations that happen here shouldn't end at the water's edge.
+                Each talk is recorded and archived, creating a growing digital library of African intellectual thought, accessible to anyone, anywhere, for free. Because the conversations that happen here shouldn't end at the water's edge.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">

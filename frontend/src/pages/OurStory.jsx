@@ -24,7 +24,7 @@ const milestones = [
         year: "2023",
         title: "Breaking Ground",
         description: "Construction begins on the volcanic shores of Limbe.",
-        fullStory: "Local craftsmen taught our architects traditional techniques. Every worker employed was a step toward economic empowerment—a principle Dr. Fisiy held as non‑negotiable.",
+        fullStory: "Local craftsmen taught our architects traditional techniques. Every worker employed was a step toward economic empowerment, a principle Dr. Fisiy held as non‑negotiable.",
         image: "https://images.unsplash.com/photo-1596701062351-8c0c16913c54?auto=format&fit=crop&q=80&w=800"
     },
     {
@@ -136,7 +136,7 @@ export default function OurStory() {
                             ))}
                         </div>
                         <p className="text-white/40 text-center text-sm max-w-2xl mx-auto mt-16 italic">
-                            Ngeme exists to make luxury meaningful—by reinvesting in the communities that welcome you.
+                            Ngeme exists to make luxury meaningful, by reinvesting in the communities that welcome you.
                         </p>
                     </div>
                 </section>
@@ -158,7 +158,7 @@ export default function OurStory() {
                                 <Eye className="w-12 h-12 text-lush mb-8" />
                                 <h3 className="text-3xl font-serif text-volcanic mb-6">Ngeme's Vision</h3>
                                 <p className="text-volcanic/70 text-lg leading-relaxed">
-                                    To create a sanctuary for the intellectual nomad—where world-class comfort inspires deep work, and where every guest becomes part of a larger story: the renewal of the social contract between citizens and their local governments across Africa.
+                                    To create a sanctuary for the intellectual nomad, where world-class comfort inspires deep work, and where every guest becomes part of a larger story: the renewal of the social contract between citizens and their local governments across Africa.
                                 </p>
                             </motion.div>
                             <motion.div
@@ -170,7 +170,7 @@ export default function OurStory() {
                                 <Heart className="w-12 h-12 text-lush mb-8" />
                                 <h3 className="text-3xl font-serif text-volcanic mb-6">Foundation's Mission</h3>
                                 <p className="text-volcanic/70 text-lg leading-relaxed">
-                                    To address deficits in local governance in Sub-Saharan Africa by fostering a culture of service, accountability and mutual respect—building inclusive, resilient institutions for responsive local engagement.
+                                    To address deficits in local governance in Sub-Saharan Africa by fostering a culture of service, accountability and mutual respect, building inclusive, resilient institutions for responsive local engagement.
                                 </p>
                             </motion.div>
                         </div>
@@ -215,7 +215,7 @@ export default function OurStory() {
                                     Prior to the World Bank, he conducted research on sustainable forest management in Cameroon and was a Research Fellow at the African Studies Center in Leiden and the University of Wageningen. He holds a Ph.D. in the Anthropology of Law from the University of Leiden (1992).
                                 </p>
                                 <p className="mb-4">
-                                    In 2014, Dr. Fisiy founded the Fisiy Foundation and Leadership Center in Washington DC as a 501(c)(3) nonprofit. Ngeme Resort is his dream to create a sustainable funding engine for that mission—proving that hospitality can be a catalyst for accountable governance and community empowerment.
+                                    In 2014, Dr. Fisiy founded the Fisiy Foundation and Leadership Center in Washington DC as a 501(c)(3) nonprofit. Ngeme Resort is his dream to create a sustainable funding engine for that mission, proving that hospitality can be a catalyst for accountable governance and community empowerment.
                                 </p>
                                 <p className="mb-6">
                                     He resides in Alexandria with his wife, Grace Forgwei, and their four children.

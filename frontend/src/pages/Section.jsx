@@ -28,7 +28,7 @@ const services = [
     image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=1000"
   },
   {
-    id: "culinary",
+    id: "dining",
     title: "Atlantic Gastronomy",
     category: "Dining",
     icon: <Utensils className="w-8 h-8" />,

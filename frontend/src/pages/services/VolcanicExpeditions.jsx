@@ -12,7 +12,7 @@ const expeditions = [
 
 const guides = [
   { name: "Emmanuel N.", specialty: "Volcanology & Birding", experience: "12 years", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200" },
-  { name: "Jeannette M.", specialty: "Cultural History", experience: "8 years", image: "https://images.unsplash.com/photo-1494790108777-8fde9e5f5d9b?auto=format&fit=crop&q=80&w=200" },
+  { name: "Jeannette M.", specialty: "Cultural History", experience: "8 years", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200" },
 ];
 
 export default function VolcanicExpeditions() {
@@ -29,10 +29,10 @@ export default function VolcanicExpeditions() {
                 Volcanic <span className="italic text-lush">Expeditions</span>
               </h1>
               <p className="text-volcanic/70 text-xl leading-relaxed mb-6">
-                Step beyond the resort and into the heart of Cameroon’s geological and cultural wonders. Our private guided tours take you to Mount Cameroon—the highest peak in West Africa—and the historic sites of Bimbia, where the Atlantic meets painful history and resilient memory.
+                Step beyond the resort and into the heart of Cameroon’s geological and cultural wonders. Our private guided tours take you to Mount Cameroon, the highest peak in West Africa, and the historic sites of Bimbia, where the Atlantic meets painful history and resilient memory.
               </p>
               <p className="text-volcanic/60 text-lg leading-relaxed mb-8">
-                Each expedition is led by expert local guides who share not only facts but stories—of volcanic eruptions, of the slave trade, of the flora and fauna that thrive in this unique landscape.
+                Each expedition is led by expert local guides who share not only facts but stories, of volcanic eruptions, of the slave trade, of the flora and fauna that thrive in this unique landscape.
               </p>
               <div className="flex flex-wrap gap-6">
                 <div className="flex items-center gap-3">
@@ -64,7 +64,7 @@ export default function VolcanicExpeditions() {
         <section className="container mx-auto px-6 mb-20">
           <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">Signature Expeditions</h2>
           <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">
-            Choose your adventure—each can be customized to your interests and fitness level.
+            Choose your adventure, each can be customized to your interests and fitness level.
           </p>
           <div className="grid md:grid-cols-3 gap-8">
             {expeditions.map((exp, idx) => (
