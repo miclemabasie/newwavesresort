@@ -1,5 +1,6 @@
 // app/components/sections/ImpactSection.jsx
 import { motion } from "framer-motion";
+import image1 from "../../assets/general/limbehouse.jpg";
 
 export default function ImpactSection() {
   return (
@@ -35,7 +36,7 @@ export default function ImpactSection() {
         
         <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
           <img 
-            src="https://images.unsplash.com/photo-1549144511-f099e773c147?auto=format&fit=crop&q=80" 
+            src={image1} 
             alt="Ngeme Vision" 
             className="w-full h-full object-cover"
           />

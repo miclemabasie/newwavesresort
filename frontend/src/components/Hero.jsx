@@ -14,6 +14,7 @@ const slides = [
     title: "Paradise away from Home",
     subtitle: "Where dreams are made and relived. Discover our Unique Stone Beach for adventurers.",
   },
+  
   {
     image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1920",
     upperTitle: "The Intellectual Hub",
@@ -25,7 +26,13 @@ const slides = [
     upperTitle: "Culinary Heritage",
     title: "Atlantic Gastronomy",
     subtitle: "Freshness redefined. Savor the spirit of Limbe through our curated dining experience.",
-  }
+  },{
+    // NEW SLIDE ADDED HERE
+    image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=1920",
+    upperTitle: "Executive Infrastructure",
+    title: "Designed by and for Professionals",
+    subtitle: "A resort engineered for those who lead. We provide the silent efficiency required for high-stakes work in a sanctuary of peace.",
+  },
 ];
 
 export default function Hero() {
