@@ -7,7 +7,7 @@ const values = [
     title: "Exclusivity",
     label: "A Private Sanctuary",
     image: "https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&q=80&w=1400",
-    desc: "A sanctuary designed for the discerning few, ensuring peace and professional focus."
+    desc: "A resort designed for the discerning few, ensuring peace, tranquility, and professional focus."
   },
   {
     id: "connectivity",
@@ -21,7 +21,7 @@ const values = [
     title: "Local Culture",
     label: "Limbe Heritage",
     image: "https://images.unsplash.com/photo-1523474253046-2cd2c78b681e?auto=format&fit=crop&q=80&w=1400",
-    desc: "Celebrating local crafts and Atlantic heritage through curated partnerships."
+    desc: "Celebrating local cultures, crafts and Atlantic heritage through curated partnerships."
   },
   {
     id: "luxury",
@@ -35,7 +35,7 @@ const values = [
     title: "Organic Produce",
     label: "Volcanic Soil",
     image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=1400",
-    desc: "Fresh nourishment sourced directly from the fertile volcanic farms of the region."
+    desc: "Fresh nourishment sourced directly from the fertile volcanic soils of the region."
   }
 ];
 
