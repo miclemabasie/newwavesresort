@@ -1,49 +1,22 @@
 import { motion } from "framer-motion";
-
-const partners = [
-  { 
-    name: "Fisiy Foundation", 
-    role: "Social Impact Lead", 
-    logo: "⚖️" 
-  },
-  { 
-    name: "Global Policy Network", 
-    role: "Strategic Partner", 
-    logo: "🌍" 
-  },
-  { 
-    name: "Limbe Artisanal Guild", 
-    role: "Sustainable Sourcing", 
-    logo: "🎨" 
-  },
-  { 
-    name: "Fiber-Optic Backbone", 
-    role: "High-Speed Connectivity", 
-    logo: "⚡" 
-  },
-  { 
-    name: "Cameroon Green Initiative", 
-    role: "Eco-Certification", 
-    logo: "🍃" 
-  }
-];
+import { useTranslation } from 'react-i18next';
 
 export default function Partnerships() {
+  const { t } = useTranslation();
+  const partners = t('partnerships.partners', { returnObjects: true });
+
   return (
     <section className="py-24 bg-white border-y border-sand">
       <div className="container">
         <div className="grid lg:grid-cols-3 gap-16 items-center">
           
-          {/* Left Side: Strategic Text */}
           <div className="lg:col-span-1">
-            <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">Strategic Synergy</span>
+            <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">{t('partnerships.section_tag')}</span>
             <h2 className="text-4xl font-serif mt-4 text-volcanic leading-tight">
-              A Network of <br /> Global Excellence
+              {t('partnerships.title')}
             </h2>
             <p className="text-volcanic/70 mt-6 leading-relaxed text-sm">
-              Ngeme operates at the intersection of international standards and local empowerment. 
-              Our partnerships are carefully curated to ensure that every stay contributes to 
-              a sustainable, reliable, and socially inclusive supply chain.
+              {t('partnerships.description')}
             </p>
             <div className="mt-8 flex items-center gap-4">
               <div className="h-12 w-12 rounded-full border border-sand flex items-center justify-center text-xl">🤝</div>
@@ -53,7 +26,6 @@ export default function Partnerships() {
             </div>
           </div>
 
-          {/* Right Side: Interactive Logo/Partner Grid */}
           <div className="lg:col-span-2">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {partners.map((partner, i) => (
@@ -74,13 +46,12 @@ export default function Partnerships() {
                 </motion.div>
               ))}
               
-              {/* "Become a Partner" CTA Box */}
               <motion.div
                 whileHover={{ scale: 0.98 }}
                 className="p-8 bg-lush rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer"
               >
-                <p className="text-white font-serif italic text-lg mb-2">Join the Mission</p>
-                <span className="text-[9px] text-sand/60 uppercase tracking-[0.2em]">Partner with us</span>
+                <p className="text-white font-serif italic text-lg mb-2">{t('partnerships.cta')}</p>
+                <span className="text-[9px] text-sand/60 uppercase tracking-[0.2em]">{t('partnerships.cta_sub')}</span>
               </motion.div>
             </div>
           </div>

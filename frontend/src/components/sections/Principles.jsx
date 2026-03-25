@@ -1,43 +1,20 @@
 import { motion } from "framer-motion";
-import { 
-  Users, 
-  ShieldCheck, 
-  Leaf, 
-  Sparkles 
-} from "lucide-react";
+import { useTranslation } from 'react-i18next';
+import { Users, ShieldCheck, Leaf, Sparkles } from "lucide-react";
 
-const principles = [
-  {
-    number: "01",
-    title: "Connection & Outreach",
-    description: "Fostering deep connectivity between the global diaspora and their local networks through knowledge exchange and intellectual sanctuary.",
-    Icon: Users
-  },
-  {
-    number: "02",
-    title: "Outstanding Professional Security",
-    description: "A sanctuary providing absolute physical and digital peace of mind, ensuring a safe space for high-level professional engagement.",
-    Icon: ShieldCheck
-  },
-  {
-    number: "03",
-    title: "Sustainable Legacy",
-    description: "Living what we preach through clean living, reliable supply-chain communities, and deep-rooted support for the Fisiy Foundation.",
-    Icon: Leaf
-  },
-  {
-    number: "04",
-    title: "Luxury Redefined",
-    subtext: "(Subtle and timeless)",
-    description: "An experience where elegance meets purpose, prioritizing quiet quality and an enduring aesthetic that transcends the temporary.",
-    Icon: Sparkles
-  }
-];
+const iconMap = {
+  "Connection & Outreach": Users,
+  "Outstanding Professional Security": ShieldCheck,
+  "Sustainable Legacy": Leaf,
+  "Luxury Redefined": Sparkles,
+};
 
 export default function Principles() {
+  const { t } = useTranslation();
+  const principles = t('principles.items', { returnObjects: true });
+
   return (
     <section className="relative py-24 md:py-20 overflow-hidden bg-sand">
-      {/* Subtle Background Texture */}
       <div className="absolute inset-0 z-0 opacity-[0.05] pointer-events-none">
         <img 
           src="https://images.unsplash.com/photo-1469474099711-423907c111e4?auto=format&fit=crop&q=80&w=1920" 
@@ -53,22 +30,21 @@ export default function Principles() {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-lush font-black tracking-[0.5em] uppercase text-[10px]"
           >
-            The Ngeme Ethos
+            {t('principles.section_tag')}
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-serif text-lush mt-4 italic"
           >
-            Our Guiding Principles
+            {t('principles.title')}
           </motion.h2>
           <div className="h-0.5 w-24 bg-lush mx-auto mt-8 opacity-40" />
         </div>
 
-        {/* 4-Column Grid for Desktop Clarity */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {principles.map((p, i) => {
-            const IconComponent = p.Icon;
+            const IconComponent = iconMap[p.title] || Sparkles;
             return (
               <motion.div
                 key={i}
@@ -78,7 +54,6 @@ export default function Principles() {
                 viewport={{ once: true }}
                 className="group relative p-10 rounded-[2.5rem] bg-white shadow-sm border border-ocean/5 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col min-h-[420px]"
               >
-                {/* Number Accent */}
                 <div className="text-ocean/10 font-serif text-6xl mb-6 group-hover:text-lush/20 transition-colors">
                   {p.number}
                 </div>
@@ -98,7 +73,6 @@ export default function Principles() {
                   {p.description}
                 </p>
 
-                {/* Lucide Icon - Replaced Emoji Rubbish */}
                 <div className="absolute top-10 right-10 text-lush opacity-20 group-hover:opacity-100 transition-all duration-500 scale-110">
                   <IconComponent size={32} strokeWidth={1.2} />
                 </div>
@@ -107,7 +81,6 @@ export default function Principles() {
           })}
         </div>
 
-        {/* Closing Tagline */}
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -115,7 +88,7 @@ export default function Principles() {
           className="mt-24 text-center"
         >
           <p className="text-[10px] uppercase tracking-[0.5em] text-ocean font-black opacity-30">
-            Strategic Outreach <span className="mx-4 text-lush">•</span> Absolute Security <span className="mx-4 text-lush">•</span> Timeless Luxury
+            {t('principles.tagline')}
           </p>
         </motion.div>
       </div>

@@ -1,0 +1,1226 @@
+{
+    "common": {
+        "reservation": "Make a Reservation",
+        "foundation_story": "The Foundation Story",
+        "plan_your_stay": "Plan Your Stay",
+        "contact": "Contact",
+        "read_more": "Read More",
+        "learn_more": "Learn More",
+        "book_now": "Book Now",
+        "inquire": "Inquire",
+        "view_details": "View Details",
+        "back_to_home": "Return Home",
+        "join_waitlist": "Join the Waitlist",
+        "send_inquiry": "Send Secure Inquiry",
+        "sending": "Relaying Message...",
+        "inquiry_received": "Inquiry Received",
+        "inquiry_success": "Your message has been encrypted and sent to our concierge. Expect a response within 4 professional hours.",
+        "submit_another": "Submit another request",
+        "confirm_availability": "Confirm Availability",
+        "reserve_seat": "Reserve Seat",
+        "get_notified": "Get Notified",
+        "request_invitation": "Request Invitation",
+        "join_the_mission": "Join the Mission",
+        "partner_with_us": "Partner with us"
+    },
+    "nav": {
+        "home": "Home",
+        "our_story": "Our Story",
+        "experiences": "Experiences",
+        "dining": "Dining",
+        "accommodations": "Accommodations",
+        "gallery": "Gallery",
+        "contact": "Contact"
+    },
+    "hero": {
+        "slides": [
+            {
+                "image": "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&q=80&w=1920",
+                "upperTitle": "Established Excellence",
+                "title": "New Waves Resort",
+                "subtitle": "A digital nomad sanctuary for the global citizen where luxury meets a legacy of social impact."
+            },
+            {
+                "image": "https://images.pexels.com/photos/2163074/pexels-photo-2163074.jpeg",
+                "upperTitle": "The Volcanic Oasis",
+                "title": "Paradise away from Home",
+                "subtitle": "Where dreams are made and relived. Discover our Unique Stone Beach for adventurers."
+            },
+            {
+                "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1920",
+                "upperTitle": "The Intellectual Hub",
+                "title": "Digital Nomad Sanctuary",
+                "subtitle": "Experience the unique synergy of volcanic coastlines and professional infrastructure."
+            },
+            {
+                "image": "https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&q=80&w=1920",
+                "upperTitle": "Culinary Heritage",
+                "title": "Atlantic Gastronomy",
+                "subtitle": "Freshness redefined. Savor the spirit of Limbe through our curated dining experience."
+            },
+            {
+                "image": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=1920",
+                "upperTitle": "Executive Infrastructure",
+                "title": "Designed by and for Professionals",
+                "subtitle": "A resort engineered for those who lead. We provide the silent efficiency required for high-stakes work in a sanctuary of peace."
+            }
+        ]
+    },
+    "impact": {
+        "section_tag": "Fisiy Foundation Partnership",
+        "title": "A Purpose-Driven Presence",
+        "description": "Ngeme translates to \"Sun of the Sea\". More than a resort, this is a center for social inclusivity. As a project born from the Fisiy Foundation, your stay contributes directly to community empowerment in Cameroon.",
+        "list": {
+            "education": "Proceeds support local education",
+            "employment": "Socially inclusive employment",
+            "sustainability": "Sustainable ecosystem growth",
+            "digital": "Prepares Youth to move to Opportunity (through digital training sponsored by FFLC)"
+        },
+        "button": "Our Foundation Story"
+    },
+    "values": {
+        "section_tag": "The Residency Pillars",
+        "exclusivity": {
+            "title": "Exclusivity",
+            "label": "A Private Sanctuary",
+            "desc": "A resort designed for the discerning few, ensuring peace, tranquility, and professional focus."
+        },
+        "connectivity": {
+            "title": "Connectivity",
+            "label": "High-Speed Infrastructure",
+            "desc": "Meeting a global network of digital nomads with enterprise-grade professional tools."
+        },
+        "culture": {
+            "title": "Local Culture",
+            "label": "Limbe Heritage",
+            "desc": "Celebrating local cultures, crafts and Atlantic heritage through curated partnerships."
+        },
+        "luxury": {
+            "title": "Timeless Luxury",
+            "label": "Enduring Elegance",
+            "desc": "An aesthetic of comfort that transcends trends, rooted in architectural harmony."
+        },
+        "organic": {
+            "title": "Organic Produce",
+            "label": "Volcanic Soil",
+            "desc": "Fresh nourishment sourced directly from the fertile volcanic soils of the region."
+        }
+    },
+    "principles": {
+        "section_tag": "The Ngeme Ethos",
+        "title": "Our Guiding Principles",
+        "items": [
+            {
+                "number": "01",
+                "title": "Connection & Outreach",
+                "description": "Fostering deep connectivity between the global diaspora and their local networks through knowledge exchange and intellectual curiosity."
+            },
+            {
+                "number": "02",
+                "title": "Outstanding Professional Security",
+                "description": "A sanctuary providing absolute physical and digital peace of mind, ensuring a safe space for high-level professional engagement."
+            },
+            {
+                "number": "03",
+                "title": "Sustainable Legacy",
+                "description": "Living our values through clean living, reliable supply-chain communities, and deep-rooted support for the Fisiy Foundation."
+            },
+            {
+                "number": "04",
+                "title": "Luxury Redefined",
+                "subtext": "(Subtle and timeless)",
+                "description": "An experience where elegance meets purpose, prioritizing quiet quality and an enduring aesthetic that transcends the temporary."
+            }
+        ],
+        "tagline": "Strategic Outreach • Absolute Security • Timeless Luxury"
+    },
+    "infrastructure": {
+        "title": "Precision Infrastructure",
+        "subtitle": "Reliability is our baseline. We provide the technical stability required by world-class leaders and digital professionals.",
+        "features": [
+            {
+                "title": "Resilient Connectivity",
+                "description": "Dual-redundant Fiber & Starlink systems. Guaranteed low-latency for global board meetings.",
+                "icon": "🌐"
+            },
+            {
+                "title": "Energy Sovereignty",
+                "description": "Smart solar grid integration ensuring 24/7 power for work and leisure.",
+                "icon": "☀️"
+            },
+            {
+                "title": "Executive Suites",
+                "description": "Soundproofed conference facilities and boardrooms with high-end AV technology.",
+                "icon": "🏢"
+            }
+        ]
+    },
+    "service_grid": {
+        "section_tag": "Excellence in Service",
+        "title": "Everything you need,",
+        "title_italic": "Expertly handled.",
+        "subtitle": "From diplomatic-level security to world-class leisure, our services are designed to support your vision and professional lifestyle.",
+        "services": [
+            {
+                "image": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800",
+                "to": "/conferences",
+                "title": "Events/Banquet Hall & Conference Facilities",
+                "subtitle": "State-of-the-art venues for high-level professional engagement and refined celebrations.",
+                "category": "Professional"
+            },
+            {
+                "image": "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&q=80&w=800",
+                "to": "/leisure",
+                "title": "World Class Swimming Pool",
+                "subtitle": "Limbe’s premier ocean-front aquatic experience, designed for absolute serenity.",
+                "category": "Leisure"
+            },
+            {
+                "image": "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=800",
+                "to": "/library",
+                "title": "In-House Library",
+                "subtitle": "A curated intellectual sanctuary for deep focus, research, and quiet reflection.",
+                "category": "Intellectual"
+            },
+            {
+                "image": "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&q=80&w=800",
+                "to": "/tours",
+                "title": "Know Your Environs Guided Tours",
+                "subtitle": "Expertly curated journeys through Limbe's landmarks and the volcanic slopes of Mt. Cameroon.",
+                "category": "Experiences"
+            }
+        ]
+    },
+    "facilities": {
+        "section_tag": "The Infrastructure",
+        "title": "World-Class Amenities",
+        "quote": "We provide the invisible infrastructure that allows the global mind to rest, ensuring every functional detail of your stay is met with precision and local warmth.",
+        "categories": {
+            "living": {
+                "label": "The Residency",
+                "items": [
+                    "Adults Only",
+                    "Private Entrance",
+                    "Hardwood Floors",
+                    "Walk-in Closet",
+                    "Soundproof/Hypoallergenic",
+                    "Air Conditioning",
+                    "Laptop Safe"
+                ]
+            },
+            "wellness": {
+                "label": "Spa & Wellness",
+                "items": [
+                    "Hot Tub/Jacuzzi",
+                    "Spa Tub",
+                    "Bathrobes & Slippers",
+                    "Bidet",
+                    "Premium Toiletries",
+                    "Rain Shower",
+                    "Deep Soak Bathtub"
+                ]
+            },
+            "tech": {
+                "label": "Connectivity",
+                "items": [
+                    "Free High Speed Wifi",
+                    "Streaming (Netflix)",
+                    "Socket Near Bed",
+                    "Flat-screen TV",
+                    "Cable Channels",
+                    "Global Languages Spoken"
+                ]
+            },
+            "concierge": {
+                "label": "Services",
+                "items": [
+                    "24-Hour Security",
+                    "Private Check-in/out",
+                    "Airport Shuttle",
+                    "Daily Housekeeping",
+                    "Laundry & Suit Press",
+                    "Free Private Parking"
+                ]
+            },
+            "culinary": {
+                "label": "Kitchen & Dining",
+                "items": [
+                    "Full Kitchenette",
+                    "Refrigerator",
+                    "Dining Area",
+                    "Electric Kettle",
+                    "Washing Machine",
+                    "Room Service",
+                    "Landmark View Terrace"
+                ]
+            }
+        }
+    },
+    "ocean_side": {
+        "section_tag": "Intellectual Sanctuary",
+        "title": "The Ocean-Side Dialogues",
+        "subtitle": "A sanctuary for global thought leaders, convening to address the pertinence of <span>African</span> and world issues.",
+        "badge_learning": "Learning",
+        "badge_podcast": "Podcast Facilities",
+        "button": "Request Invitation"
+    },
+    "culinary": {
+        "section_tag": "Gastronomy",
+        "title": "Atlantic Flavors & Local Soul",
+        "description": "Our kitchen is a tribute to the Gulf of Guinea. We blend traditional Cameroonian techniques with global fine-dining standards, sourcing every ingredient from the local Limbe markets and our own organic gardens.",
+        "badges": {
+            "organic": "Organically sourced foods",
+            "cooking_classes": "Promoting Cooking Classes for Long-Term residents/guests"
+        },
+        "dishes": [
+            {
+                "name": "Atlantic Chargrilled Lobster",
+                "desc": "Caught daily from the Limbe coast, infused with local herbs.",
+                "price": "To be determined"
+            },
+            {
+                "name": "Traditional Limbe Sea Bream",
+                "desc": "Slow-roasted over volcanic stone heat for authentic depth.",
+                "price": "To be determined"
+            },
+            {
+                "name": "Mt. Cameroon Garden Salad",
+                "desc": "Organic greens from the mountain foothills.",
+                "price": "To be determined"
+            }
+        ],
+        "button": "View Full Menu"
+    },
+    "suites": {
+        "section_tag": "Accommodations",
+        "title": "Designed for Luxury & Excellence",
+        "subtitle": "Whether for a high-level summit or a nomadic retreat, our suites offer a sanctuary of productivity.",
+        "suites": [
+            {
+                "name": "The Atlantic Horizon",
+                "size": "120sqm",
+                "price": "$350",
+                "img": "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800"
+            },
+            {
+                "name": "Digital Nomad Studio",
+                "size": "65sqm",
+                "price": "$210",
+                "img": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=800"
+            },
+            {
+                "name": "Executive Founders Suite",
+                "size": "180sqm",
+                "price": "$210",
+                "img": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=800"
+            }
+        ]
+    },
+    "accomodations": {
+        "section_tag": "Accommodations",
+        "title": "Designed for Luxury & Excellence",
+        "subtitle": "Whether for a high-level summit or a nomadic retreat, our suites offer a sanctuary of productivity.",
+        "suites": [
+            {
+                "id": "ocean-suite",
+                "title": "Ocean View Suite",
+                "price": 350,
+                "image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1000",
+                "description": "Wake up to the gentle sounds of the Atlantic and panoramic views of the shimmering coastline. Our Ocean View Suites blend modern comfort with traditional Cameroonian elegance.",
+                "amenities": [
+                    "Private Balcony",
+                    "King-size Bed",
+                    "Spacious Living Area",
+                    "En-suite Bathroom",
+                    "High-speed Wi-Fi"
+                ]
+            },
+            {
+                "id": "garden-bungalow",
+                "title": "Garden Bungalow",
+                "price": 280,
+                "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1000",
+                "description": "Nestled amidst lush tropical gardens, our Garden Bungalows offer a tranquil escape. Enjoy privacy and serenity with easy access to the resort's facilities.",
+                "amenities": [
+                    "Private Patio",
+                    "Queen-size Bed",
+                    "Garden Views",
+                    "Outdoor Shower",
+                    "Personalized Concierge"
+                ]
+            },
+            {
+                "id": "executive-villa",
+                "title": "Executive Villa",
+                "price": 800,
+                "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1000",
+                "description": "For those seeking ultimate luxury, our Executive Villas provide an unparalleled experience. Featuring multiple bedrooms, a private pool, and dedicated staff.",
+                "amenities": [
+                    "Private Infinity Pool",
+                    "Multiple Bedrooms",
+                    "Butler Service",
+                    "Gourmet Kitchen",
+                    "Panoramic Views"
+                ]
+            },
+            {
+                "id": "deluxe-room",
+                "title": "Deluxe Room",
+                "price": 220,
+                "image": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=1000",
+                "description": "Our Deluxe Rooms offer a cozy yet elegant stay. Ideal for couples or solo travelers. Thoughtfully designed with comfort in mind for a peaceful retreat.",
+                "amenities": [
+                    "Comfortable Double Bed",
+                    "Modern Furnishings",
+                    "Smart TV",
+                    "Mini-Bar",
+                    "Room Service"
+                ]
+            }
+        ]
+    },
+    "gallery_preview": {
+        "section_tag": "The Perspective",
+        "title": "A Glimpse into Serenity",
+        "button": "View Full Gallery"
+    },
+    "testimonials": {
+        "section_tag": "Client Perspectives",
+        "title": "Trusted by the Global Community",
+        "testimonials": [
+            {
+                "quote": "Ngeme provides a rare combination of Atlantic tranquility and the robust infrastructure I need for international consulting. The reliability of the power and data systems is world-class.",
+                "author": "Dr. Amadou K.",
+                "role": "Global Policy Advisor",
+                "location": "Washington D.C."
+            },
+            {
+                "quote": "The focus on social inclusivity through the Fisiy Foundation makes every stay feel meaningful. It is rare to find a resort that balances luxury with such deep community impact.",
+                "author": "Sarah J.",
+                "role": "Executive Director, International NGO",
+                "location": "Geneva"
+            },
+            {
+                "quote": "A true sanctuary for the digital nomad. The conference facilities and the view of the volcanic coast create an environment that fosters both productivity and deep reflection.",
+                "author": "Jean-Pierre M.",
+                "role": "Tech Entrepreneur & Investor",
+                "location": "Paris"
+            }
+        ]
+    },
+    "partnerships": {
+        "section_tag": "Strategic Synergy",
+        "title": "A Network of Global Excellence",
+        "description": "Ngeme operates at the intersection of international standards and local empowerment. Our partnerships are carefully curated to ensure that every stay contributes to a sustainable, reliable, and socially inclusive supply chain.",
+        "partners": [
+            {
+                "name": "Fisiy Foundation",
+                "role": "Social Impact Lead",
+                "logo": "⚖️"
+            },
+            {
+                "name": "Global Policy Network",
+                "role": "Strategic Partner",
+                "logo": "🌍"
+            },
+            {
+                "name": "Limbe Artisanal Guild",
+                "role": "Sustainable Sourcing",
+                "logo": "🎨"
+            },
+            {
+                "name": "Fiber-Optic Backbone",
+                "role": "High-Speed Connectivity",
+                "logo": "⚡"
+            },
+            {
+                "name": "Cameroon Green Initiative",
+                "role": "Eco-Certification",
+                "logo": "🍃"
+            }
+        ],
+        "cta": "Join the Mission",
+        "cta_sub": "Partner with us"
+    },
+    "footer": {
+        "newsletter_title": "Stay Informed",
+        "newsletter_text": "Join our exclusive network for updates on the Ocean-Side Dialogues and Fisiy Foundation progress.",
+        "newsletter_placeholder": "Your Professional Email",
+        "newsletter_button": "Join",
+        "brand_name": "New Waves Resort",
+        "brand_description": "A premier nomadic hub and hospitality sanctuary in Limbe, Cameroon. As a vehicle for the Fisiy Foundation, we believe in the power of connection and social inclusivity.",
+        "legacy_title": "The Legacy",
+        "legacy_foundation": "Fisiy Foundation",
+        "legacy_dialogues": "Ocean-Side Dialogues",
+        "concierge_title": "Concierge",
+        "concierge_book": "Book a Suite",
+        "concierge_inquiries": "Direct Inquiries",
+        "contact_title": "Contact",
+        "address": "Limbe, South West Region, Cameroon",
+        "email": "info@newwavesresort.com",
+        "phone": "+237 000 000 000",
+        "copyright": "© 2026 New Waves Resort — All Rights Reserved",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Stay",
+        "est": "EST. 2025",
+        "sanctuary": "Limbe Sanctuary"
+    },
+    "accommodations": {
+        "section_tag": "The Residency",
+        "title": "Exquisite Sanctuaries",
+        "subtitle": "Designed for the intellectual nomad, our rooms offer the perfect balance of African warmth and executive functionality.",
+        "search_placeholder": "Search suites...",
+        "sort_by": "Sort by",
+        "sort_low_high": "Price: Low to High",
+        "sort_high_low": "Price: High to Low",
+        "suites_available": "sanctuary available",
+        "suites_available_plural": "sanctuaries available",
+        "amenities": "Key Amenities",
+        "reserve": "Reserve",
+        "modal": {
+            "title": "Reservation Detail",
+            "description": "A sanctuary for the global mind, rooted in the volcanic beauty of Limbe.",
+            "breakfast": "Complimentary Organic Breakfast",
+            "concierge": "Concierge Guided Check-in",
+            "booking_title": "Booking Inquiry",
+            "arrival": "Arrival",
+            "departure": "Departure",
+            "full_name": "Full Name",
+            "special_requirements": "Special Requirements",
+            "special_placeholder": "e.g. Dietary needs, Airport pickup, Workspace setup...",
+            "confirm": "Confirm Availability"
+        }
+    },
+    "coming_soon": {
+        "tag": "A New Chapter in Excellence",
+        "title": "Coming Soon",
+        "description": "We are currently refining this experience to meet the standards of the global nomad. Stay connected as we redefine the Atlantic coast.",
+        "return_home": "Return Home",
+        "join_waitlist": "Join the Waitlist"
+    },
+    "contact": {
+        "section_tag": "Concierge & Inquiries",
+        "title": "Begin Your Atlantic Residency",
+        "subtitle": "Our team specializes in coordinating long-term stays, corporate retreats, and foundation visits. Reach out to discuss your specific professional or physical requirements.",
+        "form": {
+            "full_name": "Full Name",
+            "full_name_placeholder": "e.g. Dr. Amadou K.",
+            "email": "Professional Email",
+            "email_placeholder": "amadou@network.org",
+            "phone": "Phone / WhatsApp",
+            "inquiry_type": "Nature of Inquiry",
+            "inquiry_options": {
+                "executive": "Executive Residency (1 week+)",
+                "corporate": "Corporate Summit / Retreat",
+                "partnership": "Fisiy Foundation Partnership"
+            },
+            "special_requirements": "Special Requirements",
+            "special_placeholder": "Workspace needs, security coordination, or dietary standards...",
+            "submit": "Send Secure Inquiry"
+        },
+        "info": {
+            "address_title": "Coastal Residency",
+            "address": "Ngeme, Mile 4 Coastal Road, Limbe, Cameroon",
+            "secure_title": "Secure Infrastructure",
+            "secure_desc": "Equipped with Starlink enterprise-grade connectivity to ensure 24/7 high-speed dialogue for global professional missions.",
+            "concierge": "Concierge",
+            "concierge_email": "residency@newwavesresort.com",
+            "foundation": "Foundation",
+            "foundation_email": "impact@fisiyfoundation.org"
+        }
+    },
+    "dining": {
+        "section_tag": "Volcanic Harvest & Purity",
+        "title": "Atlantic Gastronomy,",
+        "title_italic": "100% Organic by Nature.",
+        "description": "Our menu is a sanctuary for the health-conscious mind. Every ingredient is strictly organic and pesticide-free, harvested directly from the nutrient-rich volcanic soils of the Fako region. From our unadulterated cold-pressed oils to our daily coastal catch, we serve only what is pure, seasonal, and chemically untouched, bringing you the true, vibrant energy of Cameroon.",
+        "filters": {
+            "all": "All",
+            "appetizers": "Appetizers",
+            "mains": "Mains",
+            "desserts": "Desserts",
+            "drinks": "Drinks",
+            "dietary": "Dietary",
+            "vegan": "Vegan",
+            "gluten_free": "Gluten-Free"
+        },
+        "search_placeholder": "Search dishes...",
+        "no_results": "No dishes match your criteria.",
+        "chef_note_title": "A Letter from the Chef",
+        "chef_note_quote": "Every dish tells the story of our land, the volcanic richness that grows our spices, the Atlantic that gives us fish, and the hands of local farmers who have cultivated these flavors for generations. I invite you to taste Cameroon with us.",
+        "chef_note_signature": "Food, Made with Love",
+        "menuItems": [
+            {
+                "id": 1,
+                "name": "Plantain Crisps with Spicy Kati-Kati",
+                "category": "appetizers",
+                "description": "Thinly sliced, fried plantains served with a fiery pepper sauce made from local kati-kati peppers.",
+                "price": 1800,
+                "dietary": [
+                    "vegan",
+                    "gluten-free"
+                ],
+                "image": "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?auto=format&fit=crop&q=80&w=800"
+            },
+            {
+                "id": 2,
+                "name": "Mbongo Tchobi Prawns",
+                "category": "appetizers",
+                "description": "Juicy prawns simmered in a dark, aromatic Cameroonian spice broth, traditionally made with fresh crayfish and bitter herbs.",
+                "price": 2400,
+                "dietary": [
+                    "gluten-free"
+                ],
+                "image": "https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?auto=format&fit=crop&q=80&w=800"
+            },
+            {
+                "id": 3,
+                "name": "Grassed Beef & Kati-Kati",
+                "category": "mains",
+                "description": "Tender beef fillet from grass-fed cattle, grilled over volcanic coals and glazed with a reduction of kati-kati peppers and local honey.",
+                "price": 6500,
+                "dietary": [
+                    "gluten-free"
+                ],
+                "image": "https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&q=80&w=800"
+            },
+            {
+                "id": 4,
+                "name": "Ndolé Vegetarian",
+                "category": "mains",
+                "description": "Creamy bitterleaf stew with peanuts, smoked fish (optional), and a medley of local vegetables. Served with boiled plantains or bobolo.",
+                "price": 4500,
+                "dietary": [
+                    "vegan-option"
+                ],
+                "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800"
+            },
+            {
+                "id": 5,
+                "name": "Grilled Rockfish with Yellow Sauce",
+                "category": "mains",
+                "description": "Fresh Atlantic rockfish, grilled and topped with a vibrant yellow sauce made from turmeric, ginger, and palm oil. Served with vegetable rice.",
+                "price": 5900,
+                "dietary": [
+                    "gluten-free"
+                ],
+                "image": "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?auto=format&fit=crop&q=80&w=800"
+            }
+        ]
+    },
+    "gallery": {
+        "section_tag": "Visual Legacy",
+        "title": "Visualize the Legacy.",
+        "categories": {
+            "all": "All",
+            "architecture": "Architecture",
+            "interiors": "Interiors",
+            "leisure": "Leisure",
+            "dining": "Dining",
+            "professional": "Professional"
+        }
+    },
+    "our_story": {
+        "hero": {
+            "tag": "Heritage & Horizon",
+            "title": "Our Story.",
+            "title_italic": "A Legacy of Impact.",
+            "description": "On the volcanic shores of Limbe, New Waves Resort was born from a simple idea: that world-class hospitality can be a force for social change. Every stay here supports the Fisiy Foundation's mission to build accountable institutions across Africa.",
+            "button": "Join the Narrative"
+        },
+        "impact_stats": {
+            "title": "20%",
+            "label": "Of profits to foundation",
+            "detail": "Funding education, infrastructure, and livelihoods",
+            "jobs": "120+",
+            "jobs_label": "Local jobs created",
+            "jobs_detail": "Fair wages and training for community members",
+            "scholarships": "450",
+            "scholarships_label": "Fisiy scholarships",
+            "scholarships_detail": "Awarded through foundation programs",
+            "mangroves": "15k",
+            "mangroves_label": "Mangroves planted",
+            "mangroves_detail": "Coastal restoration with community partners"
+        },
+        "vision": {
+            "tag": "Two Wings, One Mission",
+            "title": "Where Luxury Meets Purpose",
+            "resort_title": "Ngeme's Vision",
+            "resort_desc": "To create a sanctuary for the intellectual nomad, where world-class comfort inspires deep work, and where every guest becomes part of a larger story: the renewal of the social contract between citizens and their local governments across Africa.",
+            "foundation_title": "Foundation's Mission",
+            "foundation_desc": "To address deficits in local governance in Sub-Saharan Africa by fostering a culture of service, accountability and mutual respect, building inclusive, resilient institutions for responsive local engagement."
+        },
+        "founder": {
+            "tag": "The Visionary",
+            "name": "Dr. Cyprian F. Fisiy",
+            "bio": "<p><span>Dr. Cyprian F. Fisiy</span> is a Principal Social Scientist and Social Development Team Leader in the Africa Region of The World Bank. He has previously served as World Bank co-coordinator for Involuntary Resettlement (1997) and Resettlement Specialist for Africa (1994), working on investment programs in Lesotho, Chad, Cameroon and Côte d'Ivoire.</p><p>Prior to the World Bank, he conducted research on sustainable forest management in Cameroon and was a Research Fellow at the African Studies Center in Leiden and the University of Wageningen. He holds a Ph.D. in the Anthropology of Law from the University of Leiden (1992).</p><p>In 2014, Dr. Fisiy founded the Fisiy Foundation and Leadership Center in Washington DC as a 501(c)(3) nonprofit. Ngeme Resort is his dream to create a sustainable funding engine for that mission, proving that hospitality can be a catalyst for accountable governance and community empowerment.</p><p>He resides in Alexandria with his wife, Grace Forgwei, and their four children.</p>",
+            "signature": "The Visionary Founder"
+        },
+        "programs": {
+            "tag": "Your Stay Fuels Change",
+            "title": "Programs You Support",
+            "description": "Through the Fisiy Foundation, a portion of New Wave Resort's profits directly fund these initiatives in Sub-Saharan Africa.",
+            "programs": [
+                {
+                    "title": "Cameroon-boxes",
+                    "description": "Small local infrastructure, foot paths, bridges, latrines, built with full community participation.",
+                    "link_text": "Learn more on foundation site"
+                },
+                {
+                    "title": "Vocational Training",
+                    "description": "Multi-purpose centers offering youth skills training, libraries, and internet access.",
+                    "link_text": "Learn more on foundation site"
+                },
+                {
+                    "title": "Livelihood Support",
+                    "description": "Self-help groups gain better access to markets and funding.",
+                    "link_text": "Learn more on foundation site"
+                }
+            ]
+        },
+        "milestones": {
+            "tag": "Timeline of Intent",
+            "title": "From Foundation to Resort",
+            "items": [
+                {
+                    "year": "2014",
+                    "title": "Foundation Born",
+                    "fullStory": "Dr. Fisiy establishes the Fisiy Foundation in Washington DC.",
+                    "description": "Dr. Fisiy establishes the Fisiy Foundation in Washington DC.",
+                    "image": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=800"
+                },
+                {
+                    "year": "2018",
+                    "title": "The Resort Dream",
+                    "fullStory": "A idea to bridge high-end comfort with deep social impact.",
+                    "description": "A idea to bridge high-end comfort with deep social impact.",
+                    "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800"
+                },
+                {
+                    "year": "2023",
+                    "title": "Breaking Ground",
+                    "fullStory": "Construction begins on the volcanic shores of Limbe.",
+                    "description": "Construction begins on the volcanic shores of Limbe.",
+                    "image": "https://images.unsplash.com/photo-1596701062351-8c0c16913c54?auto=format&fit=crop&q=80&w=800"
+                },
+                {
+                    "year": "2025",
+                    "title": "Opening & Legacy",
+                    "fullStory": "Ngeme launches, committing 20% of profits to the foundation.",
+                    "description": "Ngeme launches, committing 20% of profits to the foundation.",
+                    "image": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=800"
+                }
+            ]
+        },
+        "philosophy": {
+            "title": "Built for the",
+            "title_italic": "Intellectual Nomad",
+            "description": "Ngeme is more than a resort, it's a hub for writers, researchers, and entrepreneurs who seek both inspiration and infrastructure. Our coworking pavilions face the Atlantic, and our library holds volumes that spark dialogue between African thought leaders and the world.",
+            "subdescription": "Every element, from locally woven textiles to menus featuring indigenous ingredients, roots you in Cameroonian authenticity while delivering global standards of comfort.",
+            "cards": [
+                {
+                    "title": "Sovereign Security",
+                    "desc": "A high‑level sanctuary for professional peace of mind."
+                },
+                {
+                    "title": "Regenerative by Design",
+                    "desc": "Every stay contributes to mangrove reforestation."
+                },
+                {
+                    "title": "Global Vision, Local Soul",
+                    "desc": "A hub where the world learns from Cameroon."
+                },
+                {
+                    "title": "Elite Standard",
+                    "desc": "World‑class infrastructure meets indigenous wisdom."
+                }
+            ]
+        }
+    },
+    "services": {
+        "hero": {
+            "tag": "The Service Protocol",
+            "title": "Seamless Infrastructure",
+            "title_italic": "for the Global Mind.",
+            "description": "At Ngeme Resort, service is a silent partner to your productivity. We provide the logistics, security, and nourishment required for high-stakes intellectual work, all while honoring the volcanic soul of Cameroon."
+        },
+        "service_list": [
+            {
+                "id": "intellectual-talks",
+                "title": "Ocean-Side Intellectual Talks",
+                "category": "Thought Leadership",
+                "description": "Curated evening dialogues under the stars. We bring together global thinkers and local leaders to discuss governance, tech, and the future of Africa.",
+                "image": "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=1000"
+            },
+            {
+                "id": "dining",
+                "title": "Atlantic Gastronomy",
+                "category": "Dining",
+                "description": "Farm-to-table excellence. Our chefs use volcanic-soil produce and fresh Atlantic catch to redefine Cameroonian fine dining.",
+                "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=1000"
+            },
+            {
+                "id": "transfers",
+                "title": "Diplomatic Transfers",
+                "category": "Transport",
+                "description": "Seamless airport pickups from Douala International. We handle the logistics so your transition from the world to the sanctuary is effortless.",
+                "image": "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80&w=1000"
+            },
+            {
+                "id": "expeditions",
+                "title": "Volcanic Expeditions",
+                "category": "Exploration",
+                "description": "Private guided tours to Mount Cameroon and the historic sites of Bimbia. Adventure rooted in deep geographical and social history.",
+                "image": "https://images.unsplash.com/photo-1698769409799-576b46f88de6?w=500&auto=format&fit=cropq=80&w=1000"
+            },
+            {
+                "id": "fleet",
+                "title": "Premium Fleet",
+                "category": "Mobility",
+                "description": "Chauffeur-driven or private luxury rentals. High-clearance vehicles maintained to international standards for your regional travels.",
+                "image": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1000"
+            },
+            {
+                "id": "library",
+                "title": "The Fisiy Research Library",
+                "category": "Knowledge Hub",
+                "description": "A private collection of African literature, law, and social science. A quiet sanctuary for deep work, research, and cross-continental dialogue.",
+                "image": "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=1000"
+            }
+        ],
+        "bespoke": {
+            "title": "Bespoke Requests",
+            "description": "Our concierge team is trained in diplomatic protocol. Whether you require a private translator, specialized research assistance, or specific dietary logistics, from volcanic soil produce to rare archival materials, we are here to facilitate.",
+            "button": "Contact the Concierge"
+        },
+        "philosophy": {
+            "tag": "The Ngeme Standard",
+            "title": "Rooted in Volcanic Soil,",
+            "title_italic": "Reaching Global Heights",
+            "description": "Every service we offer is filtered through a lens of cultural integrity and ecological mindfulness. From the vehicles we maintain to the ingredients we source, we prioritize partnerships that uplift local communities and preserve the raw beauty of the Cameroon coastline.",
+            "badges": {
+                "wifi": "High Speed Wifi",
+                "wifi_sub": "Global Connectivity",
+                "security": "24/7",
+                "security_sub": "Sovereign Protection"
+            }
+        }
+    },
+    "service_pages": {
+        "atlantic_gastronomy": {
+            "hero": {
+                "tag": "Dining",
+                "title": "Atlantic Gastronomy",
+                "description": "Our culinary philosophy is simple: honor the volcanic soil that grows our spices, the Atlantic that provides our catch, and the hands that have cultivated these flavors for generations.",
+                "subdescription": "Every dish tells a story, of farmers who practice terraced agriculture on Mount Cameroon’s slopes, of fishermen who still launch their pirogues by hand, and of recipes passed down through centuries. We invite you to taste Cameroon.",
+                "location": "The Lighthouse Pavilion & Beach",
+                "hours": "Daily 7am – 10pm",
+                "chef_quote": "Cooking is an act of love. We put a piece of our land on every plate.",
+                "chef_name": "Chef Mireille Ndongo"
+            },
+            "experiences_title": "Ways to Dine",
+            "experiences_sub": "From sunrise coffee to moonlit feasts, choose the setting that suits your mood.",
+            "experiences": [
+                {
+                    "title": "Beachfront Breakfast",
+                    "description": "Start your day with fresh pastries, tropical fruit, and volcanic coffee steps from the Atlantic."
+                },
+                {
+                    "title": "Sundowner Sessions",
+                    "description": "Cocktails and small plates as the sun sets over the water, a nightly ritual."
+                },
+                {
+                    "title": "Private Moonlit Dinners",
+                    "description": "An intimate multi‑course feast on the beach, just for you."
+                }
+            ],
+            "menu_title": "Menu Highlights",
+            "menu_sub": "A taste of what awaits. Our full menu changes seasonally with the freshest catches and harvests.",
+            "view_full_menu": "View Full Menu",
+            "chef_table": {
+                "title": "The Chef's Table",
+                "description": "For the ultimate culinary experience, reserve our Chef’s Table. Seated just steps from the open kitchen, you’ll enjoy a custom multi‑course tasting menu crafted by Chef Mireille herself, with wine pairings from our cellar.",
+                "features": [
+                    "Interactive experience – ask questions, learn techniques, watch the magic unfold.",
+                    "Exclusive wine pairings featuring Cameroonian and international labels.",
+                    "Intimate setting for up to 8 guests – perfect for special celebrations."
+                ],
+                "button": "Inquire About Chef's Table"
+            },
+            "testimonials_title": "What Our Guests Say",
+            "testimonials": [
+                {
+                    "quote": "The most memorable meal of our lives, not just for the food, but for the setting and the stories behind every ingredient.",
+                    "author": "— The Thompson Family, UK"
+                },
+                {
+                    "quote": "Chef Mireille’s tasting menu is a journey through Cameroon. Don’t miss the plantain crisps with kati‑kati.",
+                    "author": "— Dr. Amina S., Nigeria"
+                }
+            ],
+            "cta_title": "Reserve Your Table",
+            "cta_sub": "Whether it’s a romantic dinner, a family celebration, or a business meal, we look forward to hosting you.",
+            "cta_button": "Make a Reservation"
+        },
+        "diplomatic_transfers": {
+            "hero": {
+                "tag": "Transport",
+                "title": "Diplomatic Transfers",
+                "description": "Your journey begins the moment you land. Our professional chauffeurs and late‑model vehicles ensure your transition from Douala International to Ngeme is seamless, safe, and serene.",
+                "subdescription": "We track every flight, handle your luggage with care, and provide amenities designed for the traveler who expects more. Whether you're arriving for business or leisure, we set the tone.",
+                "location": "Douala International Airport (DLA)",
+                "hours": "24/7 availability"
+            },
+            "features_title": "The Transfer Experience",
+            "features_sub": "More than a ride, we manage every detail so you can arrive refreshed.",
+            "features": [
+                "Chauffeurs trained in diplomatic protocol",
+                "Flight tracking – we adjust to your schedule",
+                "In-vehicle Wi-Fi and charging",
+                "Complimentary refreshments"
+            ],
+            "fleet_title": "Our Fleet",
+            "vehicles": [
+                {
+                    "name": "Executive Sedan",
+                    "capacity": 3,
+                    "image": "https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&q=80&w=600"
+                },
+                {
+                    "name": "Luxury SUV",
+                    "capacity": 6,
+                    "image": "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=600"
+                },
+                {
+                    "name": "VIP Van",
+                    "capacity": 10,
+                    "image": "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=600"
+                }
+            ],
+            "testimonials_title": "Trusted by Discerning Travelers",
+            "testimonials": [
+                {
+                    "quote": "After a long flight, stepping into a waiting Ngeme vehicle felt like coming home. Flawless.",
+                    "author": "— Ambassador K. Mbaye, Senegal"
+                },
+                {
+                    "quote": "They handled our group of 12 with multiple stops effortlessly. Truly professional.",
+                    "author": "— Dr. Linda T., USA"
+                }
+            ],
+            "cta_title": "Arrange Your Transfer",
+            "cta_sub": "Provide your flight details, and we'll be waiting when you arrive.",
+            "cta_button": "Book a Transfer"
+        },
+        "fisiy_library": {
+            "hero": {
+                "tag": "Knowledge Hub",
+                "title": "The Fisiy Research Library",
+                "description": "A sanctuary for the serious mind. Our library houses a private collection of African literature, law, social science, and rare archival materials, curated over decades by Dr. Cyprian Fisiy and colleagues.",
+                "subdescription": "With reading rooms overlooking the Atlantic, high‑speed internet, and a librarian on hand, it's the perfect environment for deep work, writing, and cross‑continental dialogue.",
+                "hours": "Open daily 8am – 8pm",
+                "audience": "Resort guests & visiting scholars"
+            },
+            "collection_title": "The Collection",
+            "collection_sub": "A living archive focused on African thought, law, and letters.",
+            "collection_highlights": [
+                {
+                    "title": "African Philosophy",
+                    "count": "1,200+ volumes"
+                },
+                {
+                    "title": "Cameroonian Law",
+                    "count": "800+ texts"
+                },
+                {
+                    "title": "Post-Colonial Literature",
+                    "count": "600+ titles"
+                },
+                {
+                    "title": "Rare Manuscripts",
+                    "count": "50+ archival items"
+                }
+            ],
+            "services_title": "Beyond the Stacks",
+            "services": [
+                {
+                    "title": "Research Assistance",
+                    "description": "Librarians available to help locate materials and navigate databases."
+                },
+                {
+                    "title": "Digital Access",
+                    "description": "High-speed internet and subscriptions to academic journals."
+                },
+                {
+                    "title": "Scholar Residencies",
+                    "description": "Dedicated workspace for visiting researchers."
+                }
+            ],
+            "residency": {
+                "title": "Scholar Residencies",
+                "description": "We offer dedicated workspace and accommodation packages for researchers, writers, and academics. Stay for a week or a month, immerse yourself in the collection and the landscape.",
+                "features": [
+                    "Private study carrels with ocean views",
+                    "Access to rare materials and digital databases",
+                    "Weekly seminars with fellow residents",
+                    "Inclusive meal plan at the resort"
+                ],
+                "button": "Apply for Residency"
+            },
+            "cta_title": "Plan Your Research Visit",
+            "cta_sub": "Whether you're a guest at the resort or a scholar seeking a quiet place to work, we welcome you.",
+            "cta_button": "Inquire About Access"
+        },
+        "intellectual_talks": {
+            "hero": {
+                "tag": "Thought Leadership",
+                "title": "Ocean-Side Intellectual Talks",
+                "description": "Where the Atlantic meets the avant‑garde. Our signature series brings together the world's brightest minds for intimate dialogues under the stars. Each session is a deep dive into the ideas shaping our continent and our century, from philosophy and governance to technology and the arts.",
+                "subdescription": "What began in 2023 as intimate conversations around a fire pit has grown into a globally recognized forum. Past speakers include Nobel laureates, heads of state, and cultural icons, all invited not for their titles, but for their willingness to think out loud, to question orthodoxy, and to engage with our guests as equals.",
+                "location": "The Lighthouse Pavilion",
+                "schedule": "Every Thursday evening",
+                "archive": "Recorded & archived on YouTube",
+                "featured_quote": "The future is not something we enter. The future is something we create.",
+                "featured_speaker": "Prof. Achille Mbembe, February 2026"
+            },
+            "experience_title": "More Than a Lecture",
+            "experience_sub": "We reject the passive auditorium model. Our talks are designed for genuine intellectual exchange, where the distance between speaker and audience dissolves, and ideas flow freely.",
+            "experience_features": [
+                {
+                    "title": "Intimate Setting",
+                    "description": "Limited to 30 guests, allowing genuine exchange between audience and speaker. No podiums, no barriers, just chairs arranged in a circle under the stars."
+                },
+                {
+                    "title": "Global Voices, Local Wisdom",
+                    "description": "We deliberately pair international thought leaders with Cameroonian elders, activists, and artists. The result is a dialogue that transcends cultural boundaries."
+                },
+                {
+                    "title": "Lasting Archive",
+                    "description": "Every talk is professionally recorded and made available on our YouTube channel, building a growing library of African intellectual thought for the world."
+                }
+            ],
+            "past_talks_title": "Past Talks",
+            "past_talks_sub": "Watch full recordings of previous sessions",
+            "view_all": "View All Talks",
+            "show_less": "Show Less",
+            "load_all": "Load All {{count}} Talks",
+            "coming_soon": {
+                "title": "Coming Soon",
+                "description": "Our inaugural talk series launches in June 2026. We're curating an extraordinary lineup of thinkers, subscribe to be notified."
+            },
+            "upcoming_title": "Upcoming Dialogues",
+            "upcoming_sub": "Join us under the stars for these upcoming conversations. Space is limited, reservations recommended.",
+            "upcoming_events": [
+                {
+                    "date": "May 15, 2026",
+                    "topic": "AI and the Future of African Governance",
+                    "speaker": "Dr. Fei-Fei Li (via satellite)"
+                },
+                {
+                    "date": "June 3, 2026",
+                    "topic": "Restorative Justice: Lessons from the Global South",
+                    "speaker": "Judge Albie Sachs"
+                },
+                {
+                    "date": "July 21, 2026",
+                    "topic": "African Philosophy in the 21st Century",
+                    "speaker": "Prof. Souleymane Bachir Diagne"
+                }
+            ],
+            "pastTalks": [
+                {
+                    "id": 1,
+                    "title": "The Future of African Governance: Digital Democracy",
+                    "speaker": "Dr. Ngozi Okonjo-Iweala",
+                    "speakerTitle": "WTO Director-General",
+                    "date": "March 12, 2026",
+                    "description": "In this powerful address, Dr. Okonjo-Iweala explores how digital transformation is reshaping governance across the continent, from blockchain voting systems to AI-driven public service delivery. She argues that Africa has a unique opportunity to leapfrog traditional bureaucratic models and build institutions that are more transparent, accountable, and inclusive than those in the West.",
+                    "youtubeId": "5Aa9Mc1VqKE",
+                    "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600",
+                    "duration": "54:32",
+                    "views": "2.4K"
+                },
+                {
+                    "id": 2,
+                    "title": "Planetary Entanglements: Africa in the Anthropocene",
+                    "speaker": "Prof. Achille Mbembe",
+                    "speakerTitle": "Philosopher & Political Theorist",
+                    "date": "February 8, 2026",
+                    "description": "Professor Mbembe delivers a profound meditation on Africa's relationship to the planet, how the continent's ecological wisdom, forged over millennia, offers vital lessons for a world facing climate catastrophe. He challenges the audience to rethink development not as extraction but as reciprocal care between human and non-human worlds.",
+                    "youtubeId": "5Aa9Mc1VqKE",
+                    "image": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&q=80&w=600",
+                    "duration": "1:12:18",
+                    "views": "3.1K"
+                },
+                {
+                    "id": 3,
+                    "title": "The Danger of a Single Story: Reimagining African Narratives",
+                    "speaker": "Chimamanda Ngozi Adichie",
+                    "speakerTitle": "Author",
+                    "date": "January 19, 2026",
+                    "description": "Building on her legendary TED Talk, Chimamanda engages in an intimate conversation about the power of stories to shape perceptions, and the responsibility of African writers to tell their own tales. She reads from unpublished work and discusses how literature can heal the wounds of colonial historiography.",
+                    "youtubeId": "5Aa9Mc1VqKE",
+                    "image": "https://images.unsplash.com/photo-1544717301-9cdcb1f5940f?auto=format&fit=crop&q=80&w=600",
+                    "duration": "1:08:45",
+                    "views": "5.7K"
+                },
+                {
+                    "id": 4,
+                    "title": "Restorative Justice: Lessons from Post-Apartheid South Africa",
+                    "speaker": "Judge Albie Sachs",
+                    "speakerTitle": "Former Justice, Constitutional Court of South Africa",
+                    "date": "December 5, 2025",
+                    "description": "Judge Sachs shares riveting stories from the Truth and Reconciliation Commission and reflects on how societies torn by conflict can begin to heal. He argues that true justice is not punitive but restorative, a lesson as urgent for divided democracies today as it was in 1994.",
+                    "youtubeId": "5Aa9Mc1VqKE",
+                    "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600",
+                    "duration": "1:24:09",
+                    "views": "1.8K"
+                },
+                {
+                    "id": 5,
+                    "title": "AI and the Future of African Governance",
+                    "speaker": "Dr. Fei-Fei Li (via satellite)",
+                    "speakerTitle": "Co-Director, Stanford Human-Centered AI Institute",
+                    "date": "November 22, 2025",
+                    "description": "In a historic satellite link, Dr. Li discusses how artificial intelligence can be harnessed for public good, from predicting disease outbreaks to optimizing crop yields. She emphasizes the need for African leadership in shaping AI ethics, ensuring that algorithms reflect the continent's diverse cultures and values.",
+                    "youtubeId": "5Aa9Mc1VqKE",
+                    "image": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600",
+                    "duration": "1:05:22",
+                    "views": "4.2K"
+                }
+            ],
+            "free_note": "All talks are complimentary for resort guests. External attendance is available by prior arrangement, please contact our concierge.",
+            "why_title": "Why Intellectual Talks?",
+            "why_text": "In an age of soundbites and algorithms, we believe in the power of slow, sustained thought. The most urgent problems facing Africa and the world, climate change, inequality, democratic backsliding, cannot be solved by quick fixes. They require deep, interdisciplinary dialogue.",
+            "why_text2": "Our talks are designed to model what that dialogue looks like: rigorous, respectful, and radically open. We invite speakers not to deliver a monologue, but to enter into conversation with our guests, with local thinkers, and with the place itself, the volcanic shores of Limbe, where Africa meets the Atlantic.",
+            "why_text3": "Each talk is recorded and archived, creating a growing digital library of African intellectual thought, accessible to anyone, anywhere, for free. Because the conversations that happen here shouldn't end at the water's edge.",
+            "stats": {
+                "talks": "12",
+                "talks_label": "Talks to date",
+                "attendees": "360+",
+                "attendees_label": "Attendees",
+                "countries": "14",
+                "countries_label": "Countries represented",
+                "views": "17K+",
+                "views_label": "YouTube views"
+            },
+            "cta_title": "Join the Conversation",
+            "cta_sub": "Whether you're a guest at Ngeme or a scholar visiting Cameroon, we invite you to be part of these transformative evenings. Subscribe to our newsletter for updates on upcoming talks and new video releases.",
+            "cta_button": "Attend a Talk",
+            "youtube_button": "Watch on YouTube"
+        },
+        "premium_fleet": {
+            "hero": {
+                "tag": "Mobility",
+                "title": "Premium Fleet",
+                "description": "Explore Cameroon at your own pace with our meticulously maintained fleet of luxury vehicles. Whether you prefer the independence of self‑drive or the insight of a local chauffeur, we provide the wheels for your journey.",
+                "subdescription": "All vehicles are equipped for the region, high clearance, air conditioning, and modern safety features. We deliver to the resort and handle all paperwork."
+            },
+            "fleet_title": "Our Vehicles",
+            "fleet_sub": "Choose from our selection of premium vehicles, each maintained to international standards.",
+            "vehicles": [
+                {
+                    "name": "Land Rover Defender",
+                    "type": "4x4",
+                    "capacity": 5,
+                    "features": [
+                        "Off-road ready",
+                        "AC",
+                        "Bluetooth"
+                    ],
+                    "image": "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=600"
+                },
+                {
+                    "name": "Mercedes-Benz V-Class",
+                    "type": "Luxury Van",
+                    "capacity": 7,
+                    "features": [
+                        "Leather seats",
+                        "Wi-Fi",
+                        "Mini-bar"
+                    ],
+                    "image": "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=600"
+                },
+                {
+                    "name": "Toyota Land Cruiser",
+                    "type": "SUV",
+                    "capacity": 5,
+                    "features": [
+                        "High clearance",
+                        "Snorkel",
+                        "GPS"
+                    ],
+                    "image": "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=600"
+                }
+            ],
+            "services_title": "How You Want to Drive",
+            "services": [
+                {
+                    "title": "Self-Drive",
+                    "description": "For those who prefer independence, fully insured, delivered to the resort."
+                },
+                {
+                    "title": "Chauffeur-Driven",
+                    "description": "Professional local driver who doubles as a guide."
+                },
+                {
+                    "title": "Regional Travel",
+                    "description": "Available for trips to Yaoundé, Kribi, or further."
+                }
+            ],
+            "cta_title": "Reserve Your Vehicle",
+            "cta_sub": "Contact our fleet team to check availability and arrange delivery.",
+            "cta_button": "Inquire About Rental"
+        },
+        "volcanic_expeditions": {
+            "hero": {
+                "tag": "Exploration",
+                "title": "Volcanic Expeditions",
+                "description": "Step beyond the resort and into the heart of Cameroon’s geological and cultural wonders. Our private guided tours take you to Mount Cameroon, the highest peak in West Africa, and the historic sites of Bimbia, where the Atlantic meets painful history and resilient memory.",
+                "subdescription": "Each expedition is led by expert local guides who share not only facts but stories, of volcanic eruptions, of the slave trade, of the flora and fauna that thrive in this unique landscape.",
+                "badge_private": "Private & small groups",
+                "badge_safety": "Safety equipment & first aid"
+            },
+            "expeditions_title": "Signature Expeditions",
+            "expeditions_sub": "Choose your adventure, each can be customized to your interests and fitness level.",
+            "expeditions": [
+                {
+                    "title": "Summit Mount Cameroon",
+                    "difficulty": "Challenging",
+                    "duration": "2 days",
+                    "image": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=600"
+                },
+                {
+                    "title": "Bimbia Slave Trade Route",
+                    "difficulty": "Easy",
+                    "duration": "4 hours",
+                    "image": "https://images.unsplash.com/photo-1596649299486-4cdea56fd59d?auto=format&fit=crop&q=80&w=600"
+                },
+                {
+                    "title": "Crater Lakes Hike",
+                    "difficulty": "Moderate",
+                    "duration": "6 hours",
+                    "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=600"
+                }
+            ],
+            "guides_title": "Your Guides",
+            "guides": [
+                {
+                    "name": "Emmanuel N.",
+                    "specialty": "Volcanology & Birding",
+                    "experience": "12 years",
+                    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200"
+                },
+                {
+                    "name": "Jeannette M.",
+                    "specialty": "Cultural History",
+                    "experience": "8 years",
+                    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200"
+                }
+            ],
+            "cta_title": "Begin Your Journey",
+            "cta_sub": "Contact our expeditions team to plan your private tour. Custom itineraries available.",
+            "cta_button": "Inquire About an Expedition"
+        }
+    }
+}

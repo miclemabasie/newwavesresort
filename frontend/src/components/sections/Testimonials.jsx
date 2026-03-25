@@ -1,31 +1,12 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const testimonials = [
-  {
-    quote: "Ngeme provides a rare combination of Atlantic tranquility and the robust infrastructure I need for international consulting. The reliability of the power and data systems is world-class.",
-    author: "Dr. Amadou K.",
-    role: "Global Policy Advisor",
-    location: "Washington D.C."
-  },
-  {
-    quote: "The focus on social inclusivity through the Fisiy Foundation makes every stay feel meaningful. It is rare to find a resort that balances luxury with such deep community impact.",
-    author: "Sarah J.",
-    role: "Executive Director, International NGO",
-    location: "Geneva"
-  },
-  {
-    quote: "A true sanctuary for the digital nomad. The conference facilities and the view of the volcanic coast create an environment that fosters both productivity and deep reflection.",
-    author: "Jean-Pierre M.",
-    role: "Tech Entrepreneur & Investor",
-    location: "Paris"
-  }
-];
+import { useTranslation } from 'react-i18next';
 
 export default function Testimonials() {
+  const { t } = useTranslation();
+  const testimonials = t('testimonials.testimonials', { returnObjects: true });
   const [index, setIndex] = useState(0);
 
-  // Swipe logic for mobile
   const handleDragEnd = (event, info) => {
     if (info.offset.x < -50 && index < testimonials.length - 1) {
       setIndex(index + 1);
@@ -36,7 +17,6 @@ export default function Testimonials() {
 
   return (
     <section className="py-32 bg-sand/30 relative overflow-hidden">
-      {/* Background Serif Accent */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 opacity-[0.03] pointer-events-none">
         <span className="text-[30rem] font-serif leading-none">“</span>
       </div>
@@ -48,22 +28,20 @@ export default function Testimonials() {
             whileInView={{ opacity: 1 }}
             className="text-lush font-bold tracking-[0.4em] uppercase text-[10px]"
           >
-            Client Perspectives
+            {t('testimonials.section_tag')}
           </motion.span>
           <h2 className="text-4xl md:text-5xl font-serif mt-4 text-volcanic italic">
-            Trusted by the Global Community
+            {t('testimonials.title')}
           </h2>
           <div className="h-1 w-12 bg-lush mx-auto mt-8" />
         </div>
 
-        {/* --- DESKTOP GRID (Hidden on Mobile) --- */}
         <div className="hidden lg:grid lg:grid-cols-3 gap-8">
           {testimonials.map((t, i) => (
             <TestimonialCard key={i} t={t} />
           ))}
         </div>
 
-        {/* --- MOBILE SLIDER (Visible only on Mobile/Tablet) --- */}
         <div className="lg:hidden relative">
           <div className="overflow-visible">
             <motion.div
@@ -82,7 +60,6 @@ export default function Testimonials() {
             </motion.div>
           </div>
 
-          {/* Pagination Dots */}
           <div className="flex justify-center gap-3 mt-10">
             {testimonials.map((_, i) => (
               <button
@@ -106,7 +83,6 @@ export default function Testimonials() {
   );
 }
 
-// Extracted Card Component for Clean Engineering
 function TestimonialCard({ t }) {
   return (
     <motion.div 

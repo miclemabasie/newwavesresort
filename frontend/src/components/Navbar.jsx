@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link, useLocation } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 import logo from "../assets/general/logo.png";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
@@ -20,23 +23,21 @@ export default function Navbar() {
   }, [isOpen]);
 
   const navItems = [
-    { name: "Home", to: "/" },
-    { name: "Our Story", to: "/story" },
-    { name: "Experiences", to: "/experiences" },
-    { name: "Dining", to: "/services/dining" },
-    { name: "Accommodations", to: "/rooms" },
-    { name: "Gallery", to: "/gallery" },
-    { name: "Contact", to: "/contact" },
+    { name: t('nav.home'), to: "/" },
+    { name: t('nav.our_story'), to: "/story" },
+    { name: t('nav.experiences'), to: "/experiences" },
+    { name: t('nav.dining'), to: "/services/dining" },
+    { name: t('nav.accommodations'), to: "/rooms" },
+    { name: t('nav.gallery'), to: "/gallery" },
+    { name: t('nav.contact'), to: "/contact" },
   ];
 
   return (
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-ocean/5">
       <div className="container flex items-center justify-between h-20">
-        
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 z-[70]">
           <img src={logo} alt="Ngeme Logo" className="w-12 h-12" />
-          {/* <span className="text-3xl font-bold text-ocean">Ngeme</span> */}
         </Link>
 
         {/* Desktop Links */}
@@ -48,12 +49,15 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Action Button & Hamburger */}
+        {/* Action Button & Language Switcher & Hamburger */}
         <div className="flex items-center gap-4">
           <Link to="/book" className="btn-pay py-2! px-5! text-xs md:text-sm">
-            Plan Your Stay
+            {t('common.plan_your_stay')}
           </Link>
-          
+
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+
           <button 
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden z-[70] p-2 text-lush focus:outline-none"
@@ -77,11 +81,10 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay (unchanged except links) */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Dark Backdrop */}
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -90,13 +93,11 @@ export default function Navbar() {
               className="fixed inset-0 bg-volcanic/40 backdrop-blur-sm z-[60] lg:hidden"
             />
             
-            {/* Sidebar Container */}
             <motion.div 
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.4, ease: "circOut" }}
-              /* inset-y-0 and h-screen ensures the background covers the full height */
               className="fixed inset-y-0 right-0 h-screen w-[85%] max-w-sm bg-sand z-[65] lg:hidden shadow-2xl flex flex-col"
             >
               <div className="flex-1 overflow-y-auto px-10 pt-32 pb-10">
@@ -123,10 +124,9 @@ export default function Navbar() {
                 </div>
 
                 <div className="mt-16 pt-10 border-t border-ocean/10">
-                  <h4 className="text-ocean font-bold uppercase tracking-widest text-xs mb-4">Location</h4>
+                  <h4 className="text-ocean font-bold uppercase tracking-widest text-xs mb-4">{t('footer.contact_title')}</h4>
                   <p className="text-volcanic/70 text-sm leading-relaxed mb-8">
-                    Down Beach, Limbe<br />
-                    South West Region, Cameroon
+                    {t('footer.address')}
                   </p>
                   
                   <div className="flex gap-4">

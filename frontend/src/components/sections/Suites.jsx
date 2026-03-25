@@ -1,22 +1,20 @@
 import { motion } from "framer-motion";
-
-const suites = [
-  { name: "The Atlantic Horizon", size: "120sqm", price: "$350", img: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800" },
-  { name: "Digital Nomad Studio", size: "65sqm", price: "$210", img: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=800" },
-  { name: "Executive Founders Suite", size: "180sqm", price: "$550", img: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800" }
-];
+import { useTranslation } from 'react-i18next';
 
 export default function Suites() {
+  const { t } = useTranslation();
+  const suites = t('suites.suites', { returnObjects: true });
+
   return (
     <section className="py-24 bg-sand">
       <div className="container">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-xl">
-            <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">Accommodations</span>
-            <h2 className="text-4xl md:text-4xl font-serif mt-4 italic text-volcanic">Designed for Luxury & Excellence</h2>
+            <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">{t('suites.section_tag')}</span>
+            <h2 className="text-4xl md:text-4xl font-serif mt-4 italic text-volcanic">{t('suites.title')}</h2>
           </div>
           <p className="text-volcanic/60 max-w-xs text-sm">
-            Whether for a high-level summit or a nomadic retreat, our suites offer a sanctuary of productivity.
+            {t('suites.subtitle')}
           </p>
         </div>
 

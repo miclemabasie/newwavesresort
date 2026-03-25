@@ -1,76 +1,16 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import Navbar from "../components/Navbar";
 import Footer from "../components/sections/Footer";
-import { 
-  Waves, 
-  PlaneTakeoff, 
-  Car, 
-  Compass, 
-  Utensils, 
-  Mic2, 
-  ShieldCheck, 
-  Wifi,
-  ArrowUpRight,
-  Wind,
-  Leaf,
-  BookOpen,
-} from "lucide-react";
+import { ArrowUpRight, Waves, Wind, Leaf, Mic2, Utensils, PlaneTakeoff, Car, Compass, BookOpen, Wifi, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const services = [
-  {
-    id: "intellectual-talks",
-    title: "Ocean-Side Intellectual Talks",
-    category: "Thought Leadership",
-    icon: <Mic2 className="w-8 h-8" />,
-    description: "Curated evening dialogues under the stars. We bring together global thinkers and local leaders to discuss governance, tech, and the future of Africa.",
-    image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: "dining",
-    title: "Atlantic Gastronomy",
-    category: "Dining",
-    icon: <Utensils className="w-8 h-8" />,
-    description: "Farm-to-table excellence. Our chefs use volcanic-soil produce and fresh Atlantic catch to redefine Cameroonian fine dining.",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: "transfers",
-    title: "Diplomatic Transfers",
-    category: "Transport",
-    icon: <PlaneTakeoff className="w-8 h-8" />,
-    description: "Seamless airport pickups from Douala International. We handle the logistics so your transition from the world to the sanctuary is effortless.",
-    image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: "expeditions",
-    title: "Volcanic Expeditions",
-    category: "Exploration",
-    icon: <Compass className="w-8 h-8" />,
-    description: "Private guided tours to Mount Cameroon and the historic sites of Bimbia. Adventure rooted in deep geographical and social history.",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: "fleet",
-    title: "Premium Fleet",
-    category: "Mobility",
-    icon: <Car className="w-8 h-8" />,
-    description: "Chauffeur-driven or private luxury rentals. High-clearance vehicles maintained to international standards for your regional travels.",
-    image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: "library",
-    title: "The Fisiy Research Library",
-    category: "Knowledge Hub",
-    icon: <BookOpen className="w-8 h-8" />,
-    description: "A private collection of African literature, law, and social science. A quiet sanctuary for deep work, research, and cross-continental dialogue.",
-    image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=1000"
-  },
-];
-
 export default function Services() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
+  const services = t('services.service_list', { returnObjects: true });
+
   return (
     <div className="bg-sand/30 min-h-screen">
       <Navbar />
@@ -84,7 +24,7 @@ export default function Services() {
               transition={{ duration: 0.6 }}
               className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block"
             >
-              The Service Protocol
+              {t('services.hero.tag')}
             </motion.span>
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
@@ -92,7 +32,7 @@ export default function Services() {
               transition={{ duration: 0.8, delay: 0.1 }}
               className="text-5xl md:text-8xl font-serif text-volcanic leading-tight mb-8"
             >
-              Seamless <span className="italic text-lush">Infrastructure</span><br />for the Global Mind.
+              {t('services.hero.title')} <span className="italic text-lush">{t('services.hero.title_italic')}</span>
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 30 }}
@@ -100,9 +40,7 @@ export default function Services() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-volcanic/70 text-xl max-w-2xl leading-relaxed"
             >
-              At Ngeme Resort, service is a silent partner to your productivity. We provide the 
-              logistics, security, and nourishment required for high-stakes intellectual work,
-              all while honoring the volcanic soul of Cameroon.
+              {t('services.hero.description')}
             </motion.p>
           </div>
         </section>
@@ -130,7 +68,13 @@ export default function Services() {
                   />
                   <div className="absolute inset-0 bg-volcanic/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md p-3 rounded-2xl text-lush shadow-lg">
-                    {service.icon}
+                    {/* Icon placeholder - we could map based on id */}
+                    {service.id === 'intellectual-talks' && <Mic2 className="w-8 h-8" />}
+                    {service.id === 'dining' && <Utensils className="w-8 h-8" />}
+                    {service.id === 'transfers' && <PlaneTakeoff className="w-8 h-8" />}
+                    {service.id === 'expeditions' && <Compass className="w-8 h-8" />}
+                    {service.id === 'fleet' && <Car className="w-8 h-8" />}
+                    {service.id === 'library' && <BookOpen className="w-8 h-8" />}
                   </div>
                 </div>
 
@@ -149,7 +93,7 @@ export default function Services() {
                     to={`/services/${service.id}`}
                     className="inline-flex items-center gap-2 text-volcanic font-black uppercase tracking-widest text-[9px] border-b border-lush pb-2 group-hover:gap-4 transition-all group-hover:text-lush"
                   >
-                    Discover More <ArrowUpRight className="w-4 h-4 text-lush group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    {t('common.learn_more')} <ArrowUpRight className="w-4 h-4 text-lush group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </Link>
                 </div>
               </motion.div>
@@ -166,7 +110,6 @@ export default function Services() {
             viewport={{ once: true }}
             className="bg-volcanic rounded-[4rem] p-12 md:p-24 text-center relative overflow-hidden"
           >
-            {/* Volcanic texture overlay */}
             <div className="absolute inset-0 opacity-10" style={{
               backgroundImage: `radial-gradient(circle at 20% 30%, #7aa65a 1px, transparent 1px), 
                                 radial-gradient(circle at 80% 70%, #7aa65a 1px, transparent 1px)`,
@@ -185,15 +128,13 @@ export default function Services() {
 
             <div className="relative z-10 max-w-3xl mx-auto">
               <h2 className="text-4xl md:text-6xl font-serif text-white mb-8">
-                Bespoke <span className="text-lush italic">Requests</span>
+                {t('services.bespoke.title')}
               </h2>
               <p className="text-white/60 text-lg mb-12 leading-relaxed">
-                Our concierge team is trained in diplomatic protocol. Whether you require a private 
-                translator, specialized research assistance, or specific dietary logistics,
-                from volcanic soil produce to rare archival materials, we are here to facilitate.
+                {t('services.bespoke.description')}
               </p>
               <button onClick={() => navigate('/contact')} className="bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-[11px] hover:bg-white hover:scale-105 transition-all shadow-xl hover:shadow-2xl">
-                Contact the Concierge
+                {t('services.bespoke.button')}
               </button>
             </div>
           </motion.div>
@@ -204,27 +145,25 @@ export default function Services() {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
               <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-4 block">
-                The Ngeme Standard
+                {t('services.philosophy.tag')}
               </span>
               <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">
-                Rooted in <span className="italic text-lush">Volcanic Soil</span>, Reaching Global Heights
+                {t('services.philosophy.title')} <span className="italic text-lush">{t('services.philosophy.title_italic')}</span>
               </h2>
               <p className="text-volcanic/70 text-lg leading-relaxed">
-                Every service we offer is filtered through a lens of cultural integrity and ecological 
-                mindfulness. From the vehicles we maintain to the ingredients we source, we prioritize 
-                partnerships that uplift local communities and preserve the raw beauty of the Cameroon coastline.
+                {t('services.philosophy.description')}
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-white p-8 rounded-3xl shadow-sm border border-sand/40 text-center">
                 <Wifi className="w-8 h-8 text-lush mx-auto mb-4" />
-                <div className="text-2xl font-serif text-volcanic">High Speed Wifi</div>
-                <div className="text-xs text-volcanic/50 uppercase tracking-wider">Global Connectivity</div>
+                <div className="text-2xl font-serif text-volcanic">{t('services.philosophy.badges.wifi')}</div>
+                <div className="text-xs text-volcanic/50 uppercase tracking-wider">{t('services.philosophy.badges.wifi_sub')}</div>
               </div>
               <div className="bg-white p-8 rounded-3xl shadow-sm border border-sand/40 text-center">
                 <ShieldCheck className="w-8 h-8 text-lush mx-auto mb-4" />
-                <div className="text-2xl font-serif text-volcanic">24/7</div>
-                <div className="text-xs text-volcanic/50 uppercase tracking-wider">Sovereign Protection</div>
+                <div className="text-2xl font-serif text-volcanic">{t('services.philosophy.badges.security')}</div>
+                <div className="text-xs text-volcanic/50 uppercase tracking-wider">{t('services.philosophy.badges.security_sub')}</div>
               </div>
             </div>
           </div>

@@ -1,79 +1,44 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Home, 
-  Sparkles, 
-  Wifi, 
-  ConciergeBell, 
-  UtensilsCrossed, 
-  ChevronRight, 
-  CheckCircle2,
-  ChevronDown
-} from "lucide-react";
-
-const facilityCategories = [
-  {
-    id: "living",
-    label: "The Residency",
-    icon: Home,
-    items: ["Adults Only", "Private Entrance", "Hardwood Floors", "Walk-in Closet", "Soundproof/Hypoallergenic", "Air Conditioning", "Laptop Safe"]
-  },
-  {
-    id: "wellness",
-    label: "Spa & Wellness",
-    icon: Sparkles,
-    items: ["Hot Tub/Jacuzzi", "Spa Tub", "Bathrobes & Slippers", "Bidet", "Premium Toiletries", "Rain Shower", "Deep Soak Bathtub"]
-  },
-  {
-    id: "tech",
-    label: "Connectivity",
-    icon: Wifi,
-    items: ["Free High Speed Wifi", "Streaming (Netflix)", "Socket Near Bed", "Flat-screen TV", "Cable Channels", "Global Languages Spoken"]
-  },
-  {
-    id: "concierge",
-    label: "Services",
-    icon: ConciergeBell,
-    items: ["24-Hour Security", "Private Check-in/out", "Airport Shuttle", "Daily Housekeeping", "Laundry & Suit Press", "Free Private Parking"]
-  },
-  {
-    id: "culinary",
-    label: "Kitchen & Dining",
-    icon: UtensilsCrossed,
-    items: ["Full Kitchenette", "Refrigerator", "Dining Area", "Electric Kettle", "Washing Machine", "Room Service", "Landmark View Terrace"]
-  }
-];
+import { useTranslation } from 'react-i18next';
+import { Home, Sparkles, Wifi, ConciergeBell, UtensilsCrossed, ChevronRight, CheckCircle2, ChevronDown } from "lucide-react";
 
 export default function Facilities() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("living");
+  
+  const facilityCategories = [
+    { id: "living", label: t('facilities.categories.living.label'), icon: Home, items: t('facilities.categories.living.items', { returnObjects: true }) },
+    { id: "wellness", label: t('facilities.categories.wellness.label'), icon: Sparkles, items: t('facilities.categories.wellness.items', { returnObjects: true }) },
+    { id: "tech", label: t('facilities.categories.tech.label'), icon: Wifi, items: t('facilities.categories.tech.items', { returnObjects: true }) },
+    { id: "concierge", label: t('facilities.categories.concierge.label'), icon: ConciergeBell, items: t('facilities.categories.concierge.items', { returnObjects: true }) },
+    { id: "culinary", label: t('facilities.categories.culinary.label'), icon: UtensilsCrossed, items: t('facilities.categories.culinary.items', { returnObjects: true }) },
+  ];
+
   const activeCategory = facilityCategories.find(c => c.id === activeTab);
 
   return (
     <section className="py-24 md:py-32 bg-white border-y border-sand overflow-hidden">
       <div className="container mx-auto px-6 lg:max-w-7xl">
         
-        {/* Header - REPLACED "5-Star BS" with meaningful context */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-20 gap-12">
           <div className="max-w-2xl">
             <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-4 block">
-                The Infrastructure
+              {t('facilities.section_tag')}
             </span>
             <h2 className="text-4xl md:text-5xl font-serif text-volcanic leading-[1] tracking-tight mb-6">
-              World-Class <br /> Amenities
+              {t('facilities.title')}
             </h2>
           </div>
           
-          {/* New Explanatory Text Block */}
           <div className="lg:max-w-xs border-l-2 border-lush pl-8 py-2">
             <p className="text-volcanic/80 text-sm md:text-base leading-relaxed italic font-light">
-              "We provide the invisible infrastructure that allows the global mind to rest, 
-              ensuring every functional detail of your stay is met with diplomatic precision 
-              and local warmth."
+              "{t('facilities.quote')}"
             </p>
           </div>
         </div>
 
-        {/* --- MOBILE VIEW (Accordion Style) --- */}
+        {/* --- MOBILE VIEW --- */}
         <div className="lg:hidden space-y-4">
           {facilityCategories.map((cat) => {
             const Icon = cat.icon;

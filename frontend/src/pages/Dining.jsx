@@ -1,20 +1,12 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 import Navbar from "../components/Navbar";
 import Footer from "../components/sections/Footer";
-import { menuItems } from "../data/menuData";
 import { Search, Coffee, UtensilsCrossed, Wine, Cookie, Sparkles, Leaf, X } from "lucide-react";
 
-// Category icons and labels
-const categories = [
-  { id: "all", label: "All", icon: <UtensilsCrossed className="w-4 h-4" /> },
-  { id: "appetizers", label: "Appetizers", icon: <Sparkles className="w-4 h-4" /> },
-  { id: "mains", label: "Mains", icon: <Coffee className="w-4 h-4" /> },
-  { id: "desserts", label: "Desserts", icon: <Cookie className="w-4 h-4" /> },
-  { id: "drinks", label: "Drinks", icon: <Wine className="w-4 h-4" /> },
-];
-
 export default function Dining() {
+  const { t } = useTranslation();
   const [filter, setFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [dietaryFilters, setDietaryFilters] = useState({
@@ -23,74 +15,70 @@ export default function Dining() {
   });
   const [showFilters, setShowFilters] = useState(false);
 
-  // Reset search when category changes (optional)
+  const categories = [
+    { id: "all", label: t('dining.filters.all'), icon: <UtensilsCrossed className="w-4 h-4" /> },
+    { id: "appetizers", label: t('dining.filters.appetizers'), icon: <Sparkles className="w-4 h-4" /> },
+    { id: "mains", label: t('dining.filters.mains'), icon: <Coffee className="w-4 h-4" /> },
+    { id: "desserts", label: t('dining.filters.desserts'), icon: <Cookie className="w-4 h-4" /> },
+    { id: "drinks", label: t('dining.filters.drinks'), icon: <Wine className="w-4 h-4" /> },
+  ];
+
+  const menuItems = t('dining.menuItems', { returnObjects: true });
+
   const handleCategoryChange = (categoryId) => {
     setFilter(categoryId);
     setSearchQuery("");
   };
 
-  // Toggle dietary filter
   const toggleDietary = (diet) => {
     setDietaryFilters((prev) => ({ ...prev, [diet]: !prev[diet] }));
   };
 
-  // Filtered items based on category, search, and dietary
   const filteredItems = useMemo(() => {
     return menuItems.filter((item) => {
-      // Category filter
       if (filter !== "all" && item.category !== filter) return false;
 
-      // Search filter (case insensitive)
       if (searchQuery && !item.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
           !item.description.toLowerCase().includes(searchQuery.toLowerCase())) {
         return false;
       }
 
-      // Dietary filters: if any dietary filter is active, the item must have that tag
       const activeDiets = Object.keys(dietaryFilters).filter((d) => dietaryFilters[d]);
       if (activeDiets.length > 0) {
-        // Check if item's dietary array contains all active diets? Or any? We'll use "any" for flexibility.
         return activeDiets.some((diet) => item.dietary.includes(diet));
       }
 
       return true;
     });
-  }, [filter, searchQuery, dietaryFilters]);
+  }, [filter, searchQuery, dietaryFilters, menuItems]);
 
   return (
     <div className="min-h-screen bg-sand/30">
       <Navbar />
 
       <main className="pt-32 pb-20">
-        {/* Hero */}
         <section className="container mx-auto px-6 mb-16">
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="max-w-4xl"
-            >
-                <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">
-                Volcanic Harvest & Purity
-                </span>
-                <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">
-                Atlantic Gastronomy, <br />
-                <span className="italic text-lush">100% Organic by Nature.</span>
-                </h1>
-                <p className="text-volcanic/70 text-xl max-w-2xl leading-relaxed">
-                Our menu is a sanctuary for the health-conscious mind. Every ingredient is 
-                strictly <spand className="text-volcanic">organic and pesticide-free</spand>, harvested directly from the nutrient-rich 
-                volcanic soils of the Fako region. From our unadulterated cold-pressed oils 
-                to our daily coastal catch, we serve only what is pure, seasonal, and 
-                chemically untouched, bringing you the true, vibrant energy of Cameroon.
-                </p>
-            </motion.div>
-            </section>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl"
+          >
+            <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">
+              {t('dining.section_tag')}
+            </span>
+            <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">
+              {t('dining.title')} <br />
+              <span className="italic text-lush">{t('dining.title_italic')}</span>
+            </h1>
+            <p className="text-volcanic/70 text-xl max-w-2xl leading-relaxed">
+              {t('dining.description')}
+            </p>
+          </motion.div>
+        </section>
 
-        {/* Filters Bar */}
         <section className="container mx-auto px-6 mb-12">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-            {/* Category Pills */}
             <div className="flex flex-wrap gap-3">
               {categories.map((cat) => (
                 <button
@@ -108,13 +96,12 @@ export default function Dining() {
               ))}
             </div>
 
-            {/* Search and Filter Toggle */}
             <div className="flex items-center gap-4 w-full lg:w-auto">
               <div className="relative flex-1 lg:w-64">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-volcanic/40" />
                 <input
                   type="text"
-                  placeholder="Search dishes..."
+                  placeholder={t('dining.search_placeholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 rounded-full border border-sand/60 bg-white text-volcanic placeholder:text-volcanic/40 focus:outline-none focus:border-lush"
@@ -125,12 +112,11 @@ export default function Dining() {
                 className="flex items-center gap-2 px-5 py-3 rounded-full border border-sand/60 bg-white text-volcanic/70 hover:border-lush"
               >
                 <Leaf className="w-4 h-4" />
-                <span className="text-xs uppercase tracking-wider">Dietary</span>
+                <span className="text-xs uppercase tracking-wider">{t('dining.filters.dietary')}</span>
               </button>
             </div>
           </div>
 
-          {/* Dietary Filters Panel */}
           <AnimatePresence>
             {showFilters && (
               <motion.div
@@ -148,7 +134,7 @@ export default function Dining() {
                       onChange={() => toggleDietary("vegan")}
                       className="w-4 h-4 text-lush border-sand rounded focus:ring-lush"
                     />
-                    <span className="text-sm">Vegan</span>
+                    <span className="text-sm">{t('dining.filters.vegan')}</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -157,7 +143,7 @@ export default function Dining() {
                       onChange={() => toggleDietary("gluten-free")}
                       className="w-4 h-4 text-lush border-sand rounded focus:ring-lush"
                     />
-                    <span className="text-sm">Gluten-Free</span>
+                    <span className="text-sm">{t('dining.filters.gluten_free')}</span>
                   </label>
                   {(dietaryFilters.vegan || dietaryFilters["gluten-free"]) && (
                     <button
@@ -173,11 +159,10 @@ export default function Dining() {
           </AnimatePresence>
         </section>
 
-        {/* Menu Grid */}
         <section className="container mx-auto px-6">
           {filteredItems.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-volcanic/50 text-lg">No dishes match your criteria.</p>
+              <p className="text-volcanic/50 text-lg">{t('dining.no_results')}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -199,7 +184,6 @@ export default function Dining() {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-volcanic/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity" />
-                      {/* Dietary tags on image */}
                       <div className="absolute top-4 right-4 flex gap-2">
                         {item.dietary.includes("vegan") && (
                           <span className="bg-lush/90 backdrop-blur-sm text-volcanic text-[8px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Vegan</span>
@@ -227,7 +211,6 @@ export default function Dining() {
           )}
         </section>
 
-        {/* Chef's Note */}
         <section className="container mx-auto px-6 mt-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -240,13 +223,13 @@ export default function Dining() {
               backgroundSize: '40px 40px'
             }} />
             <div className="relative z-10 max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-5xl font-serif mb-6 italic">A Letter from the Chef</h2>
+              <h2 className="text-3xl md:text-5xl font-serif mb-6 italic">{t('dining.chef_note_title')}</h2>
               <p className="text-white/70 text-lg leading-relaxed mb-8">
-                "Every dish tells the story of our land, the volcanic richness that grows our spices, the Atlantic that gives us fish, and the hands of local farmers who have cultivated these flavors for generations. I invite you to taste Cameroon with us."
+                {t('dining.chef_note_quote')}
               </p>
               <div className="flex items-center justify-center gap-3">
                 <div className="w-12 h-px bg-lush/50" />
-                <span className="text-lush font-bold uppercase tracking-widest text-xs">Food, Made with Love</span>
+                <span className="text-lush font-bold uppercase tracking-widest text-xs">{t('dining.chef_note_signature')}</span>
                 <div className="w-12 h-px bg-lush/50" />
               </div>
             </div>
