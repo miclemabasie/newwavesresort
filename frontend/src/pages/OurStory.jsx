@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { useTranslation, Trans } from 'react-i18next';
 import Navbar from "../components/Navbar";
 import Footer from "../components/sections/Footer";
+import fisiy from "../assets/general/doctorfisiy.jpg"
 import { ArrowRight, Star, Globe, Shield, Leaf, Eye, Heart, User, Award, ExternalLink, Home, Briefcase, HandHeart } from "lucide-react";
 
 export default function OurStory() {
@@ -106,7 +107,7 @@ export default function OurStory() {
               >
                 <div className="aspect-[3/4] rounded-[3rem] overflow-hidden shadow-2xl border-[12px] border-sand/30">
                   <img
-                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800"
+                    src={fisiy}
                     alt="Dr. Cyprian F. Fisiy"
                     className="w-full h-full object-cover object-center"
                   />

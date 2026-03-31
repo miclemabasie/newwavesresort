@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { useTranslation } from 'react-i18next';
-import logo from "../../assets/general/logo.png";
+import logo from "../../assets/general/logo1.png";
 import { Instagram, Linkedin, Facebook, Twitter, Youtube, MapPin } from "lucide-react";
 
 export default function Footer() {

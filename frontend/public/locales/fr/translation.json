@@ -319,7 +319,7 @@
     "accomodations": {
         "section_tag": "Hébergements",
         "title": "Conçus pour le Luxe et l’Excellence",
-        "subtitle": "Que ce soit pour un sommet de haut niveau ou une retraite nomade, nos suites offrent un sanctuaire de productivité.",
+        "subtitle": "Notre établissement vous propose une variété de suites : des suites d’une chambre, de deux chambres et de trois chambres.",
         "suites": [
             {
                 "id": "ocean-suite",
@@ -653,7 +653,7 @@
         "founder": {
             "tag": "Le visionnaire",
             "name": "Dr. Cyprian F. Fisiy",
-            "bio": "<p><span>Dr. Cyprian F. Fisiy</span> est chercheur principal en sciences sociales et chef d'équipe pour le développement social à la région Afrique de la Banque mondiale. Il a précédemment été coordinateur de la Banque mondiale pour la réinstallation involontaire (1997) et spécialiste de la réinstallation pour l'Afrique (1994), travaillant sur des programmes d'investissement au Lesotho, au Tchad, au Cameroun et en Côte d'Ivoire.</p><p>Avant la Banque mondiale, il a mené des recherches sur la gestion durable des forêts au Cameroun et a été chercheur associé au Centre d'études africaines de Leiden et à l'Université de Wageningen. Il est titulaire d'un doctorat en anthropologie du droit de l'Université de Leiden (1992).</p><p>En 2014, le Dr Fisiy a fondé la Fondation Fisiy et le Centre de leadership à Washington DC, une organisation à but non lucratif 501(c)(3). Le resort Ngeme est son rêve de créer un moteur de financement durable pour cette mission, prouvant que l'hospitalité peut être un catalyseur pour une gouvernance responsable et l'autonomisation des communautés.</p><p>Il réside à Alexandria avec son épouse, Grace Forgwei, et leurs quatre enfants.</p>",
+            "bio": "<p><span>Cyprian Fisiy</span> Fort d'une carrière de plus de 40 ans, Cyprian Fisiy a accumulé une vaste expérience dans la théorie et la pratique du développement. Son travail dans le milieu académique et la recherche renforce davantage son expertise dans ce domaine. Vingt de ces années ont été passées à la Banque mondiale, où il est passé du poste de spécialiste du développement social à celui de Directeur du Département du développement social. À la retraite, il a initié la Fisiy Foundation and Leader Center, témoignage de son engagement en faveur de l'amélioration de la société. Les objectifs de la Fondation sont de s'attaquer aux épineuses questions de gouvernance locale en Afrique subsaharienne, de contribuer à combler le fossé numérique pour les jeunes et de faciliter leur accès à l'économie numérique.</p><p>Avant de prendre sa retraite de la Banque mondiale en décembre 2013, M. Fisiy était Directeur du Département du développement social, qui offre des services de conseil et de soutien opérationnel, de la recherche et une réflexion innovante dans divers domaines aux niveaux des politiques, des programmes et des projets. Un aspect important de ce travail consistait à établir un alignement étroit entre les dynamiques sociales existantes et les infrastructures physiques émergentes.</p><p> Le parcours de M. Fisiy à la Banque a commencé en 1994 en tant que scientifique social au sein du Département technique, environnemental et de développement social pour l'Afrique (AFTES). Son rôle a évolué vers celui de chef de secteur puis de directeur, où il a soutenu le développement dans des zones touchées par des conflits telles que les Philippines, l’Indonésie, la Papouasie-Nouvelle-Guinée et la Thaïlande, ainsi que dans des contextes de reconstruction post-catastrophe. Son vaste travail de terrain dans divers pays africains, notamment le Cameroun, le Tchad, la République centrafricaine, la Côte d’Ivoire, l’Éthiopie, le Lesotho, le Rwanda, la Sierra Leone, l’Afrique du Sud, le Swaziland et l’Ouganda, souligne son expérience pratique et son approche concrète.</p><p>Au niveau thématique, M. Fisiy s'est penché sur des questions complexes liées à la construction de vastes infrastructures, telles que le barrage de Katse au Lesotho et le projet hydroélectrique Nam Theun 2 (NT2) en RDP lao. Il a également travaillé sur les questions de conflits fonciers, possède une compréhension approfondie de la théorie et de la gestion des conflits, et s’implique activement dans l’engagement des jeunes afin de leur offrir des opportunités de seconde chance.</p>",
             "signature": "Le fondateur visionnaire"
         },
         "programs": {
@@ -692,7 +692,7 @@
                 {
                     "year": "2018",
                     "title": "Le rêve du resort",
-                    "fullStory": "Une idée pour combiner confort haut de gamme et impact social profond.",
+                    "fullStory": "Ngeme a été initialement conçu comme un point de passage et une porte d’entrée pour les partenaires et soutiens du FFLC, où les procédures d’intégration seraient effectuées avant que les participants ne se rendent sur le terrain. Avec la crise en cours dans les régions du Nord-Ouest et du Sud-Ouest, Ngeme a été repensé comme un moteur autonome de croissance et d’hospitalité reflétant le meilleur que le Cameroun peut offrir.",
                     "description_fr": "Une idée pour combiner confort haut de gamme et impact social profond.",
                     "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800"
                 },
@@ -706,7 +706,7 @@
                 {
                     "year": "2025",
                     "title": "Ouverture & héritage",
-                    "fullStory": "Ngeme ouvre ses portes, consacrant 20 % de ses bénéfices à la fondation.",
+                    "fullStory": "comment une rencontre rapprochée avec le luxe peut transformer et financer un changement durable dans les communautés locales.",
                     "description": "Ngeme launches, committing 20% of profits to the foundation.",
                     "image": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=800"
                 }
@@ -715,7 +715,7 @@
         "philosophy": {
             "title": "Conçu pour le",
             "title_italic": "nomade intellectuel",
-            "description": "Ngeme est plus qu'un resort, c'est un carrefour pour écrivains, chercheurs et entrepreneurs en quête à la fois d'inspiration et d'infrastructure. Nos pavillons de coworking font face à l'Atlantique et notre bibliothèque abrite des volumes qui suscitent le dialogue entre les leaders d'opinion africains et le monde.",
+            "description": "Ngeme est plus qu’un complexe hôtelier, c’est un carrefour pour les écrivains, les chercheurs et les entrepreneurs en quête à la fois d’inspiration et d’infrastructures. Nos pavillons de coworking font face à l’Atlantique, et notre bibliothèque abrite des ouvrages qui suscitent le dialogue entre les penseurs africains et le reste du monde. Recherchez l’inspiration, l’innovation et le luxe… Venez et comptez parmi les précurseurs.",
             "subdescription": "Chaque élément, des textiles tissés localement aux menus mettant en vedette des ingrédients autochtones, vous ancre dans l'authenticité camerounaise tout en offrant des standards mondiaux de confort.",
             "cards": [
                 {

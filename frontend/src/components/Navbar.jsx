@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink, Link, useLocation } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from 'react-i18next';
-import logo from "../assets/general/logo.png";
+import logo from "../assets/general/logo1.png";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {

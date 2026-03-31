@@ -468,7 +468,7 @@
     "accommodations": {
         "section_tag": "The Residency",
         "title": "Exquisite Sanctuaries",
-        "subtitle": "Designed for the intellectual nomad, our rooms offer the perfect balance of African warmth and executive functionality.",
+        "subtitle": "Our facility presents you with a variety of Suites: 1-bedroom, 2-bedroom, and 3-bedroom suites..",
         "search_placeholder": "Search suites...",
         "sort_by": "Sort by",
         "sort_low_high": "Price: Low to High",
@@ -653,7 +653,7 @@
         "founder": {
             "tag": "The Visionary",
             "name": "Dr. Cyprian F. Fisiy",
-            "bio": "<p><span>Dr. Cyprian F. Fisiy</span> is a Principal Social Scientist and Social Development Team Leader in the Africa Region of The World Bank. He has previously served as World Bank co-coordinator for Involuntary Resettlement (1997) and Resettlement Specialist for Africa (1994), working on investment programs in Lesotho, Chad, Cameroon and Côte d'Ivoire.</p><p>Prior to the World Bank, he conducted research on sustainable forest management in Cameroon and was a Research Fellow at the African Studies Center in Leiden and the University of Wageningen. He holds a Ph.D. in the Anthropology of Law from the University of Leiden (1992).</p><p>In 2014, Dr. Fisiy founded the Fisiy Foundation and Leadership Center in Washington DC as a 501(c)(3) nonprofit. Ngeme Resort is his dream to create a sustainable funding engine for that mission, proving that hospitality can be a catalyst for accountable governance and community empowerment.</p><p>He resides in Alexandria with his wife, Grace Forgwei, and their four children.</p>",
+            "bio": "<p><span>Cyprian Fisiy</span> With a career of over 40 years, Cyprian Fisiy has amassed a wealth of experience in development theory and practice. His work in academia and research further solidifies his expertise in the field. Twenty of these years were spent at the World Bank, where he rose from a Social Development Specialist to the position of Director of the Social Development Department. In retirement, he initiated the Fisiy Foundation and Leader Center, a testament to his dedication to societal improvement. The Foundation's goals are to address the thorny issues of local governance in Sub-Saharan Africa, help bridge the digital gap for youth, and facilitate their access to the digital economy.</p><p>Before he retired from the World Bank in December 2013, Mr. Fisiy was Director of the Social Development Department, which offers advisory and operational support, research, and innovative thinking in diverse areas at policy, program, and project levels. A prominent aspect of this work was establishing a tight alignment between the prevailing social and emerging physical infrastructure.</p><p> Mr. Fisiy's journey at the Bank began in 1994 as a Social Scientist in the Africa Technical, Environmental, and Social Development Department (AFTES). His role evolved to that of a sector manager and director, where he supported development in conflict-affected areas in the Philippines, Indonesia, Papua New Guinea, and Thailand, as well as in post-disaster reconstruction. His extensive fieldwork in various African countries, including Cameroon, Chad, Central African Republic, Cote d’Ivoire, Ethiopia, Lesotho, Rwanda, Sierra Leone, South Africa, Swaziland, and Uganda, underscores his practical experience and hands-on approach.</p><p>At the thematic level, Mr. Fisiy has delved into complex issues related to the construction of extensive infrastructure, such as the Lesotho Katse Dam and the Nam Theun 2 (NT2) Hydropower project in Lao PDR. He has also worked on land conflict issues, has a deep understanding of conflict theory and management, and is actively involved in youth engagement to provide second-chance opportunities.</p>",
             "signature": "The Visionary Founder"
         },
         "programs": {
@@ -692,7 +692,7 @@
                 {
                     "year": "2018",
                     "title": "The Resort Dream",
-                    "fullStory": "A idea to bridge high-end comfort with deep social impact.",
+                    "fullStory": "Ngeme was first conceived as a way-station and Port of Entry for FFLC partners and supporters, where on-boarding would be carried out before participants move to the field. With the ongoing crisis in the NW& SW Regions, Ngeme has been re-engineered as a self-sustaining engine of growth and hospitality reflecting the BEST Cameroon can offer",
                     "description": "A idea to bridge high-end comfort with deep social impact.",
                     "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800"
                 },
@@ -706,7 +706,7 @@
                 {
                     "year": "2025",
                     "title": "Opening & Legacy",
-                    "fullStory": "Ngeme launches, committing 20% of profits to the foundation.",
+                    "fullStory": "how a close encounter with luxury can transform and fund lasting change in local communities.",
                     "description": "Ngeme launches, committing 20% of profits to the foundation.",
                     "image": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=800"
                 }
@@ -715,7 +715,7 @@
         "philosophy": {
             "title": "Built for the",
             "title_italic": "Intellectual Nomad",
-            "description": "Ngeme is more than a resort, it's a hub for writers, researchers, and entrepreneurs who seek both inspiration and infrastructure. Our coworking pavilions face the Atlantic, and our library holds volumes that spark dialogue between African thought leaders and the world.",
+            "description": "Ngeme is more than a resort, it's a hub for writers, researchers, and entrepreneurs who seek both inspiration and infrastructure. Our coworking pavilions face the Atlantic, and our library holds volumes that spark dialogue between African thought leaders and the world. Seek inspiration, innovation, and luxury.... Visit and be counted among the pace-setters.",
             "subdescription": "Every element, from locally woven textiles to menus featuring indigenous ingredients, roots you in Cameroonian authenticity while delivering global standards of comfort.",
             "cards": [
                 {
