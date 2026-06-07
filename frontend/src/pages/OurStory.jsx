@@ -31,9 +31,12 @@ export default function OurStory() {
               <h1 className="text-5xl md:text-8xl font-serif text-volcanic leading-[1.05] mb-10 tracking-tight">
                 {t('our_story.hero.title')} <br /> <span className="italic text-lush">{t('our_story.hero.title_italic')}</span>
               </h1>
-              <p className="text-volcanic/80 text-lg md:text-xl font-medium max-w-lg leading-relaxed mb-8">
-                {t('our_story.hero.description')}
-              </p>
+              
+              {/* FIX: Render HTML content properly */}
+              <div 
+                className="text-volcanic/80 text-lg md:text-xl leading-relaxed mb-8 prose prose-lg max-w-none"
+                dangerouslySetInnerHTML={{ __html: t('our_story.hero.description') }}
+              />
               
               <div className="flex flex-col sm:flex-row gap-5">
                 <Link
@@ -53,7 +56,7 @@ export default function OurStory() {
               className="relative h-[500px] md:h-[700px] rounded-[3rem] overflow-hidden shadow-2xl border-[12px] border-sand/30"
             >
               <img
-                src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1200"
+                src="/assets/general/image17.jpeg"
                 className="w-full h-full object-cover"
                 alt="Ngeme Resort Aerial View"
               />

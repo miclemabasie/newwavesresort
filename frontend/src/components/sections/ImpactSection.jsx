@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useTranslation } from 'react-i18next';
-import image1 from "../../assets/general/limbehouse.jpg";
+import image1 from "../../assets/general/image2.jpeg";
 
 export default function ImpactSection() {
   const { t } = useTranslation();

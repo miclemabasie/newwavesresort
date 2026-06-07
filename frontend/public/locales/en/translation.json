@@ -38,13 +38,13 @@
                 "image": "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&q=80&w=1920",
                 "upperTitle": "Established Excellence",
                 "title": "New Waves Resort",
-                "subtitle": "A digital nomad sanctuary for the global citizen where luxury meets a legacy of social impact."
+                "subtitle": "A sanctuary for the global citizen where luxury meets a legacy of social impact."
             },
             {
                 "image": "https://images.pexels.com/photos/2163074/pexels-photo-2163074.jpeg",
                 "upperTitle": "The Volcanic Oasis",
                 "title": "Paradise away from Home",
-                "subtitle": "Where dreams are made and relived. Discover our Unique Stone Beach for adventurers."
+                "subtitle": "Where memories are made and relived. Discover our Unique Stone Beach for adventurers."
             },
             {
                 "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1920",
@@ -62,7 +62,7 @@
                 "image": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=1920",
                 "upperTitle": "Executive Infrastructure",
                 "title": "Designed by and for Professionals",
-                "subtitle": "A resort engineered for those who lead. We provide the silent efficiency required for high-stakes work in a sanctuary of peace."
+                "subtitle": "A resort engineered for those who lead. We provide the silent efficiency required for high-stakes work, inspired by nature, designed for you."
             }
         ]
     },
@@ -118,7 +118,7 @@
             {
                 "number": "02",
                 "title": "Outstanding Professional Security",
-                "description": "A sanctuary providing absolute physical and digital peace of mind, ensuring a safe space for high-level professional engagement."
+                "description": "A sanctuary providing absolute physical and digital peace of mind, Nuturing a space for intentaional engagement, encouraging the exchange of ideas"
             },
             {
                 "number": "03",
@@ -140,7 +140,7 @@
         "features": [
             {
                 "title": "Resilient Connectivity",
-                "description": "Dual-redundant Fiber & Starlink systems. Guaranteed low-latency for global board meetings.",
+                "description": "Dual-redundant system, seamlessly suppporting vedeo and teleconferencing alongside the full breath of prefessional's digital needs.",
                 "icon": "🌐"
             },
             {
@@ -150,7 +150,7 @@
             },
             {
                 "title": "Executive Suites",
-                "description": "Soundproofed conference facilities and boardrooms with high-end AV technology.",
+                "description": "Confrerence facilities and boardrooms with AV technology systems.",
                 "icon": "🏢"
             }
         ]
@@ -159,24 +159,24 @@
         "section_tag": "Excellence in Service",
         "title": "Everything you need,",
         "title_italic": "Expertly handled.",
-        "subtitle": "From diplomatic-level security to world-class leisure, our services are designed to support your vision and professional lifestyle.",
+        "subtitle": "rom world-class leisure to seamless professional support, our services are thoughtfully designed to nurture your vision and way of life.",
         "services": [
             {
-                "image": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800",
+                "image": "/assets/general/image1.jpeg",
                 "to": "/conferences",
                 "title": "Events/Banquet Hall & Conference Facilities",
                 "subtitle": "State-of-the-art venues for high-level professional engagement and refined celebrations.",
                 "category": "Professional"
             },
             {
-                "image": "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&q=80&w=800",
+                "image": "/assets/general/image16.jpeg",
                 "to": "/leisure",
                 "title": "World Class Swimming Pool",
                 "subtitle": "Limbe’s premier ocean-front aquatic experience, designed for absolute serenity.",
                 "category": "Leisure"
             },
             {
-                "image": "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=800",
+                "image": "/assets/general/image8.jpeg",
                 "to": "/library",
                 "title": "In-House Library",
                 "subtitle": "A curated intellectual sanctuary for deep focus, research, and quiet reflection.",
@@ -224,11 +224,11 @@
                 "label": "Connectivity",
                 "items": [
                     "Free High Speed Wifi",
-                    "Streaming (Netflix)",
+                    "Streaming Options",
                     "Socket Near Bed",
-                    "Flat-screen TV",
-                    "Cable Channels",
-                    "Global Languages Spoken"
+                    "Smart TV in each suite",
+                    "Cable / Satellite Channels",
+                    "Multi-lingual Staff"
                 ]
             },
             "concierge": {
@@ -249,17 +249,16 @@
                     "Refrigerator",
                     "Dining Area",
                     "Electric Kettle",
-                    "Washing Machine",
                     "Room Service",
-                    "Landmark View Terrace"
+                    "Ocean View Terrace"
                 ]
             }
         }
     },
     "ocean_side": {
-        "section_tag": "Intellectual Sanctuary",
+        "section_tag": "",
         "title": "The Ocean-Side Dialogues",
-        "subtitle": "A sanctuary for global thought leaders, convening to address the pertinence of <span>African</span> and world issues.",
+        "subtitle": "A sanctuary for global thought leaders, nurturing engaging exchanges on ideas spanning local, regional and world issues.",
         "badge_learning": "Learning",
         "badge_podcast": "Podcast Facilities",
         "button": "Request Invitation"
@@ -300,19 +299,19 @@
                 "name": "The Atlantic Horizon",
                 "size": "120sqm",
                 "price": "$350",
-                "img": "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800"
+                "img": "/assets/general/image15.jpeg"
             },
             {
-                "name": "Digital Nomad Studio",
+                "name": "Nomad Studio",
                 "size": "65sqm",
                 "price": "$210",
-                "img": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=800"
+                "img": "/assets/general/image14.jpeg"
             },
             {
                 "name": "Executive Founders Suite",
                 "size": "180sqm",
                 "price": "$210",
-                "img": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=800"
+                "img": "/assets/general/image11.jpeg"
             }
         ]
     },
@@ -410,7 +409,7 @@
     },
     "partnerships": {
         "section_tag": "Strategic Synergy",
-        "title": "A Network of Global Excellence",
+        "title": "A Network of Excellence",
         "description": "Ngeme operates at the intersection of international standards and local empowerment. Our partnerships are carefully curated to ensure that every stay contributes to a sustainable, reliable, and socially inclusive supply chain.",
         "partners": [
             {
@@ -448,7 +447,7 @@
         "newsletter_placeholder": "Your Professional Email",
         "newsletter_button": "Join",
         "brand_name": "New Waves Resort",
-        "brand_description": "A premier nomadic hub and hospitality sanctuary in Limbe, Cameroon. As a vehicle for the Fisiy Foundation, we believe in the power of connection and social inclusivity.",
+        "brand_description": "A premier hospitality sanctuary in Limbe, Cameroon. Inspired by nature. Designed for you.",
         "legacy_title": "The Legacy",
         "legacy_foundation": "Fisiy Foundation",
         "legacy_dialogues": "Ocean-Side Dialogues",
@@ -625,7 +624,7 @@
             "tag": "Heritage & Horizon",
             "title": "Our Story.",
             "title_italic": "A Legacy of Impact.",
-            "description": "On the volcanic shores of Limbe, New Waves Resort was born from a simple idea: that world-class hospitality can be a force for social change. Every stay here supports the Fisiy Foundation's mission to build accountable institutions across Africa.",
+            "description": "<p><strong>New Waves Resort, Ngeme – Historical Positioning</strong></p>\n\n<p>Located at the foot of Mount Cameroon, the City of Limbe is about 45 miles (72 kilometers) from the business capital, Douala, and just 90 minutes from Douala International Airport by car. Limbe is also the emergent growth pole and Business Center of the South-West Region of Cameroon, the location of the New Waves Resort, Ngeme. Limbe City is not only an administrative/business center; it is also a leading tourism destination endowed with the following facilities:</p>\n\n<ul>\n  <li>Headquarters of the Cameroon Development Corporation (CDC), the second-highest employer after the State</li>\n  <li>Location of the only petroleum refinery of Cameroon, SONARA</li>\n  <li>Site of the second natural deep-sea port of Cameroon after Kribi</li>\n  <li>Location of the only Botanical Gardens in the entire country with a \"Jungle Village\" right in the Center of the City</li>\n  <li>Renowned Down Beach business area with its \"famed fish barbecue bazaar\" right on the coastline</li>\n  <li>Location of the country's Special Military Intervention Forces (BIR), which guarantees both safety and security for citizens and investors</li>\n  <li>Outstanding livability with minimal city congestion, gardens, and sports facilities (including the Ngeme Omnisport Sports Palace). It is precisely in this neighborhood that the New Waves Resort is located.</li>\n</ul>\n\n<p>Historically, Limbe was the first point of colonial contact when the Rev. Alfred Saker, the pioneering missionary, landed from Santa Isabel (present-day Malabo) on the then-Spanish island of Fernando Po in circa 1845.</p>\n\n<p>Not only did missionaries set up camp here, but Limbe also hosted the historic Slave-Trading port of Bimbia. This historic location is currently under review for UNESCO World Heritage Status.</p>\n\n<p>With the establishment of the German Protectorate in 1884, large areas of fertile volcanic soil were appropriated from the indigenes to establish commercial plantations, which are today administered as the CDC plantations.</p>\n\n<p>It is precisely on the Atlantic waterfront of this historic city that the New Waves Resort welcomes all and sundry willing to relive the historical footprint of colonial contact and to celebrate multiculturalism. The Resort opens its doors to you to discover your home away from home.</p>",
             "button": "Join the Narrative"
         },
         "impact_stats": {
@@ -653,7 +652,7 @@
         "founder": {
             "tag": "The Visionary",
             "name": "Dr. Cyprian F. Fisiy",
-            "bio": "<p><span>Cyprian Fisiy</span> With a career of over 40 years, Cyprian Fisiy has amassed a wealth of experience in development theory and practice. His work in academia and research further solidifies his expertise in the field. Twenty of these years were spent at the World Bank, where he rose from a Social Development Specialist to the position of Director of the Social Development Department. In retirement, he initiated the Fisiy Foundation and Leader Center, a testament to his dedication to societal improvement. The Foundation's goals are to address the thorny issues of local governance in Sub-Saharan Africa, help bridge the digital gap for youth, and facilitate their access to the digital economy.</p><p>Before he retired from the World Bank in December 2013, Mr. Fisiy was Director of the Social Development Department, which offers advisory and operational support, research, and innovative thinking in diverse areas at policy, program, and project levels. A prominent aspect of this work was establishing a tight alignment between the prevailing social and emerging physical infrastructure.</p><p> Mr. Fisiy's journey at the Bank began in 1994 as a Social Scientist in the Africa Technical, Environmental, and Social Development Department (AFTES). His role evolved to that of a sector manager and director, where he supported development in conflict-affected areas in the Philippines, Indonesia, Papua New Guinea, and Thailand, as well as in post-disaster reconstruction. His extensive fieldwork in various African countries, including Cameroon, Chad, Central African Republic, Cote d’Ivoire, Ethiopia, Lesotho, Rwanda, Sierra Leone, South Africa, Swaziland, and Uganda, underscores his practical experience and hands-on approach.</p><p>At the thematic level, Mr. Fisiy has delved into complex issues related to the construction of extensive infrastructure, such as the Lesotho Katse Dam and the Nam Theun 2 (NT2) Hydropower project in Lao PDR. He has also worked on land conflict issues, has a deep understanding of conflict theory and management, and is actively involved in youth engagement to provide second-chance opportunities.</p>",
+            "bio": "<p><span>Cyprian Fisiy</span> With a career of over 40 years, Cyprian Fisiy has amassed a wealth of experience in development theory and practice. His work in academia and research further solidifies his expertise in the field. Twenty of these years were spent at the World Bank, where he rose from a Social Development Specialist to the position of Director of the Social Development Department. In retirement, he initiated the Fisiy Foundation and Leader Center, a testament to his dedication to societal improvement. The Foundation's goals are to address the thorny issues of local governance in Sub-Saharan Africa, help bridge the digital gap for youth, and facilitate their access to the digital economy.</p><p>Before he retired from the World Bank in December 2013, Mr. Fisiy was Director of the Social Development Department, which offers advisory and operational support, research, and innovative thinking in diverse areas at policy, program, and project levels. A prominent aspect of this work was establishing a tight alignment between the prevailing social and emerging physical infrastructure.</p><p> Mr. Fisiy's journey at the Bank began in 1994 as a Social Scientist in the Africa Technical, Environmental, and Social Development Department (AFTES). His role evolved to that of a sector manager and director, where he supported development in conflict-affected areas in the Philippines, Indonesia, Papua New Guinea, and Thailand, as well as in post-disaster reconstruction. His extensive fieldwork in various African countries, including Cameroon, Chad, Central African Republic, Cote d'Ivoire, Ethiopia, Lesotho, Rwanda, Sierra Leone, South Africa, Swaziland, and Uganda, underscores his practical experience and hands-on approach.</p><p>At the thematic level, Mr. Fisiy has delved into complex issues related to the construction of extensive infrastructure, such as the Lesotho Katse Dam and the Nam Theun 2 (NT2) Hydropower project in Lao PDR. He has also worked on land conflict issues, has a deep understanding of conflict theory and management, and is actively involved in youth engagement to provide second-chance opportunities.</p>",
             "signature": "The Visionary Founder"
         },
         "programs": {
@@ -687,28 +686,28 @@
                     "title": "Foundation Born",
                     "fullStory": "Dr. Fisiy establishes the Fisiy Foundation in Washington DC.",
                     "description": "Dr. Fisiy establishes the Fisiy Foundation in Washington DC.",
-                    "image": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=800"
+                    "image": "/assets/general/image3.jpeg"
                 },
                 {
                     "year": "2018",
                     "title": "The Resort Dream",
                     "fullStory": "Ngeme was first conceived as a way-station and Port of Entry for FFLC partners and supporters, where on-boarding would be carried out before participants move to the field. With the ongoing crisis in the NW& SW Regions, Ngeme has been re-engineered as a self-sustaining engine of growth and hospitality reflecting the BEST Cameroon can offer",
                     "description": "A idea to bridge high-end comfort with deep social impact.",
-                    "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800"
+                    "image": "/assets/general/image17.jpeg"
                 },
                 {
                     "year": "2023",
                     "title": "Breaking Ground",
                     "fullStory": "Construction begins on the volcanic shores of Limbe.",
                     "description": "Construction begins on the volcanic shores of Limbe.",
-                    "image": "https://images.unsplash.com/photo-1596701062351-8c0c16913c54?auto=format&fit=crop&q=80&w=800"
+                    "image": "/assets/general/image5.jpeg"
                 },
                 {
                     "year": "2025",
                     "title": "Opening & Legacy",
                     "fullStory": "how a close encounter with luxury can transform and fund lasting change in local communities.",
                     "description": "Ngeme launches, committing 20% of profits to the foundation.",
-                    "image": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=800"
+                    "image": "/assets/general/image10.jpeg"
                 }
             ]
         },

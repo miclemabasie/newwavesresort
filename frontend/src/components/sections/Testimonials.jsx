@@ -36,11 +36,11 @@ export default function Testimonials() {
           <div className="h-1 w-12 bg-lush mx-auto mt-8" />
         </div>
 
-        <div className="hidden lg:grid lg:grid-cols-3 gap-8">
+        {/* <div className="hidden lg:grid lg:grid-cols-3 gap-8">
           {testimonials.map((t, i) => (
             <TestimonialCard key={i} t={t} />
           ))}
-        </div>
+        </div> */}
 
         <div className="lg:hidden relative">
           <div className="overflow-visible">
@@ -73,11 +73,11 @@ export default function Testimonials() {
           </div>
         </div>
 
-        <div className="mt-20 text-center">
+        {/* <div className="mt-20 text-center">
           <p className="text-[11px] uppercase tracking-[0.3em] text-volcanic/40 font-semibold">
             Member of the Global Sustainable Tourism Council
           </p>
-        </div>
+        </div> */}
       </div>
     </section>
   );

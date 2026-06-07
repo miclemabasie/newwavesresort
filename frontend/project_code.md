@@ -2,7 +2,7 @@
 
 **Project Root:** `.`
 
-**Total Files:** 44
+**Total Files:** 46
 
 ---
 
@@ -646,6 +646,35 @@ if __name__ == "__main__":
 
 ---
 
+### File: `src/i18n.js`
+
+**Size:** 641 bytes  
+```javascript
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+import Backend from "i18next-http-backend";
+
+i18n
+  .use(Backend) // loads translations from /public/locales
+  .use(LanguageDetector) // detects user language
+  .use(initReactI18next) // passes i18n instance to react-i18next
+  .init({
+    fallbackLng: "en",
+    debug: process.env.NODE_ENV === "development",
+    interpolation: {
+      escapeValue: false, // React already safes from XSS
+    },
+    backend: {
+      loadPath: "/locales/{{lng}}/translation.json",
+    },
+  });
+
+export default i18n;
+```
+
+---
+
 ### File: `src/index.css`
 
 **Size:** 1154 bytes  
@@ -724,14 +753,14 @@ button:focus-visible {
 
 ### File: `src/main.jsx`
 
-**Size:** 357 bytes  
+**Size:** 336 bytes  
 ```jsx
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom';
 import './App.css'
 import App from './App.jsx'
-import Home from "./pages/Home.jsx";
+import './i18n'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -748,52 +777,21 @@ createRoot(document.getElementById('root')).render(
 
 ### File: `src/components/Hero.jsx`
 
-**Size:** 7043 bytes  
+**Size:** 5491 bytes  
 ```jsx
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const slides = [
-  {
-    image: "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&q=80&w=1920",
-    upperTitle: "Established Excellence",
-    title: "New Waves Resort",
-    subtitle: "A digital nomad sanctuary for the global citizen where luxury meets a legacy of social impact.",
-  },
-  {
-    image: "https://images.pexels.com/photos/2163074/pexels-photo-2163074.jpeg", 
-    upperTitle: "The Volcanic Oasis",
-    title: "Paradise away from Home",
-    subtitle: "Where dreams are made and relived. Discover our Unique Stone Beach for adventurers.",
-  },
-  
-  {
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1920",
-    upperTitle: "The Intellectual Hub",
-    title: "Digital Nomad Sanctuary",
-    subtitle: "Experience the unique synergy of volcanic coastlines and professional infrastructure.",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&q=80&w=1920",
-    upperTitle: "Culinary Heritage",
-    title: "Atlantic Gastronomy",
-    subtitle: "Freshness redefined. Savor the spirit of Limbe through our curated dining experience.",
-  },{
-    // NEW SLIDE ADDED HERE
-    image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=1920",
-    upperTitle: "Executive Infrastructure",
-    title: "Designed by and for Professionals",
-    subtitle: "A resort engineered for those who lead. We provide the silent efficiency required for high-stakes work in a sanctuary of peace.",
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function Hero() {
+  const { t } = useTranslation();
+  const slides = t('hero.slides', { returnObjects: true });
   const [current, setCurrent] = useState(0);
   const [isAuto, setIsAuto] = useState(true);
 
   const nextSlide = useCallback(() => {
     setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-  }, []);
+  }, [slides.length]);
 
   const prevSlide = () => {
     setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
@@ -808,7 +806,6 @@ export default function Hero() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-volcanic">
-      
       {/* Background Layer */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="popLayout">
@@ -828,7 +825,6 @@ export default function Hero() {
               className="w-full h-full object-cover" 
               alt="Resort View" 
             />
-            {/* Dark contrast gradients for legibility */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-black/80" />
             <div className="absolute inset-0 bg-ocean/20 mix-blend-multiply opacity-50" />
           </motion.div>
@@ -838,7 +834,6 @@ export default function Hero() {
       {/* Content Layer */}
       <div className="relative z-20 h-full container mx-auto flex flex-col items-center justify-center text-center px-6">
         <div className="max-w-7xl mt-[-5vh]">
-          {/* Upper Title remains as is */}
           <motion.span
             key={`upper-${current}`}
             initial={{ opacity: 0, y: 10 }}
@@ -848,7 +843,6 @@ export default function Hero() {
             {slides[current].upperTitle}
           </motion.span>
 
-          {/* MAIN TITLE: Drastically increased size for "Sovereign" impact */}
           <motion.h1 
             key={`title-${current}`}
             initial={{ opacity: 0, y: 30 }}
@@ -871,16 +865,16 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <button className="w-72 sm:w-auto bg-white text-ocean px-12 py-5 rounded-xl font-black transition-all uppercase text-[11px] tracking-[0.3em] hover:bg-lush hover:text-white shadow-2xl">
-              Make a Reservation
+              {t('common.reservation')}
             </button>
             <button className="w-72 sm:w-auto border border-white/40 text-white backdrop-blur-md px-12 py-5 rounded-xl font-black transition-all uppercase text-[11px] tracking-[0.3em] hover:bg-white hover:text-ocean">
-              The Foundation Story
+              {t('common.foundation_story')}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Manual Switch Controls */}
+      {/* Manual Switch Controls (unchanged) */}
       <div className="absolute inset-x-0 bottom-24 z-40 flex justify-between items-center container mx-auto pointer-events-none px-10">
         <button 
           onClick={prevSlide}
@@ -901,7 +895,7 @@ export default function Hero() {
         </button>
       </div>
 
-      {/* Decorative Wave */}
+      {/* Decorative Wave (unchanged) */}
       <div className="absolute bottom-0 left-0 w-full z-40 leading-[0]">
         <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-[40px] md:h-[60px] fill-sand">
           <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C58.47,91.54,118.14,81.22,176.5,69.57,235.43,57.81,321.39,56.44,321.39,56.44Z"></path>
@@ -914,16 +908,102 @@ export default function Hero() {
 
 ---
 
+### File: `src/components/LanguageSwitcher.jsx`
+
+**Size:** 2868 bytes  
+```jsx
+import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+
+export default function LanguageSwitcher() {
+  const { i18n } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const languages = [
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  ];
+
+  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+
+  const changeLanguage = (code) => {
+    i18n.changeLanguage(code);
+    setIsOpen(false);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-volcanic/70 hover:text-lush transition-colors bg-white/50 rounded-lg border border-sand/30 hover:border-lush/50"
+      >
+        <span className="text-base">{currentLanguage.flag}</span>
+        <span className="uppercase text-xs font-bold">{currentLanguage.code}</span>
+        <svg
+          className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-sand/30 overflow-hidden z-50">
+          {languages.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => changeLanguage(lang.code)}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors ${
+                i18n.language === lang.code
+                  ? 'bg-lush/10 text-lush font-medium'
+                  : 'text-volcanic/70 hover:bg-sand/30 hover:text-lush'
+              }`}
+            >
+              <span className="text-base">{lang.flag}</span>
+              <span className="capitalize">{lang.name}</span>
+              {i18n.language === lang.code && (
+                <svg className="w-4 h-4 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+---
+
 ### File: `src/components/Navbar.jsx`
 
-**Size:** 5548 bytes  
+**Size:** 5568 bytes  
 ```jsx
 import { useState, useEffect } from "react";
 import { NavLink, Link, useLocation } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "../assets/general/logo.png";
+import { useTranslation } from 'react-i18next';
+import logo from "../assets/general/logo1.png";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
@@ -940,23 +1020,21 @@ export default function Navbar() {
   }, [isOpen]);
 
   const navItems = [
-    { name: "Home", to: "/" },
-    { name: "Our Story", to: "/story" },
-    { name: "Experiences", to: "/experiences" },
-    { name: "Dining", to: "/services/dining" },
-    { name: "Accommodations", to: "/rooms" },
-    { name: "Gallery", to: "/gallery" },
-    { name: "Contact", to: "/contact" },
+    { name: t('nav.home'), to: "/" },
+    { name: t('nav.our_story'), to: "/story" },
+    { name: t('nav.experiences'), to: "/experiences" },
+    { name: t('nav.dining'), to: "/services/dining" },
+    { name: t('nav.accommodations'), to: "/rooms" },
+    { name: t('nav.gallery'), to: "/gallery" },
+    { name: t('nav.contact'), to: "/contact" },
   ];
 
   return (
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-ocean/5">
       <div className="container flex items-center justify-between h-20">
-        
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 z-[70]">
           <img src={logo} alt="Ngeme Logo" className="w-12 h-12" />
-          {/* <span className="text-3xl font-bold text-ocean">Ngeme</span> */}
         </Link>
 
         {/* Desktop Links */}
@@ -968,12 +1046,15 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Action Button & Hamburger */}
+        {/* Action Button & Language Switcher & Hamburger */}
         <div className="flex items-center gap-4">
           <Link to="/book" className="btn-pay py-2! px-5! text-xs md:text-sm">
-            Plan Your Stay
+            {t('common.plan_your_stay')}
           </Link>
-          
+
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+
           <button 
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden z-[70] p-2 text-lush focus:outline-none"
@@ -997,11 +1078,10 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay (unchanged except links) */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Dark Backdrop */}
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -1010,13 +1090,11 @@ export default function Navbar() {
               className="fixed inset-0 bg-volcanic/40 backdrop-blur-sm z-[60] lg:hidden"
             />
             
-            {/* Sidebar Container */}
             <motion.div 
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.4, ease: "circOut" }}
-              /* inset-y-0 and h-screen ensures the background covers the full height */
               className="fixed inset-y-0 right-0 h-screen w-[85%] max-w-sm bg-sand z-[65] lg:hidden shadow-2xl flex flex-col"
             >
               <div className="flex-1 overflow-y-auto px-10 pt-32 pb-10">
@@ -1043,10 +1121,9 @@ export default function Navbar() {
                 </div>
 
                 <div className="mt-16 pt-10 border-t border-ocean/10">
-                  <h4 className="text-ocean font-bold uppercase tracking-widest text-xs mb-4">Location</h4>
+                  <h4 className="text-ocean font-bold uppercase tracking-widest text-xs mb-4">{t('footer.contact_title')}</h4>
                   <p className="text-volcanic/70 text-sm leading-relaxed mb-8">
-                    Down Beach, Limbe<br />
-                    South West Region, Cameroon
+                    {t('footer.address')}
                   </p>
                   
                   <div className="flex gap-4">
@@ -1073,23 +1150,20 @@ export default function Navbar() {
 
 ### File: `src/components/sections/Cultinary.jsx`
 
-**Size:** 3079 bytes  
+**Size:** 2457 bytes  
 ```jsx
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 export default function Culinary() {
-  const dishes = [
-    { name: "Atlantic Chargrilled Lobster", desc: "Caught daily from the Limbe coast, infused with local herbs.", price: "To be determined" },
-    { name: "Traditional Limbe Sea Bream", desc: "Slow-roasted over volcanic stone heat for authentic depth.", price: "To be determined" },
-    { name: "Mt. Cameroon Garden Salad", desc: "Organic greens from the mountain foothills.", price: "To be determined" }
-  ];
+  const { t } = useTranslation();
+  const dishes = t('culinary.dishes', { returnObjects: true });
 
   return (
     <section className="container py-24 bg-white rounded-t-[3rem] -mt-12 relative z-40">
       <div className="grid lg:grid-cols-2 gap-16 items-center">
         
-        {/* REPLACED: Image of local coastal cuisine instead of a hamburger */}
         <div className="relative group overflow-hidden rounded-2xl">
           <img 
             src="https://buyam.co/storage/products/medium_507c6d52-0ba8-43a5-b8bd-d4ed94fd5b8a.png" 
@@ -1100,22 +1174,19 @@ export default function Culinary() {
         </div>
 
         <div>
-          <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">Gastronomy</span>
-          <h2 className="text-4xl md:text-5xl font-serif mt-4 mb-8 text-volcanic">Atlantic Flavors & Local Soul</h2>
+          <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">{t('culinary.section_tag')}</span>
+          <h2 className="text-4xl md:text-5xl font-serif mt-4 mb-8 text-volcanic">{t('culinary.title')}</h2>
           
           <p className="text-volcanic/70 text-lg leading-relaxed mb-6">
-            Our kitchen is a tribute to the Gulf of Guinea. We blend traditional Cameroonian 
-            techniques with global fine-dining standards, sourcing every ingredient from 
-            the local Limbe markets and our own organic gardens.
+            {t('culinary.description')}
           </p>
 
-          {/* ADDED: Diplomat's specific phrasing */}
           <div className="mb-10 space-y-2">
             <p className="text-lush font-bold text-xs uppercase tracking-widest flex items-center gap-2">
-              <span>✦</span> Organically sourced foods
+              <span>✦</span> {t('culinary.badges.organic')}
             </p>
             <p className="text-ocean font-bold text-xs uppercase tracking-widest flex items-center gap-2">
-              <span>✦</span> Promoting Cooking Classes for Long-Term residents/guests
+              <span>✦</span> {t('culinary.badges.cooking_classes')}
             </p>
           </div>
 
@@ -1131,7 +1202,7 @@ export default function Culinary() {
             ))}
           </div>
           
-          <Link to="/dining" className="btn-outline hover:text-lush hover:outline-lush mt-12 inline-block">View Full Menu</Link>
+          <Link to="/dining" className="btn-outline hover:text-lush hover:outline-lush mt-12 inline-block">{t('culinary.button')}</Link>
         </div>
       </div>
     </section>
@@ -1143,84 +1214,49 @@ export default function Culinary() {
 
 ### File: `src/components/sections/Facilities.jsx`
 
-**Size:** 7666 bytes  
+**Size:** 7158 bytes  
 ```jsx
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Home, 
-  Sparkles, 
-  Wifi, 
-  ConciergeBell, 
-  UtensilsCrossed, 
-  ChevronRight, 
-  CheckCircle2,
-  ChevronDown
-} from "lucide-react";
-
-const facilityCategories = [
-  {
-    id: "living",
-    label: "The Residency",
-    icon: Home,
-    items: ["Adults Only", "Private Entrance", "Hardwood Floors", "Walk-in Closet", "Soundproof/Hypoallergenic", "Air Conditioning", "Laptop Safe"]
-  },
-  {
-    id: "wellness",
-    label: "Spa & Wellness",
-    icon: Sparkles,
-    items: ["Hot Tub/Jacuzzi", "Spa Tub", "Bathrobes & Slippers", "Bidet", "Premium Toiletries", "Rain Shower", "Deep Soak Bathtub"]
-  },
-  {
-    id: "tech",
-    label: "Connectivity",
-    icon: Wifi,
-    items: ["Free High Speed Wifi", "Streaming (Netflix)", "Socket Near Bed", "Flat-screen TV", "Cable Channels", "Global Languages Spoken"]
-  },
-  {
-    id: "concierge",
-    label: "Services",
-    icon: ConciergeBell,
-    items: ["24-Hour Security", "Private Check-in/out", "Airport Shuttle", "Daily Housekeeping", "Laundry & Suit Press", "Free Private Parking"]
-  },
-  {
-    id: "culinary",
-    label: "Kitchen & Dining",
-    icon: UtensilsCrossed,
-    items: ["Full Kitchenette", "Refrigerator", "Dining Area", "Electric Kettle", "Washing Machine", "Room Service", "Landmark View Terrace"]
-  }
-];
+import { useTranslation } from 'react-i18next';
+import { Home, Sparkles, Wifi, ConciergeBell, UtensilsCrossed, ChevronRight, CheckCircle2, ChevronDown } from "lucide-react";
 
 export default function Facilities() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("living");
+  
+  const facilityCategories = [
+    { id: "living", label: t('facilities.categories.living.label'), icon: Home, items: t('facilities.categories.living.items', { returnObjects: true }) },
+    { id: "wellness", label: t('facilities.categories.wellness.label'), icon: Sparkles, items: t('facilities.categories.wellness.items', { returnObjects: true }) },
+    { id: "tech", label: t('facilities.categories.tech.label'), icon: Wifi, items: t('facilities.categories.tech.items', { returnObjects: true }) },
+    { id: "concierge", label: t('facilities.categories.concierge.label'), icon: ConciergeBell, items: t('facilities.categories.concierge.items', { returnObjects: true }) },
+    { id: "culinary", label: t('facilities.categories.culinary.label'), icon: UtensilsCrossed, items: t('facilities.categories.culinary.items', { returnObjects: true }) },
+  ];
+
   const activeCategory = facilityCategories.find(c => c.id === activeTab);
 
   return (
     <section className="py-24 md:py-32 bg-white border-y border-sand overflow-hidden">
       <div className="container mx-auto px-6 lg:max-w-7xl">
         
-        {/* Header - REPLACED "5-Star BS" with meaningful context */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-20 gap-12">
           <div className="max-w-2xl">
             <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-4 block">
-                The Infrastructure
+              {t('facilities.section_tag')}
             </span>
             <h2 className="text-4xl md:text-5xl font-serif text-volcanic leading-[1] tracking-tight mb-6">
-              World-Class <br /> Amenities
+              {t('facilities.title')}
             </h2>
           </div>
           
-          {/* New Explanatory Text Block */}
           <div className="lg:max-w-xs border-l-2 border-lush pl-8 py-2">
             <p className="text-volcanic/80 text-sm md:text-base leading-relaxed italic font-light">
-              "We provide the invisible infrastructure that allows the global mind to rest, 
-              ensuring every functional detail of your stay is met with precision 
-              and local warmth."
+              "{t('facilities.quote')}"
             </p>
           </div>
         </div>
 
-        {/* --- MOBILE VIEW (Accordion Style) --- */}
+        {/* --- MOBILE VIEW --- */}
         <div className="lg:hidden space-y-4">
           {facilityCategories.map((cat) => {
             const Icon = cat.icon;
@@ -1329,66 +1365,52 @@ export default function Facilities() {
 
 ### File: `src/components/sections/Footer.jsx`
 
-**Size:** 5944 bytes  
+**Size:** 5580 bytes  
 ```jsx
 import { Link } from "react-router";
-import logo from "../../assets/general/logo.png";
-import { 
-  Instagram, 
-  Linkedin, 
-  Facebook, 
-  Twitter, 
-  Youtube, 
-  MapPin 
-} from "lucide-react";
+import { useTranslation } from 'react-i18next';
+import logo from "../../assets/general/logo1.png";
+import { Instagram, Linkedin, Facebook, Twitter, Youtube, MapPin } from "lucide-react";
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-volcanic pt-24 pb-12 text-sand overflow-hidden relative">
-      {/* Background Decorative Accent */}
       <div className="absolute top-0 right-0 text-[12rem] font-bold text-white/[0.02] leading-none pointer-events-none select-none whitespace-nowrap">
         NEW WAVES
       </div>
 
       <div className="container relative z-10 mx-auto px-6 lg:max-w-7xl">
-        {/* Newsletter Section */}
         <div className="bg-lush rounded-3xl p-8 md:p-16 mb-24 flex flex-col lg:flex-row items-center justify-between gap-12 shadow-2xl border border-white/10">
           <div className="max-w-md text-center lg:text-left">
-            <h3 className="text-white text-3xl font-serif mb-4 italic">Stay Informed</h3>
+            <h3 className="text-white text-3xl font-serif mb-4 italic">{t('footer.newsletter_title')}</h3>
             <p className="text-white/80 text-sm leading-relaxed">
-              Join our exclusive network for updates on the Ocean-Side Dialogues and Fisiy Foundation progress.
+              {t('footer.newsletter_text')}
             </p>
           </div>
           
           <form className="w-full max-w-md flex flex-col sm:flex-row gap-3" onSubmit={(e) => e.preventDefault()}>
             <input 
               type="email" 
-              placeholder="Your Professional Email" 
+              placeholder={t('footer.newsletter_placeholder')}
               className="w-full flex-1 bg-white/10 border border-white/20 rounded-xl px-6 py-4 text-white placeholder:text-white/40 focus:outline-none focus:border-lush transition-colors"
             />
             <button className="bg-white text-ocean hover:bg-lush hover:text-white px-8 py-4 rounded-xl font-bold transition-all uppercase text-[10px] tracking-widest whitespace-nowrap flex-shrink-0">
-              Join
+              {t('footer.newsletter_button')}
             </button>
           </form>
         </div>
 
-        {/* Footer Navigation */}
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-16 mb-20 border-b border-white/10 pb-20">
           <div className="lg:col-span-2">
-            {/* Branding Section */}
             <div className="flex items-center gap-4 mb-8">
-              <img 
-                src={logo}
-                alt="New Waves Logo" 
-                className="w-12 h-12 object-contain" 
-              />
-              <h4 className="text-white text-2xl font-serif">New Waves Resort</h4>
+              <img src={logo} alt="New Waves Logo" className="w-12 h-12 object-contain" />
+              <h4 className="text-white text-2xl font-serif">{t('footer.brand_name')}</h4>
             </div>
             <p className="max-w-sm text-sm text-white/60 leading-relaxed mb-8">
-              A premier nomadic hub and hospitality sanctuary in Limbe, Cameroon. 
-              As a vehicle for the Fisiy Foundation, we believe in the power of connection and social inclusivity.
+              {t('footer.brand_description')}
             </p>
-            {/* Social Icons - Integrated for High Visibility */}
             <div className="flex gap-5">
               <SocialIcon Icon={Instagram} href="#" />
               <SocialIcon Icon={Linkedin} href="#" />
@@ -1399,47 +1421,45 @@ export default function Footer() {
           </div>
           
           <div>
-            <h5 className="text-white text-[11px] uppercase tracking-[0.3em] font-bold mb-8">The Legacy</h5>
+            <h5 className="text-white text-[11px] uppercase tracking-[0.3em] font-bold mb-8">{t('footer.legacy_title')}</h5>
             <ul className="space-y-4 text-sm">
-              <li><Link to="/foundation" className="text-white/50 hover:text-lush transition-colors duration-300 block">Fisiy Foundation</Link></li>
-              <li><Link to="/dialogues" className="text-white/50 hover:text-lush transition-colors duration-300 block">Ocean-Side Dialogues</Link></li>
+              <li><Link to="/foundation" className="text-white/50 hover:text-lush transition-colors duration-300 block">{t('footer.legacy_foundation')}</Link></li>
+              <li><Link to="/dialogues" className="text-white/50 hover:text-lush transition-colors duration-300 block">{t('footer.legacy_dialogues')}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h5 className="text-white text-[11px] uppercase tracking-[0.3em] font-bold mb-8">Concierge</h5>
+            <h5 className="text-white text-[11px] uppercase tracking-[0.3em] font-bold mb-8">{t('footer.concierge_title')}</h5>
             <ul className="space-y-4 text-sm">
-              <li><Link to="/rooms" className="text-white/50 hover:text-lush transition-colors duration-300 block">Book a Suite</Link></li>
-              
-              <li><Link to="/contact" className="text-white/50 hover:text-lush transition-colors duration-300 block">Direct Inquiries</Link></li>
+              <li><Link to="/rooms" className="text-white/50 hover:text-lush transition-colors duration-300 block">{t('footer.concierge_book')}</Link></li>
+              <li><Link to="/contact" className="text-white/50 hover:text-lush transition-colors duration-300 block">{t('footer.concierge_inquiries')}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h5 className="text-white text-[11px] uppercase tracking-[0.3em] font-bold mb-8">Contact</h5>
+            <h5 className="text-white text-[11px] uppercase tracking-[0.3em] font-bold mb-8">{t('footer.contact_title')}</h5>
             <ul className="space-y-4 text-sm text-white/50">
               <li className="flex items-start gap-3">
                 <MapPin size={16} className="text-lush shrink-0 mt-0.5" />
-                <span>Limbe, South West Region, Cameroon</span>
+                <span>{t('footer.address')}</span>
               </li>
-              <li>info@newwavesresort.com</li>
-              <li>+237 000 000 000</li>
+              <li>{t('footer.email')}</li>
+              <li>{t('footer.phone')}</li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Credits */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] uppercase tracking-[0.3em] text-white/30 font-bold">
           <div className="flex items-center gap-3">
             <span className="text-lush">✦</span> 
-            <span>EST. 2025</span>
+            <span>{t('footer.est')}</span>
             <span className="hidden md:block opacity-20">|</span>
-            <span>Limbe Sanctuary</span>
+            <span>{t('footer.sanctuary')}</span>
           </div>
-          <p>© 2026 New Waves Resort — All Rights Reserved</p>
+          <p>{t('footer.copyright')}</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors text-lush">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors text-lush">Terms of Stay</a>
+            <a href="#" className="hover:text-white transition-colors text-lush">{t('footer.privacy')}</a>
+            <a href="#" className="hover:text-white transition-colors text-lush">{t('footer.terms')}</a>
           </div>
         </div>
       </div>
@@ -1447,7 +1467,6 @@ export default function Footer() {
   );
 }
 
-// Sub-component for clean Social Icon rendering
 function SocialIcon({ Icon, href }) {
   return (
     <a 
@@ -1466,7 +1485,7 @@ function SocialIcon({ Icon, href }) {
 
 ### File: `src/components/sections/GalleryPreview.jsx`
 
-**Size:** 3399 bytes  
+**Size:** 3226 bytes  
 ```jsx
 import React, { useState } from 'react';
 import { galleryData } from "../../data/galleryData";
@@ -1474,24 +1493,24 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Lightbox from "../ui/Lightbox";
 import { ArrowRight } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 
 function GalleryPreview() {
+  const { t } = useTranslation();
   const [selectedIndex, setSelectedIndex] = useState(null);
-  // Slicing 8 images to perfectly fill two rows of 4 on desktop
   const previewImages = galleryData.slice(0, 8);
 
   return (
     <section className="bg-volcanic py-24 md:py-32 overflow-hidden">
       <div className="container mx-auto lg:max-w-[1440px] px-6 lg:px-12">
         
-        {/* Header Logic: High Contrast Pure White on Volcanic */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
           <div className="max-w-xl">
             <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-4 block">
-              The Perspective
+              {t('gallery_preview.section_tag')}
             </span>
             <h2 className="text-4xl md:text-5xl font-serif text-white italic leading-tight tracking-tight">
-              A Glimpse into <br /> Serenity
+              {t('gallery_preview.title')}
             </h2>
           </div>
           
@@ -1499,12 +1518,11 @@ function GalleryPreview() {
             to="/gallery" 
             className="group flex items-center gap-4 text-white font-black uppercase tracking-[0.4em] text-[10px] pb-3 border-b border-lush/50 hover:border-lush transition-all duration-300"
           >
-            View Full Gallery
+            {t('gallery_preview.button')}
             <ArrowRight className="w-5 h-5 text-lush group-hover:translate-x-2 transition-transform duration-300" />
           </Link>
         </div>
 
-        {/* 4-COLUMN GRID: Naturally reduces image size for a refined look */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
           {previewImages.map((item, index) => (
             <motion.div 
@@ -1519,7 +1537,6 @@ function GalleryPreview() {
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
               />
               
-              {/* Elegant Hover Overlay - High Visibility White Text */}
               <div className="absolute inset-0 bg-volcanic/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
                 <span className="text-lush font-black uppercase tracking-[0.4em] text-[9px] mb-2">
                   {item.category}
@@ -1554,13 +1571,15 @@ export default GalleryPreview;
 
 ### File: `src/components/sections/ImpactSection.jsx`
 
-**Size:** 2262 bytes  
+**Size:** 2083 bytes  
 ```jsx
-// app/components/sections/ImpactSection.jsx
 import { motion } from "framer-motion";
-import image1 from "../../assets/general/limbehouse.jpg";
+import { useTranslation } from 'react-i18next';
+import image1 from "../../assets/general/image2.jpeg";
 
 export default function ImpactSection() {
+  const { t } = useTranslation();
+
   return (
     <section className="container py-24">
       <div className="grid lg:grid-cols-2 gap-20 items-center">
@@ -1572,24 +1591,30 @@ export default function ImpactSection() {
         >
           <div className="flex items-center gap-3 mb-6">
             <span className="h-px w-8 bg-lush"></span>
-            <span className="text-lush font-bold tracking-[0.3em] uppercase text-xs">Fisiy Foundation Partnership</span>
+            <span className="text-lush font-bold tracking-[0.3em] uppercase text-xs">{t('impact.section_tag')}</span>
           </div>
-          <h2 className="text-5xl font-serif mb-8 leading-tight text-volcanic">A Purpose-Driven Presence</h2>
+          <h2 className="text-5xl font-serif mb-8 leading-tight text-volcanic">{t('impact.title')}</h2>
           <p className="text-lg text-volcanic/80 mb-6 leading-relaxed">
-            Ngeme translates to "Sun of the Sea". More than a resort, this is a center for social inclusivity. 
-            As a project born from the <strong>Fisiy Foundation</strong>, your stay contributes directly to community empowerment in Cameroon.
+            {t('impact.description')}
           </p>
           <ul className="space-y-4 mb-10">
-            {['Proceeds support local education', 'Socially inclusive employment', 'Sustainable ecosystem growth', 'Prepares Youth to move to Opportunity (through digital training sponsored by FFLC)'].map((text) => (
-              <li key={text} className="flex items-center gap-3 text-sm font-medium text-volcanic/70">
-                <span className="w-1.5 h-1.5 bg-lush rounded-full"></span> {text}
+            {[
+              'impact.list.education',
+              'impact.list.employment',
+              'impact.list.sustainability',
+              'impact.list.digital'
+            ].map((key) => (
+              <li key={key} className="flex items-center gap-3 text-sm font-medium text-volcanic/70">
+                <span className="w-1.5 h-1.5 bg-lush rounded-full"></span> {t(key)}
               </li>
             ))}
           </ul>
           <button
-           className="btn-outline"
-           onClick={() => window.open('https://fisiyfoundation.org/', '_blank')}
-           >Our Foundation Story</button>
+            className="btn-outline"
+            onClick={() => window.open('https://fisiyfoundation.org/', '_blank')}
+          >
+            {t('impact.button')}
+          </button>
         </motion.div>
         
         <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
@@ -1610,45 +1635,25 @@ export default function ImpactSection() {
 
 ### File: `src/components/sections/Infrastructure.jsx`
 
-**Size:** 1361 bytes  
+**Size:** 814 bytes  
 ```jsx
-// app/components/sections/Infrastructure.jsx
+import { useTranslation } from 'react-i18next';
 import ServiceCard from "../ui/ServiceCard";
 
 export default function Infrastructure() {
-  const features = [
-    {
-      title: "Resilient Connectivity",
-      description: "Dual-redundant Fiber & Starlink systems. Guaranteed low-latency for global board meetings.",
-      icon: "🌐",
-      to: "/nomads"
-    },
-    {
-      title: "Energy Sovereignty",
-      description: "Smart solar grid integration ensuring 24/7 power for work and leisure.",
-      icon: "☀️",
-      to: "/nomads"
-    },
-    {
-      title: "Executive Suites",
-      description: "Soundproofed conference facilities and boardrooms with high-end AV technology.",
-      icon: "🏢",
-      to: "/conferences"
-    }
-  ];
+  const { t } = useTranslation();
+  const features = t('infrastructure.features', { returnObjects: true });
 
   return (
     <section className="bg-ocean py-24">
       <div className="container">
         <div className="mb-16">
-          <h2 className="text-white font-serif italic mb-4">Precision Infrastructure</h2>
-          <p className="text-white/70 max-w-2xl">
-            Reliability is our baseline. We provide the technical stability required by world-class leaders and digital professionals.
-          </p>
+          <h2 className="text-white font-serif italic mb-4">{t('infrastructure.title')}</h2>
+          <p className="text-white/70 max-w-2xl">{t('infrastructure.subtitle')}</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {features.map((f) => (
-            <ServiceCard key={f.title} {...f} />
+            <ServiceCard key={f.title} title={f.title} description={f.description} icon={f.icon} to={f.to} />
           ))}
         </div>
       </div>
@@ -1661,16 +1666,18 @@ export default function Infrastructure() {
 
 ### File: `src/components/sections/OceanSide.jsx`
 
-**Size:** 2912 bytes  
+**Size:** 2179 bytes  
 ```jsx
 import React from 'react';
 import { motion } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 import { Mic2, GraduationCap } from "lucide-react";
 
 function OceanSide() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-20 md:py-35 text-center bg-volcanic relative overflow-hidden">
-      {/* Subtle Structural Grain to prevent flat "digital" look */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
 
       <div className="container max-w-4xl mx-auto px-6 relative z-10">
@@ -1680,46 +1687,35 @@ function OceanSide() {
           viewport={{ once: true }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Section Identifier */}
           <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-8 block">
-            Intellectual Sanctuary
+            {t('ocean_side.section_tag')}
           </span>
 
-          {/* Primary Title - Pure White for maximum legibility */}
           <h2 className="font-serif italic text-white mb-6 text-5xl md:text-5xl tracking-tight leading-tight">
-            The Ocean-Side Dialogues
+            {t('ocean_side.title')}
           </h2>
 
-          {/* Diplomat's Required Facilities - High Contrast Sub-Header */}
           <div className="flex items-center justify-center gap-6 mb-12">
             <div className="flex items-center gap-2">
               <GraduationCap size={16} className="text-lush" />
-              <span className="text-white font-bold uppercase tracking-[0.2em] text-[11px]">Learning</span>
+              <span className="text-white font-bold uppercase tracking-[0.2em] text-[11px]">{t('ocean_side.badge_learning')}</span>
             </div>
-            <div className="h-4 w-px bg-white/20" />
-            <div className="flex items-center gap-2">
-              <Mic2 size={16} className="text-lush" />
-              <span className="text-white font-bold uppercase tracking-[0.2em] text-[11px]">Podcast Facilities</span>
-            </div>
+            
           </div>
 
-          {/* Description - Using White with high opacity (90%) for the "Old Man's" eyes */}
           <p className="text-xl md:text-3xl text-white/90 mb-16 leading-relaxed font-light max-w-3xl mx-auto">
-            A sanctuary for global thought leaders, convening to address 
-            the pertinence of <span className="text-lush font-medium italic">African</span> and world issues.
+            {t('ocean_side.subtitle')}
           </p>
 
-          {/* Premium Call to Action */}
           <div className="flex justify-center">
             <button className="bg-white text-volcanic px-14 py-6 rounded-2xl font-black uppercase text-[11px] tracking-[0.4em] hover:bg-lush hover:text-white transition-all duration-500 shadow-2xl">
-              Request Invitation
+              {t('ocean_side.button')}
             </button>
           </div>
           
         </motion.div>
       </div>
 
-      {/* Decorative Bottom Line */}
       <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-lush/20 to-transparent" />
     </section>
   )
@@ -1732,54 +1728,27 @@ export default OceanSide;
 
 ### File: `src/components/sections/Partnerships.jsx`
 
-**Size:** 3481 bytes  
+**Size:** 2768 bytes  
 ```jsx
 import { motion } from "framer-motion";
-
-const partners = [
-  { 
-    name: "Fisiy Foundation", 
-    role: "Social Impact Lead", 
-    logo: "⚖️" 
-  },
-  { 
-    name: "Global Policy Network", 
-    role: "Strategic Partner", 
-    logo: "🌍" 
-  },
-  { 
-    name: "Limbe Artisanal Guild", 
-    role: "Sustainable Sourcing", 
-    logo: "🎨" 
-  },
-  { 
-    name: "Fiber-Optic Backbone", 
-    role: "High-Speed Connectivity", 
-    logo: "⚡" 
-  },
-  { 
-    name: "Cameroon Green Initiative", 
-    role: "Eco-Certification", 
-    logo: "🍃" 
-  }
-];
+import { useTranslation } from 'react-i18next';
 
 export default function Partnerships() {
+  const { t } = useTranslation();
+  const partners = t('partnerships.partners', { returnObjects: true });
+
   return (
     <section className="py-24 bg-white border-y border-sand">
       <div className="container">
         <div className="grid lg:grid-cols-3 gap-16 items-center">
           
-          {/* Left Side: Strategic Text */}
           <div className="lg:col-span-1">
-            <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">Strategic Synergy</span>
+            <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">{t('partnerships.section_tag')}</span>
             <h2 className="text-4xl font-serif mt-4 text-volcanic leading-tight">
-              A Network of <br /> Global Excellence
+              {t('partnerships.title')}
             </h2>
             <p className="text-volcanic/70 mt-6 leading-relaxed text-sm">
-              Ngeme operates at the intersection of international standards and local empowerment. 
-              Our partnerships are carefully curated to ensure that every stay contributes to 
-              a sustainable, reliable, and socially inclusive supply chain.
+              {t('partnerships.description')}
             </p>
             <div className="mt-8 flex items-center gap-4">
               <div className="h-12 w-12 rounded-full border border-sand flex items-center justify-center text-xl">🤝</div>
@@ -1789,7 +1758,6 @@ export default function Partnerships() {
             </div>
           </div>
 
-          {/* Right Side: Interactive Logo/Partner Grid */}
           <div className="lg:col-span-2">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {partners.map((partner, i) => (
@@ -1810,13 +1778,12 @@ export default function Partnerships() {
                 </motion.div>
               ))}
               
-              {/* "Become a Partner" CTA Box */}
               <motion.div
                 whileHover={{ scale: 0.98 }}
                 className="p-8 bg-lush rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer"
               >
-                <p className="text-white font-serif italic text-lg mb-2">Join the Mission</p>
-                <span className="text-[9px] text-sand/60 uppercase tracking-[0.2em]">Partner with us</span>
+                <p className="text-white font-serif italic text-lg mb-2">{t('partnerships.cta')}</p>
+                <span className="text-[9px] text-sand/60 uppercase tracking-[0.2em]">{t('partnerships.cta_sub')}</span>
               </motion.div>
             </div>
           </div>
@@ -1832,48 +1799,25 @@ export default function Partnerships() {
 
 ### File: `src/components/sections/Principles.jsx`
 
-**Size:** 4756 bytes  
+**Size:** 3778 bytes  
 ```jsx
 import { motion } from "framer-motion";
-import { 
-  Users, 
-  ShieldCheck, 
-  Leaf, 
-  Sparkles 
-} from "lucide-react";
+import { useTranslation } from 'react-i18next';
+import { Users, ShieldCheck, Leaf, Sparkles } from "lucide-react";
 
-const principles = [
-  {
-    number: "01",
-    title: "Connection & Outreach",
-    description: "Fostering deep connectivity between the global diaspora and their local networks through knowledge exchange and intellectual curiosity.",
-    Icon: Users
-  },
-  {
-    number: "02",
-    title: "Outstanding Professional Security",
-    description: "A sanctuary providing absolute physical and digital peace of mind, ensuring a safe space for high-level professional engagement.",
-    Icon: ShieldCheck
-  },
-  {
-    number: "03",
-    title: "Sustainable Legacy",
-    description: "Living our values through clean living, reliable supply-chain communities, and deep-rooted support for the Fisiy Foundation.",
-    Icon: Leaf
-  },
-  {
-    number: "04",
-    title: "Luxury Redefined",
-    subtext: "(Subtle and timeless)",
-    description: "An experience where elegance meets purpose, prioritizing quiet quality and an enduring aesthetic that transcends the temporary.",
-    Icon: Sparkles
-  }
-];
+const iconMap = {
+  "Connection & Outreach": Users,
+  "Outstanding Professional Security": ShieldCheck,
+  "Sustainable Legacy": Leaf,
+  "Luxury Redefined": Sparkles,
+};
 
 export default function Principles() {
+  const { t } = useTranslation();
+  const principles = t('principles.items', { returnObjects: true });
+
   return (
     <section className="relative py-24 md:py-20 overflow-hidden bg-sand">
-      {/* Subtle Background Texture */}
       <div className="absolute inset-0 z-0 opacity-[0.05] pointer-events-none">
         <img 
           src="https://images.unsplash.com/photo-1469474099711-423907c111e4?auto=format&fit=crop&q=80&w=1920" 
@@ -1889,22 +1833,21 @@ export default function Principles() {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-lush font-black tracking-[0.5em] uppercase text-[10px]"
           >
-            The Ngeme Ethos
+            {t('principles.section_tag')}
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-serif text-lush mt-4 italic"
           >
-            Our Guiding Principles
+            {t('principles.title')}
           </motion.h2>
           <div className="h-0.5 w-24 bg-lush mx-auto mt-8 opacity-40" />
         </div>
 
-        {/* 4-Column Grid for Desktop Clarity */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {principles.map((p, i) => {
-            const IconComponent = p.Icon;
+            const IconComponent = iconMap[p.title] || Sparkles;
             return (
               <motion.div
                 key={i}
@@ -1914,7 +1857,6 @@ export default function Principles() {
                 viewport={{ once: true }}
                 className="group relative p-10 rounded-[2.5rem] bg-white shadow-sm border border-ocean/5 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col min-h-[420px]"
               >
-                {/* Number Accent */}
                 <div className="text-ocean/10 font-serif text-6xl mb-6 group-hover:text-lush/20 transition-colors">
                   {p.number}
                 </div>
@@ -1934,7 +1876,6 @@ export default function Principles() {
                   {p.description}
                 </p>
 
-                {/* Lucide Icon - Replaced Emoji Rubbish */}
                 <div className="absolute top-10 right-10 text-lush opacity-20 group-hover:opacity-100 transition-all duration-500 scale-110">
                   <IconComponent size={32} strokeWidth={1.2} />
                 </div>
@@ -1943,7 +1884,6 @@ export default function Principles() {
           })}
         </div>
 
-        {/* Closing Tagline */}
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -1951,7 +1891,7 @@ export default function Principles() {
           className="mt-24 text-center"
         >
           <p className="text-[10px] uppercase tracking-[0.5em] text-ocean font-black opacity-30">
-            Strategic Outreach <span className="mx-4 text-lush">•</span> Absolute Security <span className="mx-4 text-lush">•</span> Timeless Luxury
+            {t('principles.tagline')}
           </p>
         </motion.div>
       </div>
@@ -1964,65 +1904,43 @@ export default function Principles() {
 
 ### File: `src/components/sections/ServiceGrid.jsx`
 
-**Size:** 2539 bytes  
+**Size:** 1456 bytes  
 ```jsx
 import React from "react";
+import { useTranslation } from 'react-i18next';
 import ServiceDiscoveryCard from "../ui/ServiceDiscoveryCard";
 
-const services = [
-  {
-    title: "Events/Banquet Hall & Conference Facilities",
-    subtitle: "State-of-the-art venues for high-level professional engagement and refined celebrations.",
-    category: "Professional",
-    image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800",
-    to: "/conferences"
-  },
-  {
-    title: "World Class Swimming Pool",
-    subtitle: "Limbe’s premier ocean-front aquatic experience, designed for absolute serenity.",
-    category: "Leisure",
-    image: "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&q=80&w=800",
-    to: "/leisure"
-  },
-  {
-    title: "In-House Library",
-    subtitle: "A curated intellectual sanctuary for deep focus, research, and quiet reflection.",
-    category: "Intellectual",
-    image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=800",
-    to: "/library"
-  },
-  {
-    title: "Know Your Environs Guided Tours",
-    subtitle: "Expertly curated journeys through Limbe's landmarks and the volcanic slopes of Mt. Cameroon.",
-    category: "Experiences",
-    image: "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&q=80&w=800",
-    to: "/tours"
-  }
-];
-
 export default function ServiceGrid() {
+  const { t } = useTranslation();
+  const services = t('service_grid.services', { returnObjects: true });
+
   return (
     <section className="container mx-auto py-24 bg-sand lg:max-w-7xl px-6">
       <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
         <div className="max-w-xl">
           <span className="text-lush font-black tracking-[0.4em] uppercase text-[10px]">
-            Excellence in Service
+            {t('service_grid.section_tag')}
           </span>
           <h2 className="text-4xl md:text-5xl font-serif mt-4 text-volcanic leading-tight">
-            Everything you need, <br />
-            <span className="italic">Expertly handled.</span>
+            {t('service_grid.title')} <br />
+            <span className="italic">{t('service_grid.title_italic')}</span>
           </h2>
         </div>
         <p className="text-volcanic/60 max-w-sm pb-2 text-sm leading-relaxed">
-          From diplomatic-level security to world-class leisure, our services are 
-          designed to support your vision and professional lifestyle.
+          {t('service_grid.subtitle')}
         </p>
       </div>
 
-      {/* 4-Column Grid: Keeping images smaller and more refined on Desktop */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {services.map((service, index) => (
-          <ServiceDiscoveryCard key={index} {...service} />
+          <ServiceDiscoveryCard 
+            key={index} 
+            title={service.title} 
+            subtitle={service.subtitle} 
+            category={service.category} 
+            image={service.image} 
+            to={service.to} 
+          />
         ))}
       </div>
     </section>
@@ -2034,27 +1952,25 @@ export default function ServiceGrid() {
 
 ### File: `src/components/sections/Suites.jsx`
 
-**Size:** 2149 bytes  
+**Size:** 1688 bytes  
 ```jsx
 import { motion } from "framer-motion";
-
-const suites = [
-  { name: "The Atlantic Horizon", size: "120sqm", price: "$350", img: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800" },
-  { name: "Digital Nomad Studio", size: "65sqm", price: "$210", img: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=800" },
-  { name: "Executive Founders Suite", size: "180sqm", price: "$550", img: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800" }
-];
+import { useTranslation } from 'react-i18next';
 
 export default function Suites() {
+  const { t } = useTranslation();
+  const suites = t('suites.suites', { returnObjects: true });
+
   return (
     <section className="py-24 bg-sand">
       <div className="container">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-xl">
-            <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">Accommodations</span>
-            <h2 className="text-4xl md:text-4xl font-serif mt-4 italic text-volcanic">Designed for Luxury & Excellence</h2>
+            <span className="text-lush font-bold tracking-[0.3em] uppercase text-[10px]">{t('suites.section_tag')}</span>
+            <h2 className="text-4xl md:text-4xl font-serif mt-4 italic text-volcanic">{t('suites.title')}</h2>
           </div>
           <p className="text-volcanic/60 max-w-xs text-sm">
-            Whether for a high-level summit or a nomadic retreat, our suites offer a sanctuary of productivity.
+            {t('suites.subtitle')}
           </p>
         </div>
 
@@ -2082,36 +1998,17 @@ export default function Suites() {
 
 ### File: `src/components/sections/Testimonials.jsx`
 
-**Size:** 5248 bytes  
+**Size:** 4234 bytes  
 ```jsx
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const testimonials = [
-  {
-    quote: "Ngeme provides a rare combination of Atlantic tranquility and the robust infrastructure I need for international consulting. The reliability of the power and data systems is world-class.",
-    author: "Dr. Amadou K.",
-    role: "Global Policy Advisor",
-    location: "Washington D.C."
-  },
-  {
-    quote: "The focus on social inclusivity through the Fisiy Foundation makes every stay feel meaningful. It is rare to find a resort that balances luxury with such deep community impact.",
-    author: "Sarah J.",
-    role: "Executive Director, International NGO",
-    location: "Geneva"
-  },
-  {
-    quote: "A true sanctuary for the digital nomad. The conference facilities and the view of the volcanic coast create an environment that fosters both productivity and deep reflection.",
-    author: "Jean-Pierre M.",
-    role: "Tech Entrepreneur & Investor",
-    location: "Paris"
-  }
-];
+import { useTranslation } from 'react-i18next';
 
 export default function Testimonials() {
+  const { t } = useTranslation();
+  const testimonials = t('testimonials.testimonials', { returnObjects: true });
   const [index, setIndex] = useState(0);
 
-  // Swipe logic for mobile
   const handleDragEnd = (event, info) => {
     if (info.offset.x < -50 && index < testimonials.length - 1) {
       setIndex(index + 1);
@@ -2122,7 +2019,6 @@ export default function Testimonials() {
 
   return (
     <section className="py-32 bg-sand/30 relative overflow-hidden">
-      {/* Background Serif Accent */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 opacity-[0.03] pointer-events-none">
         <span className="text-[30rem] font-serif leading-none">“</span>
       </div>
@@ -2134,22 +2030,20 @@ export default function Testimonials() {
             whileInView={{ opacity: 1 }}
             className="text-lush font-bold tracking-[0.4em] uppercase text-[10px]"
           >
-            Client Perspectives
+            {t('testimonials.section_tag')}
           </motion.span>
           <h2 className="text-4xl md:text-5xl font-serif mt-4 text-volcanic italic">
-            Trusted by the Global Community
+            {t('testimonials.title')}
           </h2>
           <div className="h-1 w-12 bg-lush mx-auto mt-8" />
         </div>
 
-        {/* --- DESKTOP GRID (Hidden on Mobile) --- */}
-        <div className="hidden lg:grid lg:grid-cols-3 gap-8">
+        {/* <div className="hidden lg:grid lg:grid-cols-3 gap-8">
           {testimonials.map((t, i) => (
             <TestimonialCard key={i} t={t} />
           ))}
-        </div>
+        </div> */}
 
-        {/* --- MOBILE SLIDER (Visible only on Mobile/Tablet) --- */}
         <div className="lg:hidden relative">
           <div className="overflow-visible">
             <motion.div
@@ -2168,7 +2062,6 @@ export default function Testimonials() {
             </motion.div>
           </div>
 
-          {/* Pagination Dots */}
           <div className="flex justify-center gap-3 mt-10">
             {testimonials.map((_, i) => (
               <button
@@ -2182,17 +2075,16 @@ export default function Testimonials() {
           </div>
         </div>
 
-        <div className="mt-20 text-center">
+        {/* <div className="mt-20 text-center">
           <p className="text-[11px] uppercase tracking-[0.3em] text-volcanic/40 font-semibold">
             Member of the Global Sustainable Tourism Council
           </p>
-        </div>
+        </div> */}
       </div>
     </section>
   );
 }
 
-// Extracted Card Component for Clean Engineering
 function TestimonialCard({ t }) {
   return (
     <motion.div 
@@ -2230,59 +2122,27 @@ function TestimonialCard({ t }) {
 
 ### File: `src/components/sections/Values.jsx`
 
-**Size:** 5487 bytes  
+**Size:** 4766 bytes  
 ```jsx
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 
-const values = [
-  {
-    id: "exclusivity",
-    title: "Exclusivity",
-    label: "A Private Sanctuary",
-    image: "https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&q=80&w=1400",
-    desc: "A resort designed for the discerning few, ensuring peace, tranquility, and professional focus."
-  },
-  {
-    id: "connectivity",
-    title: "Connectivity",
-    label: "High-Speed Infrastructure",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1400",
-    desc: "Meeting a global network of digital nomads with enterprise-grade professional tools."
-  },
-  {
-    id: "culture",
-    title: "Local Culture",
-    label: "Limbe Heritage",
-    image: "https://images.unsplash.com/photo-1523474253046-2cd2c78b681e?auto=format&fit=crop&q=80&w=1400",
-    desc: "Celebrating local cultures, crafts and Atlantic heritage through curated partnerships."
-  },
-  {
-    id: "luxury",
-    title: "Timeless Luxury",
-    label: "Enduring Elegance",
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1400",
-    desc: "An aesthetic of comfort that transcends trends, rooted in architectural harmony."
-  },
-  {
-    id: "organic",
-    title: "Organic Produce",
-    label: "Volcanic Soil",
-    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=1400",
-    desc: "Fresh nourishment sourced directly from the fertile volcanic soils of the region."
-  }
+const valueKeys = [
+  { id: "exclusivity", titleKey: "values.exclusivity.title", labelKey: "values.exclusivity.label", descKey: "values.exclusivity.desc", image: "https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&q=80&w=1400" },
+  { id: "connectivity", titleKey: "values.connectivity.title", labelKey: "values.connectivity.label", descKey: "values.connectivity.desc", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1400" },
+  { id: "culture", titleKey: "values.culture.title", labelKey: "values.culture.label", descKey: "values.culture.desc", image: "https://images.unsplash.com/photo-1523474253046-2cd2c78b681e?auto=format&fit=crop&q=80&w=1400" },
+  { id: "luxury", titleKey: "values.luxury.title", labelKey: "values.luxury.label", descKey: "values.luxury.desc", image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1400" },
+  { id: "organic", titleKey: "values.organic.title", labelKey: "values.organic.label", descKey: "values.organic.desc", image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=1400" },
 ];
 
 export default function ValuesSection() {
-  const [activeId, setActiveId] = useState(values[0].id);
-
-  const activeValue = values.find(v => v.id === activeId);
+  const { t } = useTranslation();
+  const [activeId, setActiveId] = useState(valueKeys[0].id);
+  const activeValue = valueKeys.find(v => v.id === activeId);
 
   return (
-    // Replaced min-h-700 with h-auto and large padding for mobile flexibility
     <section className="relative w-full min-h-[800px] flex items-center py-20 overflow-hidden bg-volcanic">
-      
-      {/* Background Image - Adjusted opacity for mobile legibility */}
       <AnimatePresence mode="wait">
         <motion.div
           key={activeId}
@@ -2297,25 +2157,20 @@ export default function ValuesSection() {
             className="w-full h-full object-cover grayscale-[20%]" 
             alt="Background"
           />
-          {/* Gradient: Top-to-bottom on mobile, Left-to-right on Desktop */}
           <div className="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-volcanic via-volcanic/80 lg:via-volcanic/60 to-transparent" />
         </motion.div>
       </AnimatePresence>
 
-      {/* Container: Increased max-width to 1800px for browser expansion */}
       <div className="w-full relative z-10 mx-auto px-6 lg:px-20 max-w-[1800px] grid lg:grid-cols-2 gap-16 items-center">
-        
-        {/* Left: Interactive List */}
         <div className="space-y-4">
           <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-8 block">
-            The Residency Pillars
+            {t('values.section_tag')}
           </span>
           
           <div className="flex flex-col">
-            {values.map((v, index) => (
+            {valueKeys.map((v, index) => (
               <button
                 key={v.id}
-                // onClick for Mobile + onMouseEnter for Desktop
                 onClick={() => setActiveId(v.id)}
                 onMouseEnter={() => setActiveId(v.id)}
                 className="group py-5 text-left relative outline-none"
@@ -2325,7 +2180,7 @@ export default function ValuesSection() {
                     0{index + 1}
                   </span>
                   <h3 className={`text-3xl md:text-5xl lg:text-7xl font-serif transition-all duration-500 ${activeId === v.id ? 'text-white translate-x-4 md:translate-x-8' : 'text-white/20 group-hover:text-white/40'}`}>
-                    {v.title}
+                    {t(v.titleKey)}
                   </h3>
                 </div>
               </button>
@@ -2333,7 +2188,6 @@ export default function ValuesSection() {
           </div>
         </div>
 
-        {/* Right: The Detail Card - Now Visible on Mobile as a "Slide-up" effect */}
         <div className="relative mt-8 lg:mt-0">
           <AnimatePresence mode="wait">
             <motion.div
@@ -2344,10 +2198,10 @@ export default function ValuesSection() {
               className="bg-white/5 backdrop-blur-2xl border border-white/10 p-10 md:p-14 rounded-[2rem] md:rounded-[3.5rem] w-full max-w-xl mx-auto lg:ml-auto"
             >
               <span className="text-lush font-black uppercase tracking-[0.4em] text-[10px] mb-6 block">
-                {activeValue.label}
+                {t(activeValue.labelKey)}
               </span>
               <p className="text-white text-xl md:text-2xl leading-relaxed font-light">
-                {activeValue.desc}
+                {t(activeValue.descKey)}
               </p>
               
               <div className="mt-10 flex items-center gap-4">
@@ -2706,53 +2560,33 @@ export const menuItems = [
 
 ### File: `src/pages/Accomodations.jsx`
 
-**Size:** 13711 bytes  
+**Size:** 12266 bytes  
 ```jsx
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 import Navbar from "../components/Navbar";
 import Footer from "../components/sections/Footer";
 import { Check, X, Calendar, Users, Coffee, Waves, Search, ArrowUpDown } from "lucide-react";
 
-const suites = [
-  {
-    id: "ocean-suite",
-    title: "Ocean View Suite",
-    price: 350,
-    image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1000",
-    description: "Wake up to the gentle sounds of the Atlantic and panoramic views of the shimmering coastline. Our Ocean View Suites blend modern comfort with traditional Cameroonian elegance.",
-    amenities: ["Private Balcony", "King-size Bed", "Spacious Living Area", "En-suite Bathroom", "High-speed Wi-Fi"]
-  },
-  {
-    id: "garden-bungalow",
-    title: "Garden Bungalow",
-    price: 280,
-    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1000",
-    description: "Nestled amidst lush tropical gardens, our Garden Bungalows offer a tranquil escape. Enjoy privacy and serenity with easy access to the resort's facilities.",
-    amenities: ["Private Patio", "Queen-size Bed", "Garden Views", "Outdoor Shower", "Personalized Concierge"]
-  },
-  {
-    id: "executive-villa",
-    title: "Executive Villa",
-    price: 800,
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1000",
-    description: "For those seeking ultimate luxury, our Executive Villas provide an unparalleled experience. Featuring multiple bedrooms, a private pool, and dedicated staff.",
-    amenities: ["Private Infinity Pool", "Multiple Bedrooms", "Butler Service", "Gourmet Kitchen", "Panoramic Views"]
-  },
-  {
-    id: "deluxe-room",
-    title: "Deluxe Room",
-    price: 220,
-    image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=1000",
-    description: "Our Deluxe Rooms offer a cozy yet elegant stay. Ideal for couples or solo travelers. Thoughtfully designed with comfort in mind for a peaceful retreat.",
-    amenities: ["Comfortable Double Bed", "Modern Furnishings", "Smart TV", "Mini-Bar", "Room Service"]
-  }
-];
-
 export default function Accommodations() {
+  const { t } = useTranslation();
+  const suitesData = t('accomodations.suites', { returnObjects: true });
   const [selectedSuite, setSelectedSuite] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("default");
+
+  // Add image URLs if not present in translation
+  const suites = suitesData.map((suite, idx) => ({
+    ...suite,
+    image: suite.image || [
+      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1000",
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1000",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1000",
+      "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=1000"
+    ][idx % 4],
+    amenities: suite.amenities || t(`facilities.categories.${idx === 0 ? 'living' : idx === 1 ? 'wellness' : 'tech'}.items`, { returnObjects: true }).slice(0, 5)
+  }));
 
   const filteredSuites = useMemo(() => {
     let filtered = suites.filter(suite =>
@@ -2767,37 +2601,34 @@ export default function Accommodations() {
     }
 
     return filtered;
-  }, [searchQuery, sortBy]);
+  }, [searchQuery, sortBy, suites]);
 
   return (
     <div className="bg-sand/30 min-h-screen">
       <Navbar />
 
       <main className="pt-32 pb-24">
-        {/* Header */}
         <section className="container mx-auto px-6 mb-12 text-center">
           <motion.span 
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }}
             className="text-lush font-black tracking-[0.5em] uppercase text-[10px] block mb-4"
           >
-            The Residency
+            {t('accommodations.section_tag')}
           </motion.span>
-          <h1 className="text-5xl md:text-7xl font-serif text-volcanic italic">Exquisite Sanctuaries</h1>
+          <h1 className="text-5xl md:text-7xl font-serif text-volcanic italic">{t('accommodations.title')}</h1>
           <p className="text-volcanic/60 mt-6 max-w-2xl mx-auto text-lg">
-            Designed for the intellectual nomad, our rooms offer the perfect balance of 
-            African warmth and executive functionality.
+            {t('accommodations.subtitle')}
           </p>
         </section>
 
-        {/* Filter Bar */}
         <section className="container mx-auto px-6 mb-12">
           <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
             <div className="relative w-full md:w-96">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-volcanic/40" />
               <input
                 type="text"
-                placeholder="Search suites..."
+                placeholder={t('accommodations.search_placeholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 rounded-full border border-sand/60 bg-white text-volcanic placeholder:text-volcanic/40 focus:outline-none focus:border-lush"
@@ -2811,19 +2642,18 @@ export default function Accommodations() {
                 onChange={(e) => setSortBy(e.target.value)}
                 className="bg-white border border-sand/60 rounded-full py-3 px-5 text-sm text-volcanic focus:outline-none focus:border-lush"
               >
-                <option value="default">Sort by</option>
-                <option value="low-high">Price: Low to High</option>
-                <option value="high-low">Price: High to Low</option>
+                <option value="default">{t('accommodations.sort_by')}</option>
+                <option value="low-high">{t('accommodations.sort_low_high')}</option>
+                <option value="high-low">{t('accommodations.sort_high_low')}</option>
               </select>
             </div>
           </div>
 
           <p className="text-volcanic/50 text-sm mt-4 text-center md:text-left">
-            {filteredSuites.length} {filteredSuites.length === 1 ? 'sanctuary' : 'sanctuaries'} available
+            {filteredSuites.length} {filteredSuites.length === 1 ? t('accommodations.suites_available') : t('accommodations.suites_available_plural')}
           </p>
         </section>
 
-        {/* Suites Grid - 4 columns on large screens */}
         <section className="container mx-auto px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <AnimatePresence>
@@ -2856,7 +2686,7 @@ export default function Accommodations() {
                     </p>
 
                     <div className="space-y-2 mb-5">
-                      <p className="text-[8px] uppercase tracking-[0.3em] font-black text-lush mb-2">Key Amenities</p>
+                      <p className="text-[8px] uppercase tracking-[0.3em] font-black text-lush mb-2">{t('accommodations.amenities')}</p>
                       <div className="grid grid-cols-1 gap-2">
                         {suite.amenities.slice(0, 3).map((item, i) => (
                           <div key={i} className="flex items-center gap-2">
@@ -2871,7 +2701,7 @@ export default function Accommodations() {
                       onClick={() => setSelectedSuite(suite)}
                       className="w-full bg-volcanic hover:bg-lush text-white font-black py-4 rounded-xl transition-all shadow-md uppercase text-[9px] tracking-[0.3em] mt-auto"
                     >
-                      Reserve
+                      {t('accommodations.reserve')}
                     </button>
                   </div>
                 </motion.div>
@@ -2880,7 +2710,6 @@ export default function Accommodations() {
           </div>
         </section>
 
-        {/* No results */}
         {filteredSuites.length === 0 && (
           <div className="text-center py-20">
             <p className="text-volcanic/40 text-lg">No suites match your search.</p>
@@ -2888,7 +2717,7 @@ export default function Accommodations() {
         )}
       </main>
 
-      {/* Reservation Modal (unchanged, but keep it) */}
+      {/* Reservation Modal */}
       <AnimatePresence>
         {selectedSuite && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6">
@@ -2913,70 +2742,54 @@ export default function Accommodations() {
                 <X className="w-5 h-5" />
               </button>
 
-              {/* Modal Left: Info */}
               <div className="hidden lg:block relative bg-volcanic p-12 text-white">
                 <div className="absolute inset-0 opacity-20">
-                    <Waves className="w-full h-full text-white p-20" />
+                  <Waves className="w-full h-full text-white p-20" />
                 </div>
                 <div className="relative z-10">
-                    <span className="text-lush font-black tracking-widest text-[10px] uppercase">Reservation Detail</span>
-                    <h2 className="text-4xl font-serif mt-4 mb-6">{selectedSuite.title}</h2>
-                    <p className="text-white/60 mb-8 italic">"A sanctuary for the global mind, rooted in the volcanic beauty of Limbe."</p>
-                    
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-4">
-                            <Coffee className="text-lush" />
-                            <span className="text-sm font-medium">Complimentary Organic Breakfast</span>
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <Users className="text-lush" />
-                            <span className="text-sm font-medium">Concierge Guided Check-in</span>
-                        </div>
+                  <span className="text-lush font-black tracking-widest text-[10px] uppercase">{t('accommodations.modal.title')}</span>
+                  <h2 className="text-4xl font-serif mt-4 mb-6">{selectedSuite.title}</h2>
+                  <p className="text-white/60 mb-8 italic">"{t('accommodations.modal.description')}"</p>
+                  
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4">
+                      <Coffee className="text-lush" />
+                      <span className="text-sm font-medium">{t('accommodations.modal.breakfast')}</span>
                     </div>
+                    <div className="flex items-center gap-4">
+                      <Users className="text-lush" />
+                      <span className="text-sm font-medium">{t('accommodations.modal.concierge')}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Modal Right: Form */}
               <div className="p-8 md:p-12 bg-white">
-                <h3 className="text-2xl font-serif text-volcanic mb-8">Booking Inquiry</h3>
+                <h3 className="text-2xl font-serif text-volcanic mb-8">{t('accommodations.modal.booking_title')}</h3>
                 <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                        <label className="text-[9px] font-black uppercase tracking-widest text-lush">Arrival</label>
-                        <input 
-                          type="date" 
-                          className="w-full bg-sand/50 border border-sand/60 rounded-xl p-4 text-sm outline-none focus:border-lush transition-colors" 
-                        />
+                      <label className="text-[9px] font-black uppercase tracking-widest text-lush">{t('accommodations.modal.arrival')}</label>
+                      <input type="date" className="w-full bg-sand/50 border border-sand/60 rounded-xl p-4 text-sm outline-none focus:border-lush transition-colors" />
                     </div>
                     <div className="space-y-2">
-                        <label className="text-[9px] font-black uppercase tracking-widest text-lush">Departure</label>
-                        <input 
-                          type="date" 
-                          className="w-full bg-sand/50 border border-sand/60 rounded-xl p-4 text-sm outline-none focus:border-lush transition-colors" 
-                        />
+                      <label className="text-[9px] font-black uppercase tracking-widest text-lush">{t('accommodations.modal.departure')}</label>
+                      <input type="date" className="w-full bg-sand/50 border border-sand/60 rounded-xl p-4 text-sm outline-none focus:border-lush transition-colors" />
                     </div>
                   </div>
                   
                   <div className="space-y-2">
-                    <label className="text-[9px] font-black uppercase tracking-widest text-lush">Full Name</label>
-                    <input 
-                      type="text" 
-                      placeholder="Dr. Julian F." 
-                      className="w-full bg-sand/50 border border-sand/60 rounded-xl p-4 text-sm outline-none focus:border-lush transition-colors" 
-                    />
+                    <label className="text-[9px] font-black uppercase tracking-widest text-lush">{t('accommodations.modal.full_name')}</label>
+                    <input type="text" placeholder="Dr. Julian F." className="w-full bg-sand/50 border border-sand/60 rounded-xl p-4 text-sm outline-none focus:border-lush transition-colors" />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-[9px] font-black uppercase tracking-widest text-lush">Special Requirements</label>
-                    <textarea 
-                      placeholder="e.g. Dietary needs, Airport pickup, Workspace setup..." 
-                      className="w-full bg-sand/50 border border-sand/60 rounded-xl p-4 text-sm outline-none focus:border-lush transition-colors resize-none" 
-                      rows="3" 
-                    />
+                    <label className="text-[9px] font-black uppercase tracking-widest text-lush">{t('accommodations.modal.special_requirements')}</label>
+                    <textarea placeholder={t('accommodations.modal.special_placeholder')} className="w-full bg-sand/50 border border-sand/60 rounded-xl p-4 text-sm outline-none focus:border-lush transition-colors resize-none" rows="3" />
                   </div>
 
                   <button className="w-full bg-lush hover:bg-volcanic text-white font-black py-5 rounded-xl uppercase text-[10px] tracking-[0.3em] transition-all">
-                    Confirm Availability
+                    {t('accommodations.modal.confirm')}
                   </button>
                 </form>
               </div>
@@ -3095,15 +2908,17 @@ export default function ComingSoon() {
 
 ### File: `src/pages/Contact.jsx`
 
-**Size:** 10625 bytes  
+**Size:** 9887 bytes  
 ```jsx
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 import Navbar from "../components/Navbar";
 import Footer from "../components/sections/Footer";
 import { Send, MapPin, Globe, Shield, MessageSquare } from "lucide-react";
 
 export default function ContactPage() {
+  const { t } = useTranslation();
   const [formStatus, setFormStatus] = useState("idle");
 
   return (
@@ -3113,35 +2928,32 @@ export default function ContactPage() {
       <main className="relative pt-32 pb-24 w-full">
         <div className="container mx-auto px-6">
           
-          {/* Header Section */}
           <div className="max-w-4xl mb-16 md:mb-24">
             <motion.span 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="text-lush font-black tracking-[0.5em] uppercase text-[10px] block mb-4"
             >
-              Concierge & Inquiries
+              {t('contact.section_tag')}
             </motion.span>
             <motion.h1 
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               className="text-5xl md:text-8xl font-serif text-volcanic leading-[1.1] tracking-tight"
             >
-              Begin Your <br />
-              <span className="italic text-lush">Atlantic Residency</span>
+              {t('contact.title')}
             </motion.h1>
             <motion.p 
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               className="text-volcanic/60 text-lg md:text-xl mt-8 max-w-2xl leading-relaxed italic font-light"
             >
-              Our team specializes in coordinating long-term stays, corporate retreats, and foundation visits. Reach out to discuss your specific professional or physical requirements.
+              {t('contact.subtitle')}
             </motion.p>
           </div>
 
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             
-            {/* RIGHT COLUMN (The Form) - Forced to Top on Mobile using order-1 */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -3156,51 +2968,51 @@ export default function ContactPage() {
                     className="text-center py-20"
                   >
                     <div className="w-20 h-20 bg-lush/10 rounded-full flex items-center justify-center mx-auto mb-8">
-                        <Send className="text-lush w-8 h-8" />
+                      <Send className="text-lush w-8 h-8" />
                     </div>
-                    <h3 className="text-3xl font-serif text-ocean mb-4">Inquiry Received</h3>
+                    <h3 className="text-3xl font-serif text-ocean mb-4">{t('common.inquiry_received')}</h3>
                     <p className="text-volcanic/60 text-sm max-w-xs mx-auto leading-relaxed">
-                        Your message has been encrypted and sent to our concierge. Expect a response within 4 professional hours.
+                      {t('common.inquiry_success')}
                     </p>
                     <button 
                       onClick={() => setFormStatus("idle")} 
                       className="mt-10 text-lush font-black text-[10px] uppercase tracking-[0.3em] border-b-2 border-lush pb-1 hover:text-volcanic hover:border-volcanic transition-colors"
                     >
-                        Submit another request
+                      {t('common.submit_another')}
                     </button>
                   </motion.div>
                 ) : (
                   <form 
                     onSubmit={(e) => { 
-                        e.preventDefault(); 
-                        setFormStatus("sending"); 
-                        setTimeout(() => setFormStatus("success"), 2000); 
+                      e.preventDefault(); 
+                      setFormStatus("sending"); 
+                      setTimeout(() => setFormStatus("success"), 2000); 
                     }} 
                     className="space-y-10"
                   >
                     <div className="grid md:grid-cols-2 gap-10">
-                      <FormInput label="Full Name" placeholder="e.g. Dr. Amadou K." />
-                      <FormInput label="Professional Email" type="email" placeholder="amadou@network.org" />
+                      <FormInput label={t('contact.form.full_name')} placeholder={t('contact.form.full_name_placeholder')} />
+                      <FormInput label={t('contact.form.email')} type="email" placeholder={t('contact.form.email_placeholder')} />
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-10">
-                      <FormInput label="Phone / WhatsApp" placeholder="+237 ..." />
+                      <FormInput label={t('contact.form.phone')} placeholder="+237 ..." />
                       <div className="space-y-3">
-                        <label className="text-[10px] uppercase tracking-[0.3em] font-black text-lush/60 ml-1">Nature of Inquiry</label>
+                        <label className="text-[10px] uppercase tracking-[0.3em] font-black text-lush/60 ml-1">{t('contact.form.inquiry_type')}</label>
                         <select className="w-full bg-sand/40 border-none rounded-2xl px-6 py-5 text-sm focus:ring-2 focus:ring-lush outline-none appearance-none cursor-pointer text-volcanic font-medium">
-                          <option>Executive Residency (1 week+)</option>
-                          <option>Corporate Summit / Retreat</option>
-                          <option>Fisiy Foundation Partnership</option>
+                          <option>{t('contact.form.inquiry_options.executive')}</option>
+                          <option>{t('contact.form.inquiry_options.corporate')}</option>
+                          <option>{t('contact.form.inquiry_options.partnership')}</option>
                         </select>
                       </div>
                     </div>
 
                     <div className="space-y-3">
-                      <label className="text-[10px] uppercase tracking-[0.3em] font-black text-lush/60 ml-1">Special Requirements</label>
+                      <label className="text-[10px] uppercase tracking-[0.3em] font-black text-lush/60 ml-1">{t('contact.form.special_requirements')}</label>
                       <textarea 
                         rows="5" 
                         className="w-full bg-sand/40 border-none rounded-[2rem] px-6 py-5 text-sm focus:ring-2 focus:ring-lush outline-none resize-none text-volcanic font-medium" 
-                        placeholder="Workspace needs, security coordination, or dietary standards..."
+                        placeholder={t('contact.form.special_placeholder')}
                       ></textarea>
                     </div>
 
@@ -3209,7 +3021,7 @@ export default function ContactPage() {
                       disabled={formStatus === "sending"}
                       className="w-full bg-volcanic hover:bg-lush text-white font-black py-7 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-6 uppercase text-[11px] tracking-[0.5em] group disabled:opacity-70"
                     >
-                      {formStatus === "sending" ? "Relaying Message..." : "Send Secure Inquiry"}
+                      {formStatus === "sending" ? t('common.sending') : t('contact.form.submit')}
                       <Send className={`w-4 h-4 transition-transform duration-500 ${formStatus === "sending" ? "animate-pulse" : "group-hover:translate-x-2 group-hover:-translate-y-1"}`} />
                     </button>
                   </form>
@@ -3217,10 +3029,8 @@ export default function ContactPage() {
               </AnimatePresence>
             </motion.div>
 
-            {/* LEFT COLUMN (Map & Details) - Moves below form on Mobile using order-2 */}
             <div className="lg:col-span-5 order-2 lg:order-1 flex flex-col gap-10">
               
-              {/* Map Container - Fixed width issue by using w-full */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -3237,41 +3047,33 @@ export default function ContactPage() {
                 <div className="absolute bottom-6 left-6 right-6 bg-volcanic/95 backdrop-blur-xl p-8 rounded-[2rem] border border-white/10 shadow-2xl">
                   <div className="flex items-center gap-4 mb-3">
                     <MapPin className="text-lush w-5 h-5" />
-                    <p className="text-white font-black text-[10px] uppercase tracking-[0.3em]">Coastal Residency</p>
+                    <p className="text-white font-black text-[10px] uppercase tracking-[0.3em]">{t('contact.info.address_title')}</p>
                   </div>
                   <p className="text-white/80 text-base font-serif italic leading-relaxed">
-                    Ngeme, Mile 4 Coastal Road,<br /> Limbe, Cameroon
+                    {t('contact.info.address')}
                   </p>
                 </div>
               </motion.div>
 
-              {/* Secure Infrastructure Badge */}
               <motion.div 
                 whileHover={{ y: -5 }}
                 className="p-10 rounded-[2.5rem] bg-lush text-white shadow-2xl relative overflow-hidden group"
               >
                 <div className="relative z-10">
-                    <div className="flex items-center gap-4 mb-4">
-                        <Shield className="text-lush w-6 h-6" />
-                        <h4 className="font-serif italic text-2xl text-white">Secure Infrastructure</h4>
-                    </div>
-                    <p className="text-[11px] leading-relaxed text-white/70 uppercase tracking-[0.3em] font-bold">
-                        Equipped with Starlink enterprise-grade connectivity to ensure 24/7 high-speed dialogue for global professional missions.
-                    </p>
+                  <div className="flex items-center gap-4 mb-4">
+                    <Shield className="text-lush w-6 h-6" />
+                    <h4 className="font-serif italic text-2xl text-white">{t('contact.info.secure_title')}</h4>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-white/70 uppercase tracking-[0.3em] font-bold">
+                    {t('contact.info.secure_desc')}
+                  </p>
                 </div>
                 <Globe className="absolute -right-10 -bottom-10 w-40 h-40 text-white/5 group-hover:text-white/10 transition-colors duration-700" />
               </motion.div>
 
-              {/* Direct Contacts Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ContactCard 
-                    label="Concierge" 
-                    value="residency@newwavesresort.com" 
-                />
-                <ContactCard 
-                    label="Foundation" 
-                    value="impact@fisiyfoundation.org" 
-                />
+                <ContactCard label={t('contact.info.concierge')} value={t('contact.info.concierge_email')} />
+                <ContactCard label={t('contact.info.foundation')} value={t('contact.info.foundation_email')} />
               </div>
             </div>
 
@@ -3284,28 +3086,22 @@ export default function ContactPage() {
   );
 }
 
-// Reusable Sub-components for professional consistency
 function FormInput({ label, type = "text", placeholder }) {
   return (
     <div className="space-y-3">
       <label className="text-[10px] uppercase tracking-[0.3em] font-black text-lush/60 ml-1">{label}</label>
-      <input 
-        type={type} 
-        required 
-        className="w-full bg-sand/40 border-none rounded-2xl px-6 py-5 text-sm focus:ring-2 focus:ring-lush transition-all outline-none text-volcanic font-medium" 
-        placeholder={placeholder} 
-      />
+      <input type={type} required className="w-full bg-sand/40 border-none rounded-2xl px-6 py-5 text-sm focus:ring-2 focus:ring-lush transition-all outline-none text-volcanic font-medium" placeholder={placeholder} />
     </div>
   );
 }
 
 function ContactCard({ label, value }) {
-    return (
-        <div className="p-8 bg-white rounded-[2rem] border border-sand shadow-sm hover:shadow-md transition-shadow">
-            <span className="block text-[10px] uppercase tracking-widest text-lush font-black mb-3">{label}</span>
-            <p className="text-sm font-serif text-ocean break-all">{value}</p>
-        </div>
-    );
+  return (
+    <div className="p-8 bg-white rounded-[2rem] border border-sand shadow-sm hover:shadow-md transition-shadow">
+      <span className="block text-[10px] uppercase tracking-widest text-lush font-black mb-3">{label}</span>
+      <p className="text-sm font-serif text-ocean break-all">{value}</p>
+    </div>
+  );
 }
 ```
 
@@ -3313,25 +3109,17 @@ function ContactCard({ label, value }) {
 
 ### File: `src/pages/Dining.jsx`
 
-**Size:** 12304 bytes  
+**Size:** 11179 bytes  
 ```jsx
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 import Navbar from "../components/Navbar";
 import Footer from "../components/sections/Footer";
-import { menuItems } from "../data/menuData";
 import { Search, Coffee, UtensilsCrossed, Wine, Cookie, Sparkles, Leaf, X } from "lucide-react";
 
-// Category icons and labels
-const categories = [
-  { id: "all", label: "All", icon: <UtensilsCrossed className="w-4 h-4" /> },
-  { id: "appetizers", label: "Appetizers", icon: <Sparkles className="w-4 h-4" /> },
-  { id: "mains", label: "Mains", icon: <Coffee className="w-4 h-4" /> },
-  { id: "desserts", label: "Desserts", icon: <Cookie className="w-4 h-4" /> },
-  { id: "drinks", label: "Drinks", icon: <Wine className="w-4 h-4" /> },
-];
-
 export default function Dining() {
+  const { t } = useTranslation();
   const [filter, setFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [dietaryFilters, setDietaryFilters] = useState({
@@ -3340,74 +3128,70 @@ export default function Dining() {
   });
   const [showFilters, setShowFilters] = useState(false);
 
-  // Reset search when category changes (optional)
+  const categories = [
+    { id: "all", label: t('dining.filters.all'), icon: <UtensilsCrossed className="w-4 h-4" /> },
+    { id: "appetizers", label: t('dining.filters.appetizers'), icon: <Sparkles className="w-4 h-4" /> },
+    { id: "mains", label: t('dining.filters.mains'), icon: <Coffee className="w-4 h-4" /> },
+    { id: "desserts", label: t('dining.filters.desserts'), icon: <Cookie className="w-4 h-4" /> },
+    { id: "drinks", label: t('dining.filters.drinks'), icon: <Wine className="w-4 h-4" /> },
+  ];
+
+  const menuItems = t('dining.menuItems', { returnObjects: true });
+
   const handleCategoryChange = (categoryId) => {
     setFilter(categoryId);
     setSearchQuery("");
   };
 
-  // Toggle dietary filter
   const toggleDietary = (diet) => {
     setDietaryFilters((prev) => ({ ...prev, [diet]: !prev[diet] }));
   };
 
-  // Filtered items based on category, search, and dietary
   const filteredItems = useMemo(() => {
     return menuItems.filter((item) => {
-      // Category filter
       if (filter !== "all" && item.category !== filter) return false;
 
-      // Search filter (case insensitive)
       if (searchQuery && !item.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
           !item.description.toLowerCase().includes(searchQuery.toLowerCase())) {
         return false;
       }
 
-      // Dietary filters: if any dietary filter is active, the item must have that tag
       const activeDiets = Object.keys(dietaryFilters).filter((d) => dietaryFilters[d]);
       if (activeDiets.length > 0) {
-        // Check if item's dietary array contains all active diets? Or any? We'll use "any" for flexibility.
         return activeDiets.some((diet) => item.dietary.includes(diet));
       }
 
       return true;
     });
-  }, [filter, searchQuery, dietaryFilters]);
+  }, [filter, searchQuery, dietaryFilters, menuItems]);
 
   return (
     <div className="min-h-screen bg-sand/30">
       <Navbar />
 
       <main className="pt-32 pb-20">
-        {/* Hero */}
         <section className="container mx-auto px-6 mb-16">
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="max-w-4xl"
-            >
-                <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">
-                Volcanic Harvest & Purity
-                </span>
-                <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">
-                Atlantic Gastronomy, <br />
-                <span className="italic text-lush">100% Organic by Nature.</span>
-                </h1>
-                <p className="text-volcanic/70 text-xl max-w-2xl leading-relaxed">
-                Our menu is a sanctuary for the health-conscious mind. Every ingredient is 
-                strictly <spand className="text-volcanic">organic and pesticide-free</spand>, harvested directly from the nutrient-rich 
-                volcanic soils of the Fako region. From our unadulterated cold-pressed oils 
-                to our daily coastal catch, we serve only what is pure, seasonal, and 
-                chemically untouched, bringing you the true, vibrant energy of Cameroon.
-                </p>
-            </motion.div>
-            </section>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl"
+          >
+            <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">
+              {t('dining.section_tag')}
+            </span>
+            <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">
+              {t('dining.title')} <br />
+              <span className="italic text-lush">{t('dining.title_italic')}</span>
+            </h1>
+            <p className="text-volcanic/70 text-xl max-w-2xl leading-relaxed">
+              {t('dining.description')}
+            </p>
+          </motion.div>
+        </section>
 
-        {/* Filters Bar */}
         <section className="container mx-auto px-6 mb-12">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-            {/* Category Pills */}
             <div className="flex flex-wrap gap-3">
               {categories.map((cat) => (
                 <button
@@ -3425,13 +3209,12 @@ export default function Dining() {
               ))}
             </div>
 
-            {/* Search and Filter Toggle */}
             <div className="flex items-center gap-4 w-full lg:w-auto">
               <div className="relative flex-1 lg:w-64">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-volcanic/40" />
                 <input
                   type="text"
-                  placeholder="Search dishes..."
+                  placeholder={t('dining.search_placeholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 rounded-full border border-sand/60 bg-white text-volcanic placeholder:text-volcanic/40 focus:outline-none focus:border-lush"
@@ -3442,12 +3225,11 @@ export default function Dining() {
                 className="flex items-center gap-2 px-5 py-3 rounded-full border border-sand/60 bg-white text-volcanic/70 hover:border-lush"
               >
                 <Leaf className="w-4 h-4" />
-                <span className="text-xs uppercase tracking-wider">Dietary</span>
+                <span className="text-xs uppercase tracking-wider">{t('dining.filters.dietary')}</span>
               </button>
             </div>
           </div>
 
-          {/* Dietary Filters Panel */}
           <AnimatePresence>
             {showFilters && (
               <motion.div
@@ -3465,7 +3247,7 @@ export default function Dining() {
                       onChange={() => toggleDietary("vegan")}
                       className="w-4 h-4 text-lush border-sand rounded focus:ring-lush"
                     />
-                    <span className="text-sm">Vegan</span>
+                    <span className="text-sm">{t('dining.filters.vegan')}</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -3474,7 +3256,7 @@ export default function Dining() {
                       onChange={() => toggleDietary("gluten-free")}
                       className="w-4 h-4 text-lush border-sand rounded focus:ring-lush"
                     />
-                    <span className="text-sm">Gluten-Free</span>
+                    <span className="text-sm">{t('dining.filters.gluten_free')}</span>
                   </label>
                   {(dietaryFilters.vegan || dietaryFilters["gluten-free"]) && (
                     <button
@@ -3490,11 +3272,10 @@ export default function Dining() {
           </AnimatePresence>
         </section>
 
-        {/* Menu Grid */}
         <section className="container mx-auto px-6">
           {filteredItems.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-volcanic/50 text-lg">No dishes match your criteria.</p>
+              <p className="text-volcanic/50 text-lg">{t('dining.no_results')}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -3516,7 +3297,6 @@ export default function Dining() {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-volcanic/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity" />
-                      {/* Dietary tags on image */}
                       <div className="absolute top-4 right-4 flex gap-2">
                         {item.dietary.includes("vegan") && (
                           <span className="bg-lush/90 backdrop-blur-sm text-volcanic text-[8px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Vegan</span>
@@ -3544,7 +3324,6 @@ export default function Dining() {
           )}
         </section>
 
-        {/* Chef's Note */}
         <section className="container mx-auto px-6 mt-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -3557,13 +3336,13 @@ export default function Dining() {
               backgroundSize: '40px 40px'
             }} />
             <div className="relative z-10 max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-5xl font-serif mb-6 italic">A Letter from the Chef</h2>
+              <h2 className="text-3xl md:text-5xl font-serif mb-6 italic">{t('dining.chef_note_title')}</h2>
               <p className="text-white/70 text-lg leading-relaxed mb-8">
-                "Every dish tells the story of our land, the volcanic richness that grows our spices, the Atlantic that gives us fish, and the hands of local farmers who have cultivated these flavors for generations. I invite you to taste Cameroon with us."
+                {t('dining.chef_note_quote')}
               </p>
               <div className="flex items-center justify-center gap-3">
                 <div className="w-12 h-px bg-lush/50" />
-                <span className="text-lush font-bold uppercase tracking-widest text-xs">Food, Made with Love</span>
+                <span className="text-lush font-bold uppercase tracking-widest text-xs">{t('dining.chef_note_signature')}</span>
                 <div className="w-12 h-px bg-lush/50" />
               </div>
             </div>
@@ -3831,374 +3610,293 @@ export default function Home() {
 
 ### File: `src/pages/OurStory.jsx`
 
-**Size:** 24246 bytes  
+**Size:** 14458 bytes  
 ```jsx
 import { motion } from "framer-motion";
 import { Link } from "react-router";
+import { useTranslation, Trans } from 'react-i18next';
 import Navbar from "../components/Navbar";
 import Footer from "../components/sections/Footer";
+import fisiy from "../assets/general/doctorfisiy.jpg"
 import { ArrowRight, Star, Globe, Shield, Leaf, Eye, Heart, User, Award, ExternalLink, Home, Briefcase, HandHeart } from "lucide-react";
 
-// Milestones now blend resort and foundation
-const milestones = [
-    {
-        year: "2014",
-        title: "Foundation Born",
-        description: "Dr. Fisiy establishes the Fisiy Foundation in Washington DC.",
-        fullStory: "Long before the resort, there was a vision for accountable governance in Africa. Dr. Cyprian Fisiy founded the Fisiy Foundation and Leadership Center as a 501(c)(3) to address deficits in local governance and foster citizen engagement.",
-        image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-        year: "2018",
-        title: "The Resort Dream",
-        description: "A idea to bridge high-end comfort with deep social impact.",
-        fullStory: "Dr. Fisiy imagined a place where global travelers could experience Cameroon's beauty while directly fueling the foundation's work. Ngeme was conceived as a self-sustaining engine for change.",
-        image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-        year: "2023",
-        title: "Breaking Ground",
-        description: "Construction begins on the volcanic shores of Limbe.",
-        fullStory: "Local craftsmen taught our architects traditional techniques. Every worker employed was a step toward economic empowerment, a principle Dr. Fisiy held as non‑negotiable.",
-        image: "https://images.unsplash.com/photo-1596701062351-8c0c16913c54?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-        year: "2025",
-        title: "Opening & Legacy",
-        description: "Ngeme launches, committing 20% of profits to the foundation.",
-        fullStory: "Today, New Waves Resort stands as a sanctuary for the intellectual nomad, and a testament to how luxury can fund lasting change in local communities.",
-        image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=800"
-    },
-];
-
-// Impact stats combine resort and foundation metrics
-const impactStats = [
-    { value: "20%", label: "Of profits to foundation", detail: "Funding education, infrastructure, and livelihoods" },
-    { value: "120+", label: "Local jobs created", detail: "Fair wages and training for community members" },
-    { value: "450", label: "Fisiy scholarships", detail: "Awarded through foundation programs" },
-    { value: "15k", label: "Mangroves planted", detail: "Coastal restoration with community partners" },
-];
-
-// Foundation program areas (with links)
-const foundationPrograms = [
-    {
-        icon: <Home className="w-8 h-8 text-lush" />,
-        title: "Cameroon-boxes",
-        description: "Small local infrastructure, foot paths, bridges, latrines, built with full community participation.",
-        link: "https://fisiyfoundation.org/programs/cameroon-boxes",
-    },
-    {
-        icon: <Briefcase className="w-8 h-8 text-lush" />,
-        title: "Vocational Training",
-        description: "Multi-purpose centers offering youth skills training, libraries, and internet access.",
-        link: "https://fisiyfoundation.org/programs/vocational-training",
-    },
-    {
-        icon: <HandHeart className="w-8 h-8 text-lush" />,
-        title: "Livelihood Support",
-        description: "Self-help groups gain better access to markets and funding.",
-        link: "https://fisiyfoundation.org/programs/livelihood-support",
-    },
-];
-
 export default function OurStory() {
-    return (
-        <div className="flex flex-col min-h-screen bg-sand/20">
-            <Navbar />
+  const { t } = useTranslation();
+  const milestones = t('our_story.milestones.items', { returnObjects: true });
+  const programs = t('our_story.programs.programs', { returnObjects: true });
+  const philosophyCards = t('our_story.philosophy.cards', { returnObjects: true });
 
-            <main className="flex-grow">
-                {/* ===== HERO SECTION (resort-focused) ===== */}
-                <section className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden bg-white">
-                    <div className="container mx-auto px-6 grid lg:grid-cols-2 items-center gap-16 z-10">
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            <span className="text-lush font-extrabold tracking-[0.5em] uppercase text-[10px] mb-6 block">
-                                Heritage & Horizon
-                            </span>
-                            <h1 className="text-5xl md:text-8xl font-serif text-volcanic leading-[1.05] mb-10 tracking-tight">
-                                Our Story. <br /> <span className="italic text-lush">A Legacy of Impact.</span>
-                            </h1>
-                            <p className="text-volcanic/80 text-lg md:text-xl font-medium max-w-lg leading-relaxed mb-8">
-                                On the volcanic shores of Limbe, New Waves Resot was born from a simple idea: that world-class hospitality can be a force for social change. Every stay here supports the Fisiy Foundation's mission to build accountable institutions across Africa.
-                            </p>
-                            
-                            <div className="flex flex-col sm:flex-row gap-5">
-                                <Link
-                                    to="/contact"
-                                    className="group relative flex items-center justify-center bg-volcanic text-white px-10 py-5 rounded-full overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-1"
-                                >
-                                    <span className="relative z-10 text-[11px] font-black uppercase tracking-[0.3em]">Join the Narrative</span>
-                                    <div className="absolute inset-0 bg-lush translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                                </Link>
-                            </div>
-                        </motion.div>
+  return (
+    <div className="flex flex-col min-h-screen bg-sand/20">
+      <Navbar />
 
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 1.2, ease: "easeOut" }}
-                            className="relative h-[500px] md:h-[700px] rounded-[3rem] overflow-hidden shadow-2xl border-[12px] border-sand/30"
-                        >
-                            <img
-                                src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1200"
-                                className="w-full h-full object-cover"
-                                alt="Ngeme Resort Aerial View"
-                            />
-                        </motion.div>
-                    </div>
-                    <div className="absolute top-0 right-0 w-1/4 h-full bg-sand/50 -skew-x-12 translate-x-1/2 pointer-events-none" />
-                </section>
+      <main className="flex-grow">
+        {/* HERO SECTION */}
+        <section className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden bg-white">
+          <div className="container mx-auto px-6 grid lg:grid-cols-2 items-center gap-16 z-10">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <span className="text-lush font-extrabold tracking-[0.5em] uppercase text-[10px] mb-6 block">
+                {t('our_story.hero.tag')}
+              </span>
+              <h1 className="text-5xl md:text-8xl font-serif text-volcanic leading-[1.05] mb-10 tracking-tight">
+                {t('our_story.hero.title')} <br /> <span className="italic text-lush">{t('our_story.hero.title_italic')}</span>
+              </h1>
+              <p className="text-volcanic/80 text-lg md:text-xl font-medium max-w-lg leading-relaxed mb-8">
+                {t('our_story.hero.description')}
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-5">
+                <Link
+                  to="/contact"
+                  className="group relative flex items-center justify-center bg-volcanic text-white px-10 py-5 rounded-full overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-1"
+                >
+                  <span className="relative z-10 text-[11px] font-black uppercase tracking-[0.3em]">{t('our_story.hero.button')}</span>
+                  <div className="absolute inset-0 bg-lush translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                </Link>
+              </div>
+            </motion.div>
 
-                {/* ===== IMPACT NUMBERS (blended) ===== */}
-                <section className="py-20 bg-volcanic text-white">
-                    <div className="container mx-auto px-6">
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
-                            {impactStats.map((stat, i) => (
-                                <motion.div 
-                                    key={i} 
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: i * 0.1 }}
-                                    className="text-center group"
-                                >
-                                    <div className="text-5xl md:text-6xl font-serif text-lush mb-3 group-hover:scale-110 transition-transform duration-500">{stat.value}</div>
-                                    <div className="text-white/40 text-[10px] font-black uppercase tracking-[0.3em] mb-2">{stat.label}</div>
-                                    <p className="text-white/20 text-xs max-w-[150px] mx-auto leading-relaxed">{stat.detail}</p>
-                                </motion.div>
-                            ))}
-                        </div>
-                        <p className="text-white/40 text-center text-sm max-w-2xl mx-auto mt-16 italic">
-                            Ngeme exists to make luxury meaningful, by reinvesting in the communities that welcome you.
-                        </p>
-                    </div>
-                </section>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="relative h-[500px] md:h-[700px] rounded-[3rem] overflow-hidden shadow-2xl border-[12px] border-sand/30"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1200"
+                className="w-full h-full object-cover"
+                alt="Ngeme Resort Aerial View"
+              />
+            </motion.div>
+          </div>
+          <div className="absolute top-0 right-0 w-1/4 h-full bg-sand/50 -skew-x-12 translate-x-1/2 pointer-events-none" />
+        </section>
 
-                {/* ===== THE VISION: RESORT + FOUNDATION ===== */}
-                <section className="py-32 bg-white">
-                    <div className="container mx-auto px-6">
-                        <div className="text-center mb-20">
-                            <span className="text-lush font-extrabold tracking-[0.5em] uppercase text-[10px]">Two Wings, One Mission</span>
-                            <h2 className="text-4xl md:text-6xl font-serif text-volcanic mt-4 italic">Where Luxury Meets Purpose</h2>
-                        </div>
-                        <div className="grid md:grid-cols-2 gap-16 max-w-5xl mx-auto">
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6 }}
-                                className="bg-sand/5 p-12 rounded-[3rem] border border-sand/30"
-                            >
-                                <Eye className="w-12 h-12 text-lush mb-8" />
-                                <h3 className="text-3xl font-serif text-volcanic mb-6">Ngeme's Vision</h3>
-                                <p className="text-volcanic/70 text-lg leading-relaxed">
-                                    To create a sanctuary for the intellectual nomad, where world-class comfort inspires deep work, and where every guest becomes part of a larger story: the renewal of the social contract between citizens and their local governments across Africa.
-                                </p>
-                            </motion.div>
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6, delay: 0.2 }}
-                                className="bg-sand/5 p-12 rounded-[3rem] border border-sand/30"
-                            >
-                                <Heart className="w-12 h-12 text-lush mb-8" />
-                                <h3 className="text-3xl font-serif text-volcanic mb-6">Foundation's Mission</h3>
-                                <p className="text-volcanic/70 text-lg leading-relaxed">
-                                    To address deficits in local governance in Sub-Saharan Africa by fostering a culture of service, accountability and mutual respect, building inclusive, resilient institutions for responsive local engagement.
-                                </p>
-                            </motion.div>
-                        </div>
-                    </div>
-                </section>
+        {/* IMPACT NUMBERS */}
+        <section className="py-20 bg-volcanic text-white">
+          <div className="container mx-auto px-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
+              <StatCard value={t('our_story.impact_stats.title')} label={t('our_story.impact_stats.label')} detail={t('our_story.impact_stats.detail')} />
+              <StatCard value={t('our_story.impact_stats.jobs')} label={t('our_story.impact_stats.jobs_label')} detail={t('our_story.impact_stats.jobs_detail')} />
+              <StatCard value={t('our_story.impact_stats.scholarships')} label={t('our_story.impact_stats.scholarships_label')} detail={t('our_story.impact_stats.scholarships_detail')} />
+              <StatCard value={t('our_story.impact_stats.mangroves')} label={t('our_story.impact_stats.mangroves_label')} detail={t('our_story.impact_stats.mangroves_detail')} />
+            </div>
+            <p className="text-white/40 text-center text-sm max-w-2xl mx-auto mt-16 italic">
+              Ngeme exists to make luxury meaningful, by reinvesting in the communities that welcome you.
+            </p>
+          </div>
+        </section>
 
-                {/* ===== FOUNDER'S STORY (accurate, with photo) ===== */}
-                <section className="py-32 bg-sand/10">
-                    <div className="container mx-auto px-6">
-                        <div className="text-center mb-20">
-                            <span className="text-lush font-extrabold tracking-[0.5em] uppercase text-[10px]">The Visionary</span>
-                            <h2 className="text-4xl md:text-6xl font-serif text-volcanic mt-4 italic">Dr. Cyprian F. Fisiy</h2>
-                        </div>
-                        <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
-                            <motion.div
-                                initial={{ opacity: 0, x: -30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.8 }}
-                                className="relative"
-                            >
-                                <div className="aspect-[3/4] rounded-[3rem] overflow-hidden shadow-2xl border-[12px] border-sand/30">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800"
-                                        alt="Dr. Cyprian F. Fisiy"
-                                        className="w-full h-full object-cover object-center"
-                                    />
-                                </div>
-                                <div className="absolute -bottom-6 -right-6 bg-lush text-volcanic p-6 rounded-full shadow-xl">
-                                    <Award className="w-8 h-8" />
-                                </div>
-                            </motion.div>
-                            <motion.div
-                                initial={{ opacity: 0, x: 30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.8 }}
-                                className="prose prose-lg text-volcanic/80"
-                            >
-                                <p className="mb-4">
-                                    <span className="text-2xl font-serif text-lush">Dr. Cyprian F. Fisiy</span> is a Principal Social Scientist and Social Development Team Leader in the Africa Region of The World Bank. He has previously served as World Bank co-coordinator for Involuntary Resettlement (1997) and Resettlement Specialist for Africa (1994), working on investment programs in Lesotho, Chad, Cameroon and Côte d'Ivoire.
-                                </p>
-                                <p className="mb-4">
-                                    Prior to the World Bank, he conducted research on sustainable forest management in Cameroon and was a Research Fellow at the African Studies Center in Leiden and the University of Wageningen. He holds a Ph.D. in the Anthropology of Law from the University of Leiden (1992).
-                                </p>
-                                <p className="mb-4">
-                                    In 2014, Dr. Fisiy founded the Fisiy Foundation and Leadership Center in Washington DC as a 501(c)(3) nonprofit. Ngeme Resort is his dream to create a sustainable funding engine for that mission, proving that hospitality can be a catalyst for accountable governance and community empowerment.
-                                </p>
-                                <p className="mb-6">
-                                    He resides in Alexandria with his wife, Grace Forgwei, and their four children.
-                                </p>
-                                <div className="flex items-center gap-4 text-volcanic">
-                                    <div className="w-12 h-px bg-lush/50" />
-                                    <span className="text-sm font-bold uppercase tracking-widest">The Visionary Founder</span>
-                                </div>
-                            </motion.div>
-                        </div>
-                    </div>
-                </section>
+        {/* THE VISION */}
+        <section className="py-32 bg-white">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-20">
+              <span className="text-lush font-extrabold tracking-[0.5em] uppercase text-[10px]">{t('our_story.vision.tag')}</span>
+              <h2 className="text-4xl md:text-6xl font-serif text-volcanic mt-4 italic">{t('our_story.vision.title')}</h2>
+            </div>
+            <div className="grid md:grid-cols-2 gap-16 max-w-5xl mx-auto">
+              <VisionCard icon={<Eye className="w-12 h-12 text-lush mb-8" />} title={t('our_story.vision.resort_title')} desc={t('our_story.vision.resort_desc')} />
+              <VisionCard icon={<Heart className="w-12 h-12 text-lush mb-8" />} title={t('our_story.vision.foundation_title')} desc={t('our_story.vision.foundation_desc')} />
+            </div>
+          </div>
+        </section>
 
-                {/* ===== HOW NGEME SUPPORTS THE FOUNDATION ===== */}
-                <section className="py-32 bg-white">
-                    <div className="container mx-auto px-6">
-                        <div className="text-center mb-20">
-                            <span className="text-lush font-extrabold tracking-[0.5em] uppercase text-[10px]">Your Stay Fuels Change</span>
-                            <h2 className="text-4xl md:text-6xl font-serif text-volcanic mt-4 italic">Programs You Support</h2>
-                            <p className="text-volcanic/60 text-lg max-w-2xl mx-auto mt-6">
-                                Through the Fisiy Foundation, a portion of New Wave Resort's profits directly fund these initiatives in Sub-Saharan Africa.
-                            </p>
-                        </div>
+        {/* FOUNDER'S STORY */}
+        <section className="py-32 bg-sand/10">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-20">
+              <span className="text-lush font-extrabold tracking-[0.5em] uppercase text-[10px]">{t('our_story.founder.tag')}</span>
+              <h2 className="text-4xl md:text-6xl font-serif text-volcanic mt-4 italic">{t('our_story.founder.name')}</h2>
+            </div>
+            <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="relative"
+              >
+                <div className="aspect-[3/4] rounded-[3rem] overflow-hidden shadow-2xl border-[12px] border-sand/30">
+                  <img
+                    src={fisiy}
+                    alt="Dr. Cyprian F. Fisiy"
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+                <div className="absolute -bottom-6 -right-6 bg-lush text-volcanic p-6 rounded-full shadow-xl">
+                  <Award className="w-8 h-8" />
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="prose prose-lg text-volcanic/80"
+              >
+                <Trans i18nKey="our_story.founder.bio" components={{ span: <span className="text-2xl font-serif text-lush" /> }} />
+                <div className="flex items-center gap-4 text-volcanic mt-6">
+                  <div className="w-12 h-px bg-lush/50" />
+                  <span className="text-sm font-bold uppercase tracking-widest">{t('our_story.founder.signature')}</span>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                            {foundationPrograms.map((program, i) => (
-                                <motion.div
-                                    key={i}
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: i * 0.1 }}
-                                    className="bg-sand/5 p-10 rounded-[2rem] border border-sand/50 hover:shadow-xl transition-all"
-                                >
-                                    <div className="mb-8 p-4 bg-lush/10 rounded-2xl inline-block">
-                                        {program.icon}
-                                    </div>
-                                    <h3 className="text-2xl font-serif text-volcanic mb-4">{program.title}</h3>
-                                    <p className="text-volcanic/70 leading-relaxed mb-8">
-                                        {program.description}
-                                    </p>
-                                    <a 
-                                        href={program.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 text-lush font-medium hover:text-volcanic transition-colors group"
-                                    >
-                                        <span>Learn more on foundation site</span>
-                                        <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                    </a>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
+        {/* PROGRAMS */}
+        <section className="py-32 bg-white">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-20">
+              <span className="text-lush font-extrabold tracking-[0.5em] uppercase text-[10px]">{t('our_story.programs.tag')}</span>
+              <h2 className="text-4xl md:text-6xl font-serif text-volcanic mt-4 italic">{t('our_story.programs.title')}</h2>
+              <p className="text-volcanic/60 text-lg max-w-2xl mx-auto mt-6">
+                {t('our_story.programs.description')}
+              </p>
+            </div>
 
-                {/* ===== MILESTONES TIMELINE ===== */}
-                <section className="py-32 bg-sand/10">
-                    <div className="container mx-auto px-6">
-                        <div className="text-center mb-24">
-                            <span className="text-lush font-extrabold tracking-[0.5em] uppercase text-[10px]">Timeline of Intent</span>
-                            <h2 className="text-4xl md:text-6xl font-serif text-volcanic mt-4 italic">From Foundation to Resort</h2>
-                        </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {programs.map((program, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="bg-sand/5 p-10 rounded-[2rem] border border-sand/50 hover:shadow-xl transition-all"
+                >
+                  <div className="mb-8 p-4 bg-lush/10 rounded-2xl inline-block">
+                    {i === 0 && <Home className="w-8 h-8 text-lush" />}
+                    {i === 1 && <Briefcase className="w-8 h-8 text-lush" />}
+                    {i === 2 && <HandHeart className="w-8 h-8 text-lush" />}
+                  </div>
+                  <h3 className="text-2xl font-serif text-volcanic mb-4">{program.title}</h3>
+                  <p className="text-volcanic/70 leading-relaxed mb-8">
+                    {program.description}
+                  </p>
+                  <a 
+                    href={program.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-lush font-medium hover:text-volcanic transition-colors group"
+                  >
+                    <span>{program.link_text}</span>
+                    <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                            {milestones.map((item, i) => (
-                                <motion.div
-                                    key={i}
-                                    whileHover={{ y: -15 }}
-                                    className="relative group bg-volcanic rounded-[2.5rem] overflow-hidden shadow-2xl h-[500px]"
-                                >
-                                    <img
-                                        src={item.image}
-                                        alt={item.title}
-                                        className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-all duration-700 group-hover:scale-110"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-volcanic via-volcanic/40 to-transparent" />
-                                    
-                                    <div className="absolute bottom-0 p-8 text-white w-full">
-                                        <span className="text-lush font-serif text-5xl block mb-4 italic">{item.year}</span>
-                                        <h4 className="text-2xl font-serif mb-4 tracking-wide">{item.title}</h4>
-                                        <p className="text-sm text-white/70 leading-relaxed font-light group-hover:text-white transition-colors duration-300 line-clamp-6">
-                                            {item.fullStory}
-                                        </p>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
+        {/* MILESTONES TIMELINE */}
+        <section className="py-32 bg-sand/10">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-24">
+              <span className="text-lush font-extrabold tracking-[0.5em] uppercase text-[10px]">{t('our_story.milestones.tag')}</span>
+              <h2 className="text-4xl md:text-6xl font-serif text-volcanic mt-4 italic">{t('our_story.milestones.title')}</h2>
+            </div>
 
-                {/* ===== PHILOSOPHY: INTELLECTUAL NOMAD ===== */}
-                <section className="py-32 bg-white">
-                    <div className="container mx-auto px-6">
-                        <div className="flex flex-col lg:flex-row gap-24">
-                            <div className="lg:w-1/2">
-                                <h2 className="text-4xl md:text-6xl font-serif text-volcanic mb-10 leading-tight">
-                                    Built for the <br /><span className="italic text-lush">Intellectual Nomad</span>
-                                </h2>
-                                <p className="text-volcanic/70 leading-relaxed text-xl font-medium mb-8">
-                                    Ngeme is more than a resort, it's a hub for writers, researchers, and entrepreneurs who seek both inspiration and infrastructure. Our coworking pavilions face the Atlantic, and our library holds volumes that spark dialogue between African thought leaders and the world.
-                                </p>
-                                <p className="text-volcanic/60 leading-relaxed text-lg font-light">
-                                    Every element, from locally woven textiles to menus featuring indigenous ingredients, roots you in Cameroonian authenticity while delivering global standards of comfort.
-                                </p>
-                            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {milestones.map((item, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ y: -15 }}
+                  className="relative group bg-volcanic rounded-[2.5rem] overflow-hidden shadow-2xl h-[500px]"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-all duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-volcanic via-volcanic/40 to-transparent" />
+                  
+                  <div className="absolute bottom-0 p-8 text-white w-full">
+                    <span className="text-lush font-serif text-5xl block mb-4 italic">{item.year}</span>
+                    <h4 className="text-2xl font-serif mb-4 tracking-wide">{item.title}</h4>
+                    <p className="text-sm text-white/70 leading-relaxed font-light group-hover:text-white transition-colors duration-300 line-clamp-6">
+                      {item.fullStory}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-                            <div className="lg:w-1/2 grid sm:grid-cols-2 gap-6">
-                                <PhilosophyCard 
-                                    icon={<Shield className="text-lush w-6 h-6" />}
-                                    title="Sovereign Security"
-                                    desc="A high‑level sanctuary for professional peace of mind."
-                                />
-                                <PhilosophyCard 
-                                    icon={<Leaf className="text-lush w-6 h-6" />}
-                                    title="Regenerative by Design"
-                                    desc="Every stay contributes to mangrove reforestation."
-                                />
-                                <PhilosophyCard 
-                                    icon={<Globe className="text-lush w-6 h-6" />}
-                                    title="Global Vision, Local Soul"
-                                    desc="A hub where the world learns from Cameroon."
-                                />
-                                <PhilosophyCard 
-                                    icon={<Star className="text-lush w-6 h-6" />}
-                                    title="Elite Standard"
-                                    desc="World‑class infrastructure meets indigenous wisdom."
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                {/* ===== FOOTER (resort + foundation) ===== */}
-                <Footer />
-            </main>
-        </div>
-    );
+        {/* PHILOSOPHY */}
+        <section className="py-32 bg-white">
+          <div className="container mx-auto px-6">
+            <div className="flex flex-col lg:flex-row gap-24">
+              <div className="lg:w-1/2">
+                <h2 className="text-4xl md:text-6xl font-serif text-volcanic mb-10 leading-tight">
+                  {t('our_story.philosophy.title')} <br /><span className="italic text-lush">{t('our_story.philosophy.title_italic')}</span>
+                </h2>
+                <p className="text-volcanic/70 leading-relaxed text-xl font-medium mb-8">
+                  {t('our_story.philosophy.description')}
+                </p>
+                <p className="text-volcanic/60 leading-relaxed text-lg font-light">
+                  {t('our_story.philosophy.subdescription')}
+                </p>
+              </div>
+
+              <div className="lg:w-1/2 grid sm:grid-cols-2 gap-6">
+                {philosophyCards.map((card, i) => (
+                  <PhilosophyCard key={i} icon={i === 0 ? <Shield className="text-lush w-6 h-6" /> : i === 1 ? <Leaf className="text-lush w-6 h-6" /> : i === 2 ? <Globe className="text-lush w-6 h-6" /> : <Star className="text-lush w-6 h-6" />} title={card.title} desc={card.desc} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <Footer />
+      </main>
+    </div>
+  );
+}
+
+// Helper components
+function StatCard({ value, label, detail }) {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="text-center group"
+    >
+      <div className="text-5xl md:text-6xl font-serif text-lush mb-3 group-hover:scale-110 transition-transform duration-500">{value}</div>
+      <div className="text-white/40 text-[10px] font-black uppercase tracking-[0.3em] mb-2">{label}</div>
+      <p className="text-white/20 text-xs max-w-[150px] mx-auto leading-relaxed">{detail}</p>
+    </motion.div>
+  );
+}
+
+function VisionCard({ icon, title, desc }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="bg-sand/5 p-12 rounded-[3rem] border border-sand/30"
+    >
+      {icon}
+      <h3 className="text-3xl font-serif text-volcanic mb-6">{title}</h3>
+      <p className="text-volcanic/70 text-lg leading-relaxed">{desc}</p>
+    </motion.div>
+  );
 }
 
 function PhilosophyCard({ icon, title, desc }) {
-    return (
-        <div className="bg-white p-10 rounded-[2rem] shadow-sm border border-sand/50 hover:shadow-xl hover:-translate-y-2 transition-all duration-500">
-            <div className="mb-6">{icon}</div>
-            <h3 className="text-xl font-serif text-volcanic mb-4">{title}</h3>
-            <p className="text-sm text-volcanic/60 leading-relaxed font-medium">
-                {desc}
-            </p>
-        </div>
-    );
+  return (
+    <div className="bg-white p-10 rounded-[2rem] shadow-sm border border-sand/50 hover:shadow-xl hover:-translate-y-2 transition-all duration-500">
+      <div className="mb-6">{icon}</div>
+      <h3 className="text-xl font-serif text-volcanic mb-4">{title}</h3>
+      <p className="text-sm text-volcanic/60 leading-relaxed font-medium">
+        {desc}
+      </p>
+    </div>
+  );
 }
 ```
 
@@ -4206,81 +3904,21 @@ function PhilosophyCard({ icon, title, desc }) {
 
 ### File: `src/pages/Section.jsx`
 
-**Size:** 11279 bytes  
+**Size:** 8897 bytes  
 ```jsx
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import Navbar from "../components/Navbar";
 import Footer from "../components/sections/Footer";
-import { 
-  Waves, 
-  PlaneTakeoff, 
-  Car, 
-  Compass, 
-  Utensils, 
-  Mic2, 
-  ShieldCheck, 
-  Wifi,
-  ArrowUpRight,
-  Wind,
-  Leaf,
-  BookOpen,
-} from "lucide-react";
+import { ArrowUpRight, Waves, Wind, Leaf, Mic2, Utensils, PlaneTakeoff, Car, Compass, BookOpen, Wifi, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const services = [
-  {
-    id: "intellectual-talks",
-    title: "Ocean-Side Intellectual Talks",
-    category: "Thought Leadership",
-    icon: <Mic2 className="w-8 h-8" />,
-    description: "Curated evening dialogues under the stars. We bring together global thinkers and local leaders to discuss governance, tech, and the future of Africa.",
-    image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: "dining",
-    title: "Atlantic Gastronomy",
-    category: "Dining",
-    icon: <Utensils className="w-8 h-8" />,
-    description: "Farm-to-table excellence. Our chefs use volcanic-soil produce and fresh Atlantic catch to redefine Cameroonian fine dining.",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: "transfers",
-    title: "Diplomatic Transfers",
-    category: "Transport",
-    icon: <PlaneTakeoff className="w-8 h-8" />,
-    description: "Seamless airport pickups from Douala International. We handle the logistics so your transition from the world to the sanctuary is effortless.",
-    image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: "expeditions",
-    title: "Volcanic Expeditions",
-    category: "Exploration",
-    icon: <Compass className="w-8 h-8" />,
-    description: "Private guided tours to Mount Cameroon and the historic sites of Bimbia. Adventure rooted in deep geographical and social history.",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: "fleet",
-    title: "Premium Fleet",
-    category: "Mobility",
-    icon: <Car className="w-8 h-8" />,
-    description: "Chauffeur-driven or private luxury rentals. High-clearance vehicles maintained to international standards for your regional travels.",
-    image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: "library",
-    title: "The Fisiy Research Library",
-    category: "Knowledge Hub",
-    icon: <BookOpen className="w-8 h-8" />,
-    description: "A private collection of African literature, law, and social science. A quiet sanctuary for deep work, research, and cross-continental dialogue.",
-    image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=1000"
-  },
-];
-
 export default function Services() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
+  const services = t('services.service_list', { returnObjects: true });
+
   return (
     <div className="bg-sand/30 min-h-screen">
       <Navbar />
@@ -4294,7 +3932,7 @@ export default function Services() {
               transition={{ duration: 0.6 }}
               className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block"
             >
-              The Service Protocol
+              {t('services.hero.tag')}
             </motion.span>
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
@@ -4302,7 +3940,7 @@ export default function Services() {
               transition={{ duration: 0.8, delay: 0.1 }}
               className="text-5xl md:text-8xl font-serif text-volcanic leading-tight mb-8"
             >
-              Seamless <span className="italic text-lush">Infrastructure</span><br />for the Global Mind.
+              {t('services.hero.title')} <span className="italic text-lush">{t('services.hero.title_italic')}</span>
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 30 }}
@@ -4310,9 +3948,7 @@ export default function Services() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-volcanic/70 text-xl max-w-2xl leading-relaxed"
             >
-              At Ngeme Resort, service is a silent partner to your productivity. We provide the 
-              logistics, security, and nourishment required for high-stakes intellectual work,
-              all while honoring the volcanic soul of Cameroon.
+              {t('services.hero.description')}
             </motion.p>
           </div>
         </section>
@@ -4340,7 +3976,13 @@ export default function Services() {
                   />
                   <div className="absolute inset-0 bg-volcanic/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md p-3 rounded-2xl text-lush shadow-lg">
-                    {service.icon}
+                    {/* Icon placeholder - we could map based on id */}
+                    {service.id === 'intellectual-talks' && <Mic2 className="w-8 h-8" />}
+                    {service.id === 'dining' && <Utensils className="w-8 h-8" />}
+                    {service.id === 'transfers' && <PlaneTakeoff className="w-8 h-8" />}
+                    {service.id === 'expeditions' && <Compass className="w-8 h-8" />}
+                    {service.id === 'fleet' && <Car className="w-8 h-8" />}
+                    {service.id === 'library' && <BookOpen className="w-8 h-8" />}
                   </div>
                 </div>
 
@@ -4359,7 +4001,7 @@ export default function Services() {
                     to={`/services/${service.id}`}
                     className="inline-flex items-center gap-2 text-volcanic font-black uppercase tracking-widest text-[9px] border-b border-lush pb-2 group-hover:gap-4 transition-all group-hover:text-lush"
                   >
-                    Discover More <ArrowUpRight className="w-4 h-4 text-lush group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    {t('common.learn_more')} <ArrowUpRight className="w-4 h-4 text-lush group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </Link>
                 </div>
               </motion.div>
@@ -4376,7 +4018,6 @@ export default function Services() {
             viewport={{ once: true }}
             className="bg-volcanic rounded-[4rem] p-12 md:p-24 text-center relative overflow-hidden"
           >
-            {/* Volcanic texture overlay */}
             <div className="absolute inset-0 opacity-10" style={{
               backgroundImage: `radial-gradient(circle at 20% 30%, #7aa65a 1px, transparent 1px), 
                                 radial-gradient(circle at 80% 70%, #7aa65a 1px, transparent 1px)`,
@@ -4395,15 +4036,13 @@ export default function Services() {
 
             <div className="relative z-10 max-w-3xl mx-auto">
               <h2 className="text-4xl md:text-6xl font-serif text-white mb-8">
-                Bespoke <span className="text-lush italic">Requests</span>
+                {t('services.bespoke.title')}
               </h2>
               <p className="text-white/60 text-lg mb-12 leading-relaxed">
-                Our concierge team is trained in diplomatic protocol. Whether you require a private 
-                translator, specialized research assistance, or specific dietary logistics,
-                from volcanic soil produce to rare archival materials, we are here to facilitate.
+                {t('services.bespoke.description')}
               </p>
               <button onClick={() => navigate('/contact')} className="bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-[11px] hover:bg-white hover:scale-105 transition-all shadow-xl hover:shadow-2xl">
-                Contact the Concierge
+                {t('services.bespoke.button')}
               </button>
             </div>
           </motion.div>
@@ -4414,27 +4053,25 @@ export default function Services() {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
               <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-4 block">
-                The Ngeme Standard
+                {t('services.philosophy.tag')}
               </span>
               <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">
-                Rooted in <span className="italic text-lush">Volcanic Soil</span>, Reaching Global Heights
+                {t('services.philosophy.title')} <span className="italic text-lush">{t('services.philosophy.title_italic')}</span>
               </h2>
               <p className="text-volcanic/70 text-lg leading-relaxed">
-                Every service we offer is filtered through a lens of cultural integrity and ecological 
-                mindfulness. From the vehicles we maintain to the ingredients we source, we prioritize 
-                partnerships that uplift local communities and preserve the raw beauty of the Cameroon coastline.
+                {t('services.philosophy.description')}
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-white p-8 rounded-3xl shadow-sm border border-sand/40 text-center">
                 <Wifi className="w-8 h-8 text-lush mx-auto mb-4" />
-                <div className="text-2xl font-serif text-volcanic">High Speed Wifi</div>
-                <div className="text-xs text-volcanic/50 uppercase tracking-wider">Global Connectivity</div>
+                <div className="text-2xl font-serif text-volcanic">{t('services.philosophy.badges.wifi')}</div>
+                <div className="text-xs text-volcanic/50 uppercase tracking-wider">{t('services.philosophy.badges.wifi_sub')}</div>
               </div>
               <div className="bg-white p-8 rounded-3xl shadow-sm border border-sand/40 text-center">
                 <ShieldCheck className="w-8 h-8 text-lush mx-auto mb-4" />
-                <div className="text-2xl font-serif text-volcanic">24/7</div>
-                <div className="text-xs text-volcanic/50 uppercase tracking-wider">Sovereign Protection</div>
+                <div className="text-2xl font-serif text-volcanic">{t('services.philosophy.badges.security')}</div>
+                <div className="text-xs text-volcanic/50 uppercase tracking-wider">{t('services.philosophy.badges.security_sub')}</div>
               </div>
             </div>
           </div>
@@ -4453,38 +4090,20 @@ export default function Services() {
 
 ### File: `src/pages/services/AtlanticGastronomy.jsx`
 
-**Size:** 11613 bytes  
+**Size:** 8917 bytes  
 ```jsx
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/sections/Footer";
-import { 
-  Utensils, Coffee, Wine, Leaf, ChefHat, Clock, MapPin, 
-  Star, ArrowRight, Users, Sun, Sunset, Moon 
-} from "lucide-react";
-
-// Sample menu highlights
-const menuHighlights = [
-  { name: "Grass-Fed Ribeye", description: "300g ribeye from cattle raised on volcanic pastures, grilled over open flame.", price: 8900 },
-  { name: "Mbongo Tchobi Prawns", description: "Juicy prawns simmered in a dark, aromatic spice broth with fresh crayfish.", price: 2400 },
-  { name: "Ndolé Vegetarian", description: "Creamy bitterleaf stew with peanuts, served with boiled plantains.", price: 4500 },
-  { name: "Poisson Braisé", description: "Whole barracuda marinated in spicy mixture, grilled over charcoal.", price: 6500 },
-];
-
-const diningExperiences = [
-  { icon: <Sun className="w-6 h-6" />, title: "Beachfront Breakfast", description: "Start your day with fresh pastries, tropical fruit, and volcanic coffee steps from the Atlantic." },
-  { icon: <Sunset className="w-6 h-6" />, title: "Sundowner Sessions", description: "Cocktails and small plates as the sun sets over the water, a nightly ritual." },
-  { icon: <Moon className="w-6 h-6" />, title: "Private Moonlit Dinners", description: "An intimate multi‑course feast on the beach, just for you." },
-];
-
-const testimonials = [
-  { quote: "The most memorable meal of our lives, not just for the food, but for the setting and the stories behind every ingredient.", author: "— The Thompson Family, UK" },
-  { quote: "Chef Mireille’s tasting menu is a journey through Cameroon. Don’t miss the plantain crisps with kati‑kati.", author: "— Dr. Amina S., Nigeria" },
-];
+import { ChefHat, Clock, MapPin, ArrowRight, Sun, Sunset, Moon } from "lucide-react";
 
 export default function AtlanticGastronomy() {
+  const { t } = useTranslation();
+  const page = t('service_pages.atlantic_gastronomy', { returnObjects: true });
+  const { hero, experiences_title, experiences_sub, experiences, menu_title, menu_sub, menuHighlights, view_full_menu, chef_table, testimonials_title, testimonials, cta_title, cta_sub, cta_button } = page;
+
   return (
     <div className="bg-sand/30 min-h-screen">
       <Navbar />
@@ -4493,24 +4112,18 @@ export default function AtlanticGastronomy() {
         <section className="container mx-auto px-6 mb-20">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-              <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">Dining</span>
-              <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">
-                Atlantic <span className="italic text-lush">Gastronomy</span>
-              </h1>
-              <p className="text-volcanic/70 text-xl leading-relaxed mb-6">
-                Our culinary philosophy is simple: honor the volcanic soil that grows our spices, the Atlantic that provides our catch, and the hands that have cultivated these flavors for generations.
-              </p>
-              <p className="text-volcanic/60 text-lg leading-relaxed mb-8">
-                Every dish tells a story, of farmers who practice terraced agriculture on Mount Cameroon’s slopes, of fishermen who still launch their pirogues by hand, and of recipes passed down through centuries. We invite you to taste Cameroon.
-              </p>
+              <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">{hero.tag}</span>
+              <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">{hero.title}</h1>
+              <p className="text-volcanic/70 text-xl leading-relaxed mb-6">{hero.description}</p>
+              <p className="text-volcanic/60 text-lg leading-relaxed mb-8">{hero.subdescription}</p>
               <div className="flex flex-wrap gap-6">
                 <div className="flex items-center gap-3">
                   <MapPin className="text-lush w-5 h-5" />
-                  <span className="text-volcanic font-medium">The Lighthouse Pavilion & Beach</span>
+                  <span className="text-volcanic font-medium">{hero.location}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Clock className="text-lush w-5 h-5" />
-                  <span className="text-volcanic font-medium">Daily 7am – 10pm</span>
+                  <span className="text-volcanic font-medium">{hero.hours}</span>
                 </div>
               </div>
             </motion.div>
@@ -4528,8 +4141,8 @@ export default function AtlanticGastronomy() {
               <div className="absolute inset-0 bg-gradient-to-t from-volcanic/50 to-transparent" />
               <div className="absolute bottom-8 left-8 right-8 text-white">
                 <ChefHat className="text-lush w-8 h-8 mb-2" />
-                <p className="text-xl font-serif italic">"Cooking is an act of love. We put a piece of our land on every plate."</p>
-                <p className="text-white/70 mt-2">— Chef Mireille Ndongo</p>
+                <p className="text-xl font-serif italic">"{hero.chef_quote}"</p>
+                <p className="text-white/70 mt-2">{hero.chef_name}</p>
               </div>
             </motion.div>
           </div>
@@ -4538,15 +4151,17 @@ export default function AtlanticGastronomy() {
         {/* Dining Experiences */}
         <section className="container mx-auto px-6 mb-20">
           <div className="bg-white rounded-[3rem] p-12 md:p-20 shadow-xl border border-sand/40">
-            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">Ways to Dine</h2>
-            <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">
-              From sunrise coffee to moonlit feasts, choose the setting that suits your mood.
-            </p>
+            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">{experiences_title}</h2>
+            <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">{experiences_sub}</p>
             <div className="grid md:grid-cols-3 gap-8">
-              {diningExperiences.map((exp, idx) => (
+              {experiences.map((exp, idx) => (
                 <div key={idx} className="text-center">
                   <div className="bg-lush/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <div className="text-lush">{exp.icon}</div>
+                    <div className="text-lush">
+                      {idx === 0 && <Sun className="w-6 h-6" />}
+                      {idx === 1 && <Sunset className="w-6 h-6" />}
+                      {idx === 2 && <Moon className="w-6 h-6" />}
+                    </div>
                   </div>
                   <h3 className="text-xl font-serif text-volcanic mb-2">{exp.title}</h3>
                   <p className="text-volcanic/60">{exp.description}</p>
@@ -4558,10 +4173,8 @@ export default function AtlanticGastronomy() {
 
         {/* Menu Highlights */}
         <section className="container mx-auto px-6 mb-20">
-          <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">Menu Highlights</h2>
-          <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">
-            A taste of what awaits. Our full menu changes seasonally with the freshest catches and harvests.
-          </p>
+          <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">{menu_title}</h2>
+          <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">{menu_sub}</p>
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {menuHighlights.map((item, idx) => (
               <motion.div
@@ -4581,7 +4194,7 @@ export default function AtlanticGastronomy() {
           </div>
           <div className="text-center mt-8">
             <Link to="/dining/menu" className="inline-flex items-center gap-2 text-lush font-bold uppercase tracking-wider text-sm hover:gap-3 transition-all">
-              View Full Menu <ArrowRight className="w-4 h-4" />
+              {view_full_menu} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </section>
@@ -4592,26 +4205,18 @@ export default function AtlanticGastronomy() {
             <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `radial-gradient(circle at 20% 30%, #7aa65a 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
             <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">The Chef's Table</h2>
-                <p className="text-white/70 text-lg leading-relaxed mb-6">
-                  For the ultimate culinary experience, reserve our Chef’s Table. Seated just steps from the open kitchen, you’ll enjoy a custom multi‑course tasting menu crafted by Chef Mireille herself, with wine pairings from our cellar.
-                </p>
+                <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">{chef_table.title}</h2>
+                <p className="text-white/70 text-lg leading-relaxed mb-6">{chef_table.description}</p>
                 <ul className="space-y-3 text-white/80">
-                  <li className="flex items-start gap-3">
-                    <ChefHat className="text-lush w-5 h-5 mt-1 flex-shrink-0" />
-                    <span>Interactive experience – ask questions, learn techniques, watch the magic unfold.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Wine className="text-lush w-5 h-5 mt-1 flex-shrink-0" />
-                    <span>Exclusive wine pairings featuring Cameroonian and international labels.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Users className="text-lush w-5 h-5 mt-1 flex-shrink-0" />
-                    <span>Intimate setting for up to 8 guests – perfect for special celebrations.</span>
-                  </li>
+                  {chef_table.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <span className="text-lush w-5 h-5 mt-1 flex-shrink-0">✦</span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
                 </ul>
                 <button className="mt-8 bg-lush text-volcanic px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs hover:bg-white transition-all">
-                  Inquire About Chef's Table
+                  {chef_table.button}
                 </button>
               </div>
               <div className="h-[300px] md:h-[400px] rounded-2xl overflow-hidden">
@@ -4627,7 +4232,7 @@ export default function AtlanticGastronomy() {
 
         {/* Testimonials */}
         <section className="container mx-auto px-6 mb-20">
-          <h2 className="text-3xl md:text-4xl font-serif text-volcanic mb-12 text-center">What Our Guests Say</h2>
+          <h2 className="text-3xl md:text-4xl font-serif text-volcanic mb-12 text-center">{testimonials_title}</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {testimonials.map((t, idx) => (
               <div key={idx} className="bg-white p-8 rounded-2xl border border-sand/40">
@@ -4639,15 +4244,13 @@ export default function AtlanticGastronomy() {
           </div>
         </section>
 
-        {/* Call to Action */}
+        {/* CTA */}
         <section className="container mx-auto px-6">
           <div className="text-center">
-            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">Reserve Your Table</h2>
-            <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">
-              Whether it’s a romantic dinner, a family celebration, or a business meal, we look forward to hosting you.
-            </p>
+            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">{cta_title}</h2>
+            <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">{cta_sub}</p>
             <Link to="/contact" className="inline-flex items-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all">
-              Make a Reservation <ArrowRight className="w-4 h-4" />
+              {cta_button} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </section>
@@ -4662,30 +4265,20 @@ export default function AtlanticGastronomy() {
 
 ### File: `src/pages/services/DiplomaticTransfers.jsx`
 
-**Size:** 7273 bytes  
+**Size:** 5983 bytes  
 ```jsx
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/sections/Footer";
-import { 
-  PlaneTakeoff, Car, Shield, Clock, MapPin, Wifi, 
-  Coffee, Briefcase, ArrowRight, Star 
-} from "lucide-react";
-
-const fleetFeatures = [
-  { icon: <Shield className="w-6 h-6" />, text: "Chauffeurs trained in diplomatic protocol" },
-  { icon: <Clock className="w-6 h-6" />, text: "Flight tracking – we adjust to your schedule" },
-  { icon: <Wifi className="w-6 h-6" />, text: "In-vehicle Wi-Fi and charging" },
-  { icon: <Coffee className="w-6 h-6" />, text: "Complimentary refreshments" },
-];
-
-const testimonials = [
-  { quote: "After a long flight, stepping into a waiting Ngeme vehicle felt like coming home. Flawless.", author: "— Ambassador K. Mbaye, Senegal" },
-  { quote: "They handled our group of 12 with multiple stops effortlessly. Truly professional.", author: "— Dr. Linda T., USA" },
-];
+import { PlaneTakeoff, Car, Shield, Clock, MapPin, Wifi, Coffee, ArrowRight } from "lucide-react";
 
 export default function DiplomaticTransfers() {
+  const { t } = useTranslation();
+  const page = t('service_pages.diplomatic_transfers', { returnObjects: true });
+  const { hero, features_title, features_sub, features, fleet_title, vehicles, testimonials_title, testimonials, cta_title, cta_sub, cta_button } = page;
+
   return (
     <div className="bg-sand/30 min-h-screen">
       <Navbar />
@@ -4694,24 +4287,18 @@ export default function DiplomaticTransfers() {
         <section className="container mx-auto px-6 mb-20">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-              <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">Transport</span>
-              <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">
-                Diplomatic <span className="italic text-lush">Transfers</span>
-              </h1>
-              <p className="text-volcanic/70 text-xl leading-relaxed mb-6">
-                Your journey begins the moment you land. Our professional chauffeurs and late‑model vehicles ensure your transition from Douala International to Ngeme is seamless, safe, and serene.
-              </p>
-              <p className="text-volcanic/60 text-lg leading-relaxed mb-8">
-                We track every flight, handle your luggage with care, and provide amenities designed for the traveler who expects more. Whether you're arriving for business or leisure, we set the tone.
-              </p>
+              <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">{hero.tag}</span>
+              <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">{hero.title}</h1>
+              <p className="text-volcanic/70 text-xl leading-relaxed mb-6">{hero.description}</p>
+              <p className="text-volcanic/60 text-lg leading-relaxed mb-8">{hero.subdescription}</p>
               <div className="flex flex-wrap gap-6">
                 <div className="flex items-center gap-3">
                   <MapPin className="text-lush w-5 h-5" />
-                  <span className="text-volcanic font-medium">Douala International Airport (DLA)</span>
+                  <span className="text-volcanic font-medium">{hero.location}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <PlaneTakeoff className="text-lush w-5 h-5" />
-                  <span className="text-volcanic font-medium">24/7 availability</span>
+                  <span className="text-volcanic font-medium">{hero.hours}</span>
                 </div>
               </div>
             </motion.div>
@@ -4733,17 +4320,20 @@ export default function DiplomaticTransfers() {
         {/* Fleet Features */}
         <section className="container mx-auto px-6 mb-20">
           <div className="bg-white rounded-[3rem] p-12 md:p-20 shadow-xl border border-sand/40">
-            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">The Transfer Experience</h2>
-            <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">
-              More than a ride, we manage every detail so you can arrive refreshed.
-            </p>
+            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">{features_title}</h2>
+            <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">{features_sub}</p>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {fleetFeatures.map((feat, idx) => (
+              {features.map((feat, idx) => (
                 <div key={idx} className="text-center">
                   <div className="bg-lush/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <div className="text-lush">{feat.icon}</div>
+                    <div className="text-lush">
+                      {idx === 0 && <Shield className="w-6 h-6" />}
+                      {idx === 1 && <Clock className="w-6 h-6" />}
+                      {idx === 2 && <Wifi className="w-6 h-6" />}
+                      {idx === 3 && <Coffee className="w-6 h-6" />}
+                    </div>
                   </div>
-                  <p className="text-volcanic/80 font-medium">{feat.text}</p>
+                  <p className="text-volcanic/80 font-medium">{feat}</p>
                 </div>
               ))}
             </div>
@@ -4752,13 +4342,9 @@ export default function DiplomaticTransfers() {
 
         {/* Vehicle Options */}
         <section className="container mx-auto px-6 mb-20">
-          <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-12 text-center">Our Fleet</h2>
+          <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-12 text-center">{fleet_title}</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { name: "Executive Sedan", capacity: 3, image: "https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&q=80&w=600" },
-              { name: "Luxury SUV", capacity: 6, image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=600" },
-              { name: "VIP Van", capacity: 10, image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=600" },
-            ].map((vehicle, idx) => (
+            {vehicles.map((vehicle, idx) => (
               <div key={idx} className="bg-white rounded-2xl overflow-hidden border border-sand/40">
                 <img src={vehicle.image} alt={vehicle.name} className="h-48 w-full object-cover" />
                 <div className="p-6">
@@ -4772,7 +4358,7 @@ export default function DiplomaticTransfers() {
 
         {/* Testimonials */}
         <section className="container mx-auto px-6 mb-20">
-          <h2 className="text-3xl md:text-4xl font-serif text-volcanic mb-12 text-center">Trusted by Discerning Travelers</h2>
+          <h2 className="text-3xl md:text-4xl font-serif text-volcanic mb-12 text-center">{testimonials_title}</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {testimonials.map((t, idx) => (
               <div key={idx} className="bg-white p-8 rounded-2xl border border-sand/40">
@@ -4786,12 +4372,10 @@ export default function DiplomaticTransfers() {
         {/* CTA */}
         <section className="container mx-auto px-6">
           <div className="text-center">
-            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">Arrange Your Transfer</h2>
-            <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">
-              Provide your flight details, and we'll be waiting when you arrive.
-            </p>
+            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">{cta_title}</h2>
+            <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">{cta_sub}</p>
             <Link to="/contact" className="inline-flex items-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all">
-              Book a Transfer <ArrowRight className="w-4 h-4" />
+              {cta_button} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </section>
@@ -4806,28 +4390,20 @@ export default function DiplomaticTransfers() {
 
 ### File: `src/pages/services/FisiyLibrary.jsx`
 
-**Size:** 8573 bytes  
+**Size:** 7411 bytes  
 ```jsx
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/sections/Footer";
 import { BookOpen, Search, Globe, Clock, Users, Award, ArrowRight, BookMarked } from "lucide-react";
 
-const collectionHighlights = [
-  { title: "African Philosophy", count: "1,200+ volumes", icon: <BookOpen className="w-8 h-8" /> },
-  { title: "Cameroonian Law", count: "800+ texts", icon: <BookMarked className="w-8 h-8" /> },
-  { title: "Post-Colonial Literature", count: "600+ titles", icon: <BookOpen className="w-8 h-8" /> },
-  { title: "Rare Manuscripts", count: "50+ archival items", icon: <Award className="w-8 h-8" /> },
-];
-
-const services = [
-  { icon: <Search className="w-6 h-6" />, title: "Research Assistance", description: "Librarians available to help locate materials and navigate databases." },
-  { icon: <Globe className="w-6 h-6" />, title: "Digital Access", description: "High-speed internet and subscriptions to academic journals." },
-  { icon: <Users className="w-6 h-6" />, title: "Scholar Residencies", description: "Dedicated workspace for visiting researchers." },
-];
-
 export default function FisiyLibrary() {
+  const { t } = useTranslation();
+  const page = t('service_pages.fisiy_library', { returnObjects: true });
+  const { hero, collection_title, collection_sub, collection_highlights, services_title, services, residency, cta_title, cta_sub, cta_button } = page;
+
   return (
     <div className="bg-sand/30 min-h-screen">
       <Navbar />
@@ -4836,24 +4412,18 @@ export default function FisiyLibrary() {
         <section className="container mx-auto px-6 mb-20">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-              <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">Knowledge Hub</span>
-              <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">
-                The Fisiy <span className="italic text-lush">Research Library</span>
-              </h1>
-              <p className="text-volcanic/70 text-xl leading-relaxed mb-6">
-                A sanctuary for the serious mind. Our library houses a private collection of African literature, law, social science, and rare archival materials, curated over decades by Dr. Cyprian Fisiy and colleagues.
-              </p>
-              <p className="text-volcanic/60 text-lg leading-relaxed mb-8">
-                With reading rooms overlooking the Atlantic, high‑speed internet, and a librarian on hand, it's the perfect environment for deep work, writing, and cross‑continental dialogue.
-              </p>
+              <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">{hero.tag}</span>
+              <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">{hero.title}</h1>
+              <p className="text-volcanic/70 text-xl leading-relaxed mb-6">{hero.description}</p>
+              <p className="text-volcanic/60 text-lg leading-relaxed mb-8">{hero.subdescription}</p>
               <div className="flex flex-wrap gap-6">
                 <div className="flex items-center gap-3">
                   <Clock className="text-lush w-5 h-5" />
-                  <span className="text-volcanic font-medium">Open daily 8am – 8pm</span>
+                  <span className="text-volcanic font-medium">{hero.hours}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Users className="text-lush w-5 h-5" />
-                  <span className="text-volcanic font-medium">Resort guests & visiting scholars</span>
+                  <span className="text-volcanic font-medium">{hero.audience}</span>
                 </div>
               </div>
             </motion.div>
@@ -4875,15 +4445,18 @@ export default function FisiyLibrary() {
         {/* Collection Highlights */}
         <section className="container mx-auto px-6 mb-20">
           <div className="bg-white rounded-[3rem] p-12 md:p-16 shadow-xl border border-sand/40">
-            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">The Collection</h2>
-            <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">
-              A living archive focused on African thought, law, and letters.
-            </p>
+            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">{collection_title}</h2>
+            <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">{collection_sub}</p>
             <div className="grid md:grid-cols-4 gap-8">
-              {collectionHighlights.map((item, idx) => (
+              {collection_highlights.map((item, idx) => (
                 <div key={idx} className="text-center">
                   <div className="bg-lush/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <div className="text-lush">{item.icon}</div>
+                    <div className="text-lush">
+                      {idx === 0 && <BookOpen className="w-8 h-8" />}
+                      {idx === 1 && <BookMarked className="w-8 h-8" />}
+                      {idx === 2 && <BookOpen className="w-8 h-8" />}
+                      {idx === 3 && <Award className="w-8 h-8" />}
+                    </div>
                   </div>
                   <h3 className="text-lg font-serif text-volcanic mb-1">{item.title}</h3>
                   <p className="text-lush font-bold">{item.count}</p>
@@ -4895,7 +4468,7 @@ export default function FisiyLibrary() {
 
         {/* Library Services */}
         <section className="container mx-auto px-6 mb-20">
-          <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-12 text-center">Beyond the Stacks</h2>
+          <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-12 text-center">{services_title}</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {services.map((s, idx) => (
               <motion.div
@@ -4906,7 +4479,11 @@ export default function FisiyLibrary() {
                 className="bg-white p-8 rounded-2xl border border-sand/40 text-center"
               >
                 <div className="bg-lush/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <div className="text-lush">{s.icon}</div>
+                  <div className="text-lush">
+                    {idx === 0 && <Search className="w-6 h-6" />}
+                    {idx === 1 && <Globe className="w-6 h-6" />}
+                    {idx === 2 && <Users className="w-6 h-6" />}
+                  </div>
                 </div>
                 <h3 className="text-xl font-serif text-volcanic mb-2">{s.title}</h3>
                 <p className="text-volcanic/60">{s.description}</p>
@@ -4921,18 +4498,15 @@ export default function FisiyLibrary() {
             <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `radial-gradient(circle at 20% 30%, #7aa65a 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
             <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">Scholar Residencies</h2>
-                <p className="text-white/70 text-lg leading-relaxed mb-6">
-                  We offer dedicated workspace and accommodation packages for researchers, writers, and academics. Stay for a week or a month, immerse yourself in the collection and the landscape.
-                </p>
+                <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">{residency.title}</h2>
+                <p className="text-white/70 text-lg leading-relaxed mb-6">{residency.description}</p>
                 <ul className="space-y-3 text-white/80">
-                  <li>• Private study carrels with ocean views</li>
-                  <li>• Access to rare materials and digital databases</li>
-                  <li>• Weekly seminars with fellow residents</li>
-                  <li>• Inclusive meal plan at the resort</li>
+                  {residency.features.map((feature, idx) => (
+                    <li key={idx}>• {feature}</li>
+                  ))}
                 </ul>
                 <button className="mt-8 bg-lush text-volcanic px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs hover:bg-white transition-all">
-                  Apply for Residency
+                  {residency.button}
                 </button>
               </div>
               <div className="h-[300px] rounded-2xl overflow-hidden">
@@ -4949,12 +4523,10 @@ export default function FisiyLibrary() {
         {/* CTA */}
         <section className="container mx-auto px-6">
           <div className="text-center">
-            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">Plan Your Research Visit</h2>
-            <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">
-              Whether you're a guest at the resort or a scholar seeking a quiet place to work, we welcome you.
-            </p>
+            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">{cta_title}</h2>
+            <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">{cta_sub}</p>
             <Link to="/contact" className="inline-flex items-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all">
-              Inquire About Access <ArrowRight className="w-4 h-4" />
+              {cta_button} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </section>
@@ -4969,134 +4541,53 @@ export default function FisiyLibrary() {
 
 ### File: `src/pages/services/IntellectualTalk.jsx`
 
-**Size:** 25091 bytes  
+**Size:** 16889 bytes  
 ```jsx
+
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/sections/Footer";
-import { 
-  Mic2, Calendar, Users, MapPin, Star, ArrowRight, Quote, 
-  Youtube, Play, X, Clock, BookOpen, Globe, Award, Eye 
-} from "lucide-react";
-
-// Sample past talks data with YouTube links
-const pastTalks = [
-  {
-    id: 1,
-    title: "The Future of African Governance: Digital Democracy",
-    speaker: "Dr. Ngozi Okonjo-Iweala",
-    speakerTitle: "WTO Director-General",
-    date: "March 12, 2026",
-    description: "In this powerful address, Dr. Okonjo-Iweala explores how digital transformation is reshaping governance across the continent, from blockchain voting systems to AI-driven public service delivery. She argues that Africa has a unique opportunity to leapfrog traditional bureaucratic models and build institutions that are more transparent, accountable, and inclusive than those in the West.",
-    youtubeId: "5Aa9Mc1VqKE", // Replace with actual YouTube IDs
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600",
-    duration: "54:32",
-    views: "2.4K"
-  },
-  {
-    id: 2,
-    title: "Planetary Entanglements: Africa in the Anthropocene",
-    speaker: "Prof. Achille Mbembe",
-    speakerTitle: "Philosopher & Political Theorist",
-    date: "February 8, 2026",
-    description: "Professor Mbembe delivers a profound meditation on Africa's relationship to the planet, how the continent's ecological wisdom, forged over millennia, offers vital lessons for a world facing climate catastrophe. He challenges the audience to rethink development not as extraction but as reciprocal care between human and non-human worlds.",
-    youtubeId: "5Aa9Mc1VqKE",
-    image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&q=80&w=600",
-    duration: "1:12:18",
-    views: "3.1K"
-  },
-  {
-    id: 3,
-    title: "The Danger of a Single Story: Reimagining African Narratives",
-    speaker: "Chimamanda Ngozi Adichie",
-    speakerTitle: "Author",
-    date: "January 19, 2026",
-    description: "Building on her legendary TED Talk, Chimamanda engages in a intimate conversation about the power of stories to shape perceptions, and the responsibility of African writers to tell their own tales. She reads from unpublished work and discusses how literature can heal the wounds of colonial historiography.",
-    youtubeId: "5Aa9Mc1VqKE",
-    image: "https://images.unsplash.com/photo-1544717301-9cdcb1f5940f?auto=format&fit=crop&q=80&w=600",
-    duration: "1:08:45",
-    views: "5.7K"
-  },
-  {
-    id: 4,
-    title: "Restorative Justice: Lessons from Post-Apartheid South Africa",
-    speaker: "Judge Albie Sachs",
-    speakerTitle: "Former Justice, Constitutional Court of South Africa",
-    date: "December 5, 2025",
-    description: "Judge Sachs shares riveting stories from the Truth and Reconciliation Commission and reflects on how societies torn by conflict can begin to heal. He argues that true justice is not punitive but restorative, a lesson as urgent for divided democracies today as it was in 1994.",
-    youtubeId: "5Aa9Mc1VqKE",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600",
-    duration: "1:24:09",
-    views: "1.8K"
-  },
-  {
-    id: 5,
-    title: "AI and the Future of African Governance",
-    speaker: "Dr. Fei-Fei Li (via satellite)",
-    speakerTitle: "Co-Director, Stanford Human-Centered AI Institute",
-    date: "November 22, 2025",
-    description: "In a historic satellite link, Dr. Li discusses how artificial intelligence can be harnessed for public good, from predicting disease outbreaks to optimizing crop yields. She emphasizes the need for African leadership in shaping AI ethics, ensuring that algorithms reflect the continent's diverse cultures and values.",
-    youtubeId: "5Aa9Mc1VqKE",
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600",
-    duration: "1:05:22",
-    views: "4.2K"
-  }
-];
-
-const upcomingEvents = [
-  { date: "May 15, 2026", topic: "AI and the Future of African Governance", speaker: "Dr. Fei-Fei Li (via satellite)" },
-  { date: "June 3, 2026", topic: "Restorative Justice: Lessons from the Global South", speaker: "Judge Albie Sachs" },
-  { date: "July 21, 2026", topic: "African Philosophy in the 21st Century", speaker: "Prof. Souleymane Bachir Diagne" },
-];
+import { Mic2, Calendar, Users, MapPin, Star, ArrowRight, Quote, Youtube, Play, X, Clock, BookOpen, Globe, Award, Eye } from "lucide-react";
 
 export default function IntellectualTalks() {
+  const { t } = useTranslation();
+  const page = t('service_pages.intellectual_talks', { returnObjects: true });
+  const { hero, experience_title, experience_sub, experience_features, past_talks_title, past_talks_sub, upcoming_title, upcoming_sub, upcoming_events, free_note, why_title, why_text, why_text2, why_text3, stats, cta_title, cta_sub, cta_button, youtube_button } = page;
+
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [showAllTalks, setShowAllTalks] = useState(false);
 
-  // For empty state demonstration (comment out the pastTalks array above and uncomment below to test)
-  // const pastTalks = [];
-
+  const pastTalks = t('service_pages.intellectual_talks.pastTalks', { returnObjects: true }) || [];
   const displayedTalks = showAllTalks ? pastTalks : pastTalks.slice(0, 3);
 
   return (
     <div className="bg-sand/30 min-h-screen">
       <Navbar />
-      
       <main className="pt-32 pb-20">
-        {/* Hero - enriched with more context */}
+        {/* Hero */}
         <section className="container mx-auto px-6 mb-20">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">
-                Thought Leadership
-              </span>
-              <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">
-                Ocean-Side <span className="italic text-lush">Intellectual Talks</span>
-              </h1>
-              <p className="text-volcanic/70 text-xl leading-relaxed mb-6">
-                Where the Atlantic meets the avant‑garde. Our signature series brings together the world's brightest minds for intimate dialogues under the stars. Each session is a deep dive into the ideas shaping our continent and our century, from philosophy and governance to technology and the arts.
-              </p>
-              <p className="text-volcanic/60 text-lg leading-relaxed mb-8">
-                What began in 2023 as intimate conversations around a fire pit has grown into a globally recognized forum. Past speakers include Nobel laureates, heads of state, and cultural icons, all invited not for their titles, but for their willingness to think out loud, to question orthodoxy, and to engage with our guests as equals.
-              </p>
+            <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+              <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">{hero.tag}</span>
+              <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">{hero.title}</h1>
+              <p className="text-volcanic/70 text-xl leading-relaxed mb-6">{hero.description}</p>
+              <p className="text-volcanic/60 text-lg leading-relaxed mb-8">{hero.subdescription}</p>
               <div className="flex flex-wrap gap-6">
                 <div className="flex items-center gap-3">
                   <MapPin className="text-lush w-5 h-5" />
-                  <span className="text-volcanic font-medium">The Lighthouse Pavilion</span>
+                  <span className="text-volcanic font-medium">{hero.location}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Calendar className="text-lush w-5 h-5" />
-                  <span className="text-volcanic font-medium">Every Thursday evening</span>
+                  <span className="text-volcanic font-medium">{hero.schedule}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Eye className="text-lush w-5 h-5" />
-                  <span className="text-volcanic font-medium">Recorded & archived on YouTube</span>
+                  <span className="text-volcanic font-medium">{hero.archive}</span>
                 </div>
               </div>
             </motion.div>
@@ -5114,59 +4605,44 @@ export default function IntellectualTalks() {
               <div className="absolute inset-0 bg-gradient-to-t from-volcanic/50 to-transparent" />
               <div className="absolute bottom-8 left-8 right-8 text-white">
                 <p className="text-lush font-bold text-sm mb-2">FEATURED MOMENT</p>
-                <p className="text-xl font-serif italic">"The future is not something we enter. The future is something we create."</p>
-                <p className="text-white/70 mt-2">— Prof. Achille Mbembe, February 2026</p>
+                <p className="text-xl font-serif italic">"{hero.featured_quote}"</p>
+                <p className="text-white/70 mt-2">{hero.featured_speaker}</p>
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* The Experience - expanded with more text */}
+        {/* The Experience */}
         <section className="container mx-auto px-6 mb-20">
           <div className="bg-white rounded-[3rem] p-12 md:p-20 shadow-xl border border-sand/40">
-            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6 text-center">More Than a Lecture</h2>
-            <p className="text-volcanic/60 text-lg text-center max-w-3xl mx-auto mb-12">
-              We reject the passive auditorium model. Our talks are designed for genuine intellectual exchange, where the distance between speaker and audience dissolves, and ideas flow freely.
-            </p>
+            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6 text-center">{experience_title}</h2>
+            <p className="text-volcanic/60 text-lg text-center max-w-3xl mx-auto mb-12">{experience_sub}</p>
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="bg-lush/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Users className="w-8 h-8 text-lush" />
+              {experience_features.map((feat, idx) => (
+                <div key={idx} className="text-center">
+                  <div className="bg-lush/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    {idx === 0 && <Users className="w-8 h-8 text-lush" />}
+                    {idx === 1 && <Globe className="w-8 h-8 text-lush" />}
+                    {idx === 2 && <BookOpen className="w-8 h-8 text-lush" />}
+                  </div>
+                  <h3 className="text-xl font-serif text-volcanic mb-3">{feat.title}</h3>
+                  <p className="text-volcanic/60">{feat.description}</p>
                 </div>
-                <h3 className="text-xl font-serif text-volcanic mb-3">Intimate Setting</h3>
-                <p className="text-volcanic/60">Limited to 30 guests, allowing genuine exchange between audience and speaker. No podiums, no barriers, just chairs arranged in a circle under the stars.</p>
-              </div>
-              <div className="text-center">
-                <div className="bg-lush/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Globe className="w-8 h-8 text-lush" />
-                </div>
-                <h3 className="text-xl font-serif text-volcanic mb-3">Global Voices, Local Wisdom</h3>
-                <p className="text-volcanic/60">We deliberately pair international thought leaders with Cameroonian elders, activists, and artists. The result is a dialogue that transcends cultural boundaries.</p>
-              </div>
-              <div className="text-center">
-                <div className="bg-lush/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <BookOpen className="w-8 h-8 text-lush" />
-                </div>
-                <h3 className="text-xl font-serif text-volcanic mb-3">Lasting Archive</h3>
-                <p className="text-volcanic/60">Every talk is professionally recorded and made available on our YouTube channel, building a growing library of African intellectual thought for the world.</p>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Past Talks - Video Cards */}
+        {/* Past Talks */}
         <section className="container mx-auto px-6 mb-20">
           <div className="flex justify-between items-center mb-12">
             <div>
-              <h2 className="text-4xl md:text-5xl font-serif text-volcanic">Past Talks</h2>
-              <p className="text-volcanic/60 text-lg mt-2">Watch full recordings of previous sessions</p>
+              <h2 className="text-4xl md:text-5xl font-serif text-volcanic">{past_talks_title}</h2>
+              <p className="text-volcanic/60 text-lg mt-2">{past_talks_sub}</p>
             </div>
             {pastTalks.length > 3 && (
-              <button 
-                onClick={() => setShowAllTalks(!showAllTalks)}
-                className="flex items-center gap-2 text-lush font-bold uppercase tracking-wider text-sm hover:gap-3 transition-all"
-              >
-                {showAllTalks ? "Show Less" : "View All Talks"} <ArrowRight className="w-4 h-4" />
+              <button onClick={() => setShowAllTalks(!showAllTalks)} className="flex items-center gap-2 text-lush font-bold uppercase tracking-wider text-sm hover:gap-3 transition-all">
+                {showAllTalks ? t('service_pages.intellectual_talks.show_less') : t('service_pages.intellectual_talks.view_all')} <ArrowRight className="w-4 h-4" />
               </button>
             )}
           </div>
@@ -5174,12 +4650,10 @@ export default function IntellectualTalks() {
           {pastTalks.length === 0 ? (
             <div className="bg-white rounded-[3rem] p-16 text-center border border-sand/40">
               <Youtube className="w-16 h-16 text-lush/30 mx-auto mb-6" />
-              <h3 className="text-2xl font-serif text-volcanic mb-3">Coming Soon</h3>
-              <p className="text-volcanic/50 text-lg max-w-md mx-auto mb-6">
-                Our inaugural talk series launches in June 2026. We're curating an extraordinary lineup of thinkers, subscribe to be notified.
-              </p>
+              <h3 className="text-2xl font-serif text-volcanic mb-3">{t('service_pages.intellectual_talks.coming_soon.title')}</h3>
+              <p className="text-volcanic/50 text-lg max-w-md mx-auto mb-6">{t('service_pages.intellectual_talks.coming_soon.description')}</p>
               <button className="bg-lush text-volcanic px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all">
-                Get Notified
+                {t('common.get_notified')}
               </button>
             </div>
           ) : (
@@ -5196,11 +4670,7 @@ export default function IntellectualTalks() {
                     onClick={() => setSelectedVideo(talk)}
                   >
                     <div className="h-48 overflow-hidden relative">
-                      <img 
-                        src={talk.image} 
-                        alt={talk.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
+                      <img src={talk.image} alt={talk.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                       <div className="absolute inset-0 bg-volcanic/30 group-hover:bg-volcanic/50 transition-colors" />
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-16 h-16 bg-lush rounded-full flex items-center justify-center shadow-xl transform group-hover:scale-110 transition-transform">
@@ -5225,14 +4695,10 @@ export default function IntellectualTalks() {
                   </motion.div>
                 ))}
               </div>
-
               {!showAllTalks && pastTalks.length > 3 && (
                 <div className="text-center mt-12">
-                  <button 
-                    onClick={() => setShowAllTalks(true)}
-                    className="inline-flex items-center gap-2 bg-volcanic text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider text-xs hover:bg-lush transition-colors"
-                  >
-                    Load All {pastTalks.length} Talks <ArrowRight className="w-4 h-4" />
+                  <button onClick={() => setShowAllTalks(true)} className="inline-flex items-center gap-2 bg-volcanic text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider text-xs hover:bg-lush transition-colors">
+                    {t('service_pages.intellectual_talks.load_all', { count: pastTalks.length })} <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               )}
@@ -5243,24 +4709,13 @@ export default function IntellectualTalks() {
         {/* Upcoming Events */}
         <section className="container mx-auto px-6 mb-20">
           <div className="bg-volcanic rounded-[3rem] p-12 md:p-16 text-white relative overflow-hidden">
-            <div className="absolute inset-0 opacity-10" style={{
-              backgroundImage: `radial-gradient(circle at 20% 30%, #7aa65a 1px, transparent 1px)`,
-              backgroundSize: '40px 40px'
-            }} />
+            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `radial-gradient(circle at 20% 30%, #7aa65a 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl font-serif text-white mb-4 text-center">Upcoming Dialogues</h2>
-              <p className="text-white/60 text-lg text-center max-w-2xl mx-auto mb-12">
-                Join us under the stars for these upcoming conversations. Space is limited, reservations recommended.
-              </p>
+              <h2 className="text-4xl md:text-5xl font-serif text-white mb-4 text-center">{upcoming_title}</h2>
+              <p className="text-white/60 text-lg text-center max-w-2xl mx-auto mb-12">{upcoming_sub}</p>
               <div className="space-y-4 max-w-3xl mx-auto">
-                {upcomingEvents.map((event, idx) => (
-                  <motion.div 
-                    key={idx}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-4 border border-white/20"
-                  >
+                {upcoming_events.map((event, idx) => (
+                  <motion.div key={idx} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.1 }} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-4 border border-white/20">
                     <div className="flex-1">
                       <div className="flex items-center gap-4 mb-2">
                         <span className="text-lush font-bold text-sm">{event.date}</span>
@@ -5269,120 +4724,77 @@ export default function IntellectualTalks() {
                       <p className="text-white/70">with {event.speaker}</p>
                     </div>
                     <button className="bg-lush text-volcanic px-8 py-3 rounded-full text-xs font-black uppercase tracking-wider hover:bg-white transition-colors whitespace-nowrap">
-                      Reserve Seat
+                      {t('common.reserve_seat')}
                     </button>
                   </motion.div>
                 ))}
               </div>
-              <p className="text-white/40 text-center mt-8 text-sm max-w-2xl mx-auto">
-                All talks are complimentary for resort guests. External attendance is available by prior arrangement, please contact our concierge.
-              </p>
+              <p className="text-white/40 text-center mt-8 text-sm max-w-2xl mx-auto">{free_note}</p>
             </div>
           </div>
         </section>
 
-        {/* Why This Matters - new section with deeper context */}
+        {/* Why This Matters */}
         <section className="container mx-auto px-6 mb-20">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-4 block">
-                The Vision
-              </span>
-              <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">Why Intellectual Talks?</h2>
-              <p className="text-volcanic/70 text-lg leading-relaxed mb-6">
-                In an age of soundbites and algorithms, we believe in the power of slow, sustained thought. The most urgent problems facing Africa and the world, climate change, inequality, democratic backsliding, cannot be solved by quick fixes. They require deep, interdisciplinary dialogue.
-              </p>
-              <p className="text-volcanic/70 text-lg leading-relaxed mb-6">
-                Our talks are designed to model what that dialogue looks like: rigorous, respectful, and radically open. We invite speakers not to deliver a monologue, but to enter into conversation with our guests, with local thinkers, and with the place itself, the volcanic shores of Limbe, where Africa meets the Atlantic.
-              </p>
-              <p className="text-volcanic/70 text-lg leading-relaxed">
-                Each talk is recorded and archived, creating a growing digital library of African intellectual thought, accessible to anyone, anywhere, for free. Because the conversations that happen here shouldn't end at the water's edge.
-              </p>
+              <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-4 block">{t('service_pages.intellectual_talks.why_title')}</span>
+              <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">{why_title}</h2>
+              <p className="text-volcanic/70 text-lg leading-relaxed mb-6">{why_text}</p>
+              <p className="text-volcanic/70 text-lg leading-relaxed mb-6">{why_text2}</p>
+              <p className="text-volcanic/70 text-lg leading-relaxed">{why_text3}</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-sand/40 text-center">
                 <Award className="w-8 h-8 text-lush mx-auto mb-3" />
-                <div className="text-2xl font-serif text-volcanic">12</div>
-                <div className="text-xs text-volcanic/50">Talks to date</div>
+                <div className="text-2xl font-serif text-volcanic">{stats.talks}</div>
+                <div className="text-xs text-volcanic/50">{stats.talks_label}</div>
               </div>
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-sand/40 text-center">
                 <Users className="w-8 h-8 text-lush mx-auto mb-3" />
-                <div className="text-2xl font-serif text-volcanic">360+</div>
-                <div className="text-xs text-volcanic/50">Attendees</div>
+                <div className="text-2xl font-serif text-volcanic">{stats.attendees}</div>
+                <div className="text-xs text-volcanic/50">{stats.attendees_label}</div>
               </div>
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-sand/40 text-center">
                 <Globe className="w-8 h-8 text-lush mx-auto mb-3" />
-                <div className="text-2xl font-serif text-volcanic">14</div>
-                <div className="text-xs text-volcanic/50">Countries represented</div>
+                <div className="text-2xl font-serif text-volcanic">{stats.countries}</div>
+                <div className="text-xs text-volcanic/50">{stats.countries_label}</div>
               </div>
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-sand/40 text-center">
                 <Youtube className="w-8 h-8 text-lush mx-auto mb-3" />
-                <div className="text-2xl font-serif text-volcanic">17K+</div>
-                <div className="text-xs text-volcanic/50">YouTube views</div>
+                <div className="text-2xl font-serif text-volcanic">{stats.views}</div>
+                <div className="text-xs text-volcanic/50">{stats.views_label}</div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Call to Action */}
+        {/* CTA */}
         <section className="container mx-auto px-6">
           <div className="text-center">
-            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">Join the Conversation</h2>
-            <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">
-              Whether you're a guest at Ngeme or a scholar visiting Cameroon, we invite you to be part of these transformative evenings. Subscribe to our newsletter for updates on upcoming talks and new video releases.
-            </p>
+            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">{cta_title}</h2>
+            <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">{cta_sub}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/contact" className="inline-flex items-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all">
-                Attend a Talk <ArrowRight className="w-4 h-4" />
+                {cta_button} <ArrowRight className="w-4 h-4" />
               </Link>
-              <a 
-                href="https://youtube.com/@ngemeresort" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 border-2 border-volcanic text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all"
-              >
-                <Youtube className="w-4 h-4" /> Watch on YouTube
+              <a href="https://youtube.com/@ngemeresort" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 border-2 border-volcanic text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all">
+                <Youtube className="w-4 h-4" /> {youtube_button}
               </a>
             </div>
           </div>
         </section>
 
-        {/* YouTube Video Modal */}
+        {/* Video Modal */}
         <AnimatePresence>
           {selectedVideo && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-volcanic/80 backdrop-blur-lg"
-              onClick={() => setSelectedVideo(null)}
-            >
-              <motion.div
-                initial={{ scale: 0.9, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 20 }}
-                className="bg-white rounded-[2rem] max-w-4xl w-full overflow-hidden shadow-2xl"
-                onClick={(e) => e.stopPropagation()}
-              >
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-volcanic/80 backdrop-blur-lg" onClick={() => setSelectedVideo(null)}>
+              <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }} className="bg-white rounded-[2rem] max-w-4xl w-full overflow-hidden shadow-2xl" onClick={(e) => e.stopPropagation()}>
                 <div className="relative">
-                  <button
-                    onClick={() => setSelectedVideo(null)}
-                    className="absolute top-4 right-4 z-10 bg-volcanic text-white p-2 rounded-full hover:bg-lush transition-colors"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                  
-                  {/* YouTube Embed */}
+                  <button onClick={() => setSelectedVideo(null)} className="absolute top-4 right-4 z-10 bg-volcanic text-white p-2 rounded-full hover:bg-lush transition-colors"><X className="w-5 h-5" /></button>
                   <div className="relative pt-[56.25%] bg-black">
-                    <iframe
-                      className="absolute inset-0 w-full h-full"
-                      src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`}
-                      title={selectedVideo.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
+                    <iframe className="absolute inset-0 w-full h-full" src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`} title={selectedVideo.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
                   </div>
-                  
                   <div className="p-8">
                     <h3 className="text-2xl font-serif text-volcanic mb-2">{selectedVideo.title}</h3>
                     <p className="text-lush font-medium mb-1">{selectedVideo.speaker}</p>
@@ -5395,7 +4807,6 @@ export default function IntellectualTalks() {
           )}
         </AnimatePresence>
       </main>
-      
       <Footer />
     </div>
   );
@@ -5406,27 +4817,20 @@ export default function IntellectualTalks() {
 
 ### File: `src/pages/services/PremiumFleet.jsx`
 
-**Size:** 6785 bytes  
+**Size:** 5359 bytes  
 ```jsx
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/sections/Footer";
-import { Car, Fuel, Settings, Users, Wifi, Shield, ArrowRight, Map, Star } from "lucide-react";
-
-const vehicles = [
-  { name: "Land Rover Defender", type: "4x4", capacity: 5, features: ["Off-road ready", "AC", "Bluetooth"], image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=600" },
-  { name: "Mercedes-Benz V-Class", type: "Luxury Van", capacity: 7, features: ["Leather seats", "Wi-Fi", "Mini-bar"], image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=600" },
-  { name: "Toyota Land Cruiser", type: "SUV", capacity: 5, features: ["High clearance", "Snorkel", "GPS"], image: "https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&q=80&w=600" },
-];
-
-const services = [
-  { icon: <Car className="w-6 h-6" />, title: "Self-Drive", description: "For those who prefer independence, fully insured, delivered to the resort." },
-  { icon: <Users className="w-6 h-6" />, title: "Chauffeur-Driven", description: "Professional local driver who doubles as a guide." },
-  { icon: <Map className="w-6 h-6" />, title: "Regional Travel", description: "Available for trips to Yaoundé, Kribi, or further." },
-];
+import { Car, Users, Map, ArrowRight } from "lucide-react";
 
 export default function PremiumFleet() {
+  const { t } = useTranslation();
+  const page = t('service_pages.premium_fleet', { returnObjects: true });
+  const { hero, fleet_title, fleet_sub, vehicles, services_title, services, cta_title, cta_sub, cta_button } = page;
+
   return (
     <div className="bg-sand/30 min-h-screen">
       <Navbar />
@@ -5435,16 +4839,10 @@ export default function PremiumFleet() {
         <section className="container mx-auto px-6 mb-20">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-              <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">Mobility</span>
-              <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">
-                Premium <span className="italic text-lush">Fleet</span>
-              </h1>
-              <p className="text-volcanic/70 text-xl leading-relaxed mb-6">
-                Explore Cameroon at your own pace with our meticulously maintained fleet of luxury vehicles. Whether you prefer the independence of self‑drive or the insight of a local chauffeur, we provide the wheels for your journey.
-              </p>
-              <p className="text-volcanic/60 text-lg leading-relaxed mb-8">
-                All vehicles are equipped for the region,high clearance, air conditioning, and modern safety features. We deliver to the resort and handle all paperwork.
-              </p>
+              <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">{hero.tag}</span>
+              <h1 className="text-5xl md:text-7xl font-serif text-volcanic leading-tight mb-8">{hero.title}</h1>
+              <p className="text-volcanic/70 text-xl leading-relaxed mb-6">{hero.description}</p>
+              <p className="text-volcanic/60 text-lg leading-relaxed mb-8">{hero.subdescription}</p>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -5463,19 +4861,11 @@ export default function PremiumFleet() {
 
         {/* Vehicle Grid */}
         <section className="container mx-auto px-6 mb-20">
-          <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">Our Vehicles</h2>
-          <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">
-            Choose from our selection of premium vehicles, each maintained to international standards.
-          </p>
+          <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">{fleet_title}</h2>
+          <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">{fleet_sub}</p>
           <div className="grid md:grid-cols-3 gap-8">
             {vehicles.map((v, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-white rounded-2xl overflow-hidden border border-sand/40"
-              >
+              <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }} className="bg-white rounded-2xl overflow-hidden border border-sand/40">
                 <img src={v.image} alt={v.name} className="h-48 w-full object-cover" />
                 <div className="p-6">
                   <h3 className="text-xl font-serif text-volcanic mb-1">{v.name}</h3>
@@ -5486,7 +4876,7 @@ export default function PremiumFleet() {
                     ))}
                   </div>
                   <button className="text-lush font-bold uppercase tracking-wider text-xs flex items-center gap-1 group">
-                    View Details <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition" />
+                    {t('common.view_details')} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition" />
                   </button>
                 </div>
               </motion.div>
@@ -5497,12 +4887,16 @@ export default function PremiumFleet() {
         {/* Service Options */}
         <section className="container mx-auto px-6 mb-20">
           <div className="bg-white rounded-[3rem] p-12 md:p-16 shadow-xl border border-sand/40">
-            <h2 className="text-3xl md:text-4xl font-serif text-volcanic mb-12 text-center">How You Want to Drive</h2>
+            <h2 className="text-3xl md:text-4xl font-serif text-volcanic mb-12 text-center">{services_title}</h2>
             <div className="grid md:grid-cols-3 gap-8">
               {services.map((s, idx) => (
                 <div key={idx} className="text-center">
                   <div className="bg-lush/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <div className="text-lush">{s.icon}</div>
+                    <div className="text-lush">
+                      {idx === 0 && <Car className="w-6 h-6" />}
+                      {idx === 1 && <Users className="w-6 h-6" />}
+                      {idx === 2 && <Map className="w-6 h-6" />}
+                    </div>
                   </div>
                   <h3 className="text-xl font-serif text-volcanic mb-2">{s.title}</h3>
                   <p className="text-volcanic/60">{s.description}</p>
@@ -5515,12 +4909,10 @@ export default function PremiumFleet() {
         {/* CTA */}
         <section className="container mx-auto px-6">
           <div className="text-center">
-            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">Reserve Your Vehicle</h2>
-            <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">
-              Contact our fleet team to check availability and arrange delivery.
-            </p>
+            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">{cta_title}</h2>
+            <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">{cta_sub}</p>
             <Link to="/contact" className="inline-flex items-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all">
-              Inquire About Rental <ArrowRight className="w-4 h-4" />
+              {cta_button} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </section>
@@ -5671,6 +5063,6 @@ export default function VolcanicExpeditions() {
 ## Summary
 
 - **Project scanned from:** `.`
-- **Total files extracted:** 44
+- **Total files extracted:** 46
 - **Output file:** `project_code.md`
-- **Generated on:** 2026-03-25 10:06:52
+- **Generated on:** 2026-06-07 16:08:59

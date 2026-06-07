@@ -3,65 +3,56 @@ export const galleryData = [
     id: 1,
     title: "Atlantic Vista",
     category: "Architecture",
-    image:
-      "https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/general/image3.jpeg",
     description: "The main resort facade facing the Gulf of Guinea.",
   },
   {
     id: 2,
     title: "Executive Nomad Suite",
     category: "Interiors",
-    image:
-      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/general/image11.jpeg",
     description: "Equipped with ergonomic workstations and Atlantic views.",
   },
   {
     id: 3,
     title: "The Infinity Edge",
     category: "Leisure",
-    image:
-      "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/general/image15.jpeg",
     description: "Limbe's largest volcanic-view pool.",
   },
   {
     id: 4,
     title: "Coastal Culinary",
     category: "Dining",
-    image:
-      "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/general/image1.jpeg",
     description: "Fresh seafood served on the volcanic sand terrace.",
   },
   {
     id: 5,
-    title: "Night at Ngeme",
+    title: "Starlit Serenity",
     category: "Architecture",
-    image:
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/general/image5.jpeg",
     description: "Starlit evenings at the resort.",
   },
   {
     id: 6,
     title: "The Dialogue Lounge",
     category: "Professional",
-    image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/general/image1.jpeg", // same file as id 4 – that's fine
     description: "Where intellectual leaders gather.",
   },
-  // Add more as needed for the full gallery page...
   {
     id: 7,
-    title: "Coastal Culinary",
-    category: "Dining",
-    image:
-      "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&q=80&w=1200",
-    description: "Fresh seafood served on the volcanic sand terrace.",
+    title: "The Heritage",
+    category: "Architecture",
+    image: "/assets/general/image2.jpeg",
+    description: "Evening dining overlooking the Atlantic.",
   },
   {
     id: 8,
-    title: "Executive Nomad Suite",
+    title: "Volcanic View",
     category: "Interiors",
-    image:
-      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=1200",
-    description: "Equipped with ergonomic workstations and Atlantic views.",
+    image: "/assets/general/image20.jpeg", // same file as id 7 – also fine
+    description: "Panoramic views of Mount Cameroon from your room.",
   },
 ];

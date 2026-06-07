@@ -140,7 +140,7 @@
         "features": [
             {
                 "title": "Connectivité résiliente",
-                "description": "Systèmes double redondance Fibre & Starlink. Faible latence garantie pour les réunions d'entreprise mondiales.",
+                "description": "Système à double redondance, prenant en charge de manière transparente la vidéo et la téléconférence, ainsi que l’ensemble des besoins numériques des professionnels.",
                 "icon": "🌐"
             },
             {
@@ -150,7 +150,7 @@
             },
             {
                 "title": "Suites exécutives",
-                "description": "Installations de conférence insonorisées et salles de réunion avec technologie audiovisuelle haut de gamme.",
+                "description": "Équipements de conférence et salles de réunion avec systèmes de technologies audiovisuelles.",
                 "icon": "🏢"
             }
         ]
@@ -159,7 +159,7 @@
         "section_tag": "Excellence du service",
         "title": "Tout ce dont vous avez besoin,",
         "title_italic": "parfaitement géré.",
-        "subtitle": "De la sécurité de niveau diplomatique aux loisirs de classe mondiale, nos services sont conçus pour soutenir votre vision et votre style de vie professionnel.",
+        "subtitle": "Des loisirs de classe mondiale à un soutien professionnel sans faille, nos services sont conçus avec soin pour nourrir votre vision et votre art de vivre.",
         "services": [
             {
                 "image": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800",
@@ -224,9 +224,9 @@
                 "label": "Connectivité",
                 "items": [
                     "Wi-Fi haut débit gratuit",
-                    "Streaming (Netflix)",
+                    "Options de streaming",
                     "Prise près du lit",
-                    "Télévision à écran plat",
+                    "Téléviseur intelligent dans chaque suite",
                     "Chaînes câblées",
                     "Langues internationales parlées"
                 ]
@@ -249,7 +249,6 @@
                     "Réfrigérateur",
                     "Coin repas",
                     "Bouilloire électrique",
-                    "Machine à laver",
                     "Service en chambre",
                     "Terrasse avec vue sur un point de repère"
                 ]
@@ -257,11 +256,10 @@
         }
     },
     "ocean_side": {
-        "section_tag": "Sanctuaire intellectuel",
+        "section_tag": "",
         "title": "Les Dialogues au bord de l'Océan",
-        "subtitle": "Un sanctuaire pour les leaders d'opinion mondiaux, se réunissant pour aborder la pertinence des questions <span>africaines</span> et mondiales.",
+        "subtitle": "Un sanctuaire pour les leaders d'opinion mondiaux, favorisant des échanges stimulants sur des idées couvrant des enjeux locaux, régionaux et planétaires.",
         "badge_learning": "Apprentissage",
-        "badge_podcast": "Équipement de podcast",
         "button": "Demander une invitation"
     },
     "culinary": {
@@ -410,7 +408,7 @@
     },
     "partnerships": {
         "section_tag": "Synergie stratégique",
-        "title": "Un réseau d'excellence mondiale",
+        "title": "Un réseau d'excellence",
         "description": "Ngeme opère à l'intersection des normes internationales et de l'autonomisation locale. Nos partenariats sont soigneusement choisis pour garantir que chaque séjour contribue à une chaîne d'approvisionnement durable, fiable et socialement inclusive.",
         "partners": [
             {
@@ -448,7 +446,7 @@
         "newsletter_placeholder": "Votre email professionnel",
         "newsletter_button": "Rejoindre",
         "brand_name": "New Waves Resort",
-        "brand_description": "Un hub nomade de premier plan et un sanctuaire d'hospitalité à Limbé, Cameroun. En tant que véhicule de la Fondation Fisiy, nous croyons au pouvoir de la connexion et de l'inclusion sociale.",
+        "brand_description": "Un sanctuaire d'hospitalité de premier choix à Limbe, au Cameroun. Inspiré par la nature. Conçu pour vous.",
         "legacy_title": "L'héritage",
         "legacy_foundation": "Fondation Fisiy",
         "legacy_dialogues": "Dialogues au bord de l'Océan",
@@ -625,7 +623,7 @@
             "tag": "Héritage & Horizon",
             "title": "Notre histoire.",
             "title_italic": "Un héritage d'impact.",
-            "description": "Sur les rives volcaniques de Limbé, New Waves Resort est né d'une idée simple : une hospitalité de classe mondiale peut être une force de changement social. Chaque séjour ici soutient la mission de la Fondation Fisiy de construire des institutions responsables à travers l'Afrique.",
+            "description": "<p><strong>New Waves Resort, Ngeme – Positionnement historique</strong></p>\n\n<p>Située au pied du Mont Cameroun, la ville de Limbé se trouve à environ 45 miles (72 kilomètres) de la capitale économique Douala, et à seulement 90 minutes en voiture de l’aéroport international de Douala. Limbé est également le pôle de croissance émergent et le centre d’affaires de la région du Sud-Ouest du Cameroun, où est implanté le New Waves Resort, Ngeme. La ville de Limbé n’est pas seulement un centre administratif et d’affaires ; c’est aussi une destination touristique de premier plan dotée des équipements suivants :</p>\n\n<ul>\n  <li>Siège de la Cameroon Development Corporation (CDC), le deuxième employeur après l’État</li>\n  <li>Emplacement de la seule raffinerie de pétrole du Cameroun, SONARA</li>\n  <li>Site du deuxième port en eau profonde naturel du Cameroun après Kribi</li>\n  <li>Emplacement des seuls jardins botaniques du pays avec un « Village Jungle » en plein cœur de la ville</li>\n  <li>Renommée zone d’affaires de Down Beach avec son « célèbre bazar de poisson grillé » en bord de mer</li>\n  <li>Présence des forces spéciales d’intervention militaire (BIR) du pays, ce qui garantit la sûreté et la sécurité des citoyens et des investisseurs</li>\n  <li>Cadre de vie exceptionnel avec un encombrement urbain minimal, des jardins et des installations sportives (dont le Palais des sports omnisports de Ngeme). C’est précisément dans ce quartier que se trouve le New Waves Resort.</li>\n</ul>\n\n<p>Historiquement, Limbé fut le premier point de contact colonial lorsque le Révérend Alfred Saker, missionnaire pionnier, débarqua de Santa Isabel (l’actuelle Malabo) sur l’île alors espagnole de Fernando Po vers 1845.</p>\n\n<p>Non seulement les missionnaires s’y installèrent, mais Limbé abrita également le port historique de traite des esclaves de Bimbia. Ce lieu historique est actuellement à l’étude pour obtenir le statut de patrimoine mondial de l’UNESCO.</p>\n\n<p>Avec l’établissement du protectorat allemand en 1884, de vastes étendues de sol volcanique fertile furent appropriées aux indigènes pour y établir des plantations commerciales, qui sont aujourd’hui gérées sous le nom de plantations de la CDC.</p>\n\n<p>C’est précisément sur le front de mer atlantique de cette ville chargée d’histoire que le New Waves Resort accueille toutes celles et tous ceux qui souhaitent revivre l’empreinte historique du contact colonial et célébrer le multiculturalisme. Le Resort vous ouvre ses portes pour découvrir votre maison loin de chez vous.</p>",
             "button": "Rejoindre le récit"
         },
         "impact_stats": {

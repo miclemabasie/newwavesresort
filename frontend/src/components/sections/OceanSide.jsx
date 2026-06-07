@@ -30,11 +30,7 @@ function OceanSide() {
               <GraduationCap size={16} className="text-lush" />
               <span className="text-white font-bold uppercase tracking-[0.2em] text-[11px]">{t('ocean_side.badge_learning')}</span>
             </div>
-            <div className="h-4 w-px bg-white/20" />
-            <div className="flex items-center gap-2">
-              <Mic2 size={16} className="text-lush" />
-              <span className="text-white font-bold uppercase tracking-[0.2em] text-[11px]">{t('ocean_side.badge_podcast')}</span>
-            </div>
+            
           </div>
 
           <p className="text-xl md:text-3xl text-white/90 mb-16 leading-relaxed font-light max-w-3xl mx-auto">
