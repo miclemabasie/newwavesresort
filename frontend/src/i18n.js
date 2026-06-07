@@ -9,6 +9,7 @@ i18n
   .use(initReactI18next) // passes i18n instance to react-i18next
   .init({
     fallbackLng: "en",
+    nonExplicitSupportedLngs: true, // allows en-US to fallback to en
     debug: process.env.NODE_ENV === "development",
     load: "languageOnly",
     interpolation: {
