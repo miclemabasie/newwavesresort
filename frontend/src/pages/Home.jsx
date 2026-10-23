@@ -13,6 +13,7 @@ import Facilities from "../components/sections/Facilities";
 import Values from "../components/sections/Values";
 import ServiceGrid from "../components/sections/ServiceGrid";
 import OceanSide from "../components/sections/OceanSide";
+import VideoExperience from "../components/sections/VideoExperience";
 
 export default function Home() {
   return (
@@ -29,7 +30,7 @@ export default function Home() {
       <ServiceGrid />
 
       <Facilities />
-
+      <VideoExperience />
       <OceanSide />
 
       <Cultinary />
