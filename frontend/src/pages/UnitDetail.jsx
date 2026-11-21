@@ -194,7 +194,7 @@ export default function UnitDetail() {
               <button
                 type="button"
                 onClick={() => setBookingOpen(true)}
-                className="w-full bg-volcanic hover:bg-lush text-white font-black py-4 rounded-xl uppercase text-xs tracking-[0.3em] transition-all shadow-lg"
+                className="w-full bg-volcanic hover:bg-lush text-white hover:text-[#0e1a28] font-black py-4 rounded-xl uppercase text-xs tracking-[0.3em] transition-all shadow-lg"
               >
                 {t('accommodations.reserve')}
               </button>

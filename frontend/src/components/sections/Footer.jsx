@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import logo from '../../assets/general/logo1.png';
-import { Instagram, Linkedin, Facebook, Twitter, Youtube, MapPin, Lock } from 'lucide-react';
+import { Instagram, Linkedin, Facebook, Twitter, Youtube, MapPin } from 'lucide-react';
 import { supabase } from '../../lib/supabase.js';
 import { useSiteSettings } from '../../hooks/useSiteSettings.js';
 
@@ -57,10 +57,10 @@ export default function Footer() {
       </div>
 
       <div className="container relative z-10 mx-auto px-6 lg:max-w-7xl">
-        <div className="bg-lush rounded-3xl p-8 md:p-16 mb-24 flex flex-col lg:flex-row items-center justify-between gap-12 shadow-2xl border border-white/10">
+        <div className="bg-ocean rounded-3xl p-8 md:p-16 mb-24 flex flex-col lg:flex-row items-center justify-between gap-12 shadow-2xl border border-white/15">
           <div className="max-w-md text-center lg:text-left">
             <h3 className="text-white text-3xl font-serif mb-4 italic">{t('footer.newsletter_title')}</h3>
-            <p className="text-white/80 text-sm leading-relaxed">{t('footer.newsletter_text')}</p>
+            <p className="text-white/90 text-sm leading-relaxed">{t('footer.newsletter_text')}</p>
           </div>
 
           <form className="w-full max-w-md flex flex-col sm:flex-row gap-3" onSubmit={handleSubscribe}>
@@ -70,12 +70,12 @@ export default function Footer() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t('footer.newsletter_placeholder')}
-              className="w-full flex-1 bg-white/10 border border-white/20 rounded-xl px-6 py-4 text-white placeholder:text-white/60 focus:outline-none focus:border-white transition-colors"
+              className="w-full flex-1 bg-white/15 border border-white/30 rounded-xl px-6 py-4 text-white placeholder:text-white/75 focus:outline-none focus:border-white transition-colors"
             />
             <button
               type="submit"
               disabled={subscribing}
-              className="bg-white text-ocean hover:bg-volcanic hover:text-white px-8 py-4 rounded-xl font-bold transition-all uppercase text-[10px] tracking-widest whitespace-nowrap flex-shrink-0 disabled:opacity-60"
+              className="bg-white text-ocean hover:bg-[#0e1a28] hover:text-white px-8 py-4 rounded-xl font-bold transition-all uppercase text-[10px] tracking-widest whitespace-nowrap flex-shrink-0 disabled:opacity-60 shadow-md"
             >
               {t('footer.newsletter_button')}
             </button>
@@ -154,15 +154,6 @@ export default function Footer() {
                   {t('footer.concierge_inquiries')}
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/admin"
-                  className="text-lush hover:text-white font-semibold transition-colors duration-300 inline-flex items-center gap-1.5"
-                >
-                  <Lock className="w-3.5 h-3.5 shrink-0" />
-                  <span>{t('footer.staff_portal')}</span>
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -208,7 +199,7 @@ function SocialIcon({ Icon, href, label }) {
     <a
       href={href}
       aria-label={label}
-      className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-lush hover:border-lush hover:-translate-y-1 transition-all duration-300"
+      className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/65 hover:text-lush hover:border-lush hover:-translate-y-1 transition-all duration-300"
       target="_blank"
       rel="noopener noreferrer"
     >

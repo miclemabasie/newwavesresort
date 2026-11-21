@@ -237,7 +237,7 @@ export default function UnitsAdmin() {
         <button
           type="button"
           onClick={() => setEditing({ ...emptyUnit })}
-          className="bg-volcanic hover:bg-lush text-white px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-widest inline-flex items-center gap-2 self-start"
+          className="bg-volcanic hover:bg-lush text-white hover:text-[#0e1a28] px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-widest inline-flex items-center gap-2 self-start"
         >
           <Plus className="w-4 h-4" /> Add Suite
         </button>
@@ -288,7 +288,7 @@ export default function UnitsAdmin() {
                     <button
                       type="button"
                       onClick={() => openEdit(u)}
-                      className="px-3 py-1.5 rounded-lg bg-sand/50 hover:bg-lush hover:text-white text-xs font-bold inline-flex items-center gap-1"
+                      className="px-3 py-1.5 rounded-lg bg-sand/50 hover:bg-lush hover:text-[#0e1a28] text-xs font-bold inline-flex items-center gap-1"
                     >
                       <Pencil className="w-3.5 h-3.5" /> Edit
                     </button>
@@ -525,10 +525,10 @@ export default function UnitsAdmin() {
               </div>
 
               <div className="flex justify-end gap-3 pt-4 border-t border-sand">
-                <button type="button" onClick={() => setEditing(null)} className="px-5 py-2.5 rounded-xl border border-sand text-xs font-bold uppercase">
+                <button type="button" onClick={() => setEditing(null)} className="px-5 py-2.5 rounded-xl bg-white text-volcanic border border-volcanic/20 hover:bg-sand/50 text-xs font-bold uppercase">
                   Cancel
                 </button>
-                <button type="submit" disabled={saving} className="px-6 py-2.5 rounded-xl bg-volcanic hover:bg-lush text-white text-xs font-bold uppercase">
+                <button type="submit" disabled={saving} className="px-6 py-2.5 rounded-xl bg-volcanic hover:bg-lush text-white hover:text-[#0e1a28] text-xs font-bold uppercase">
                   {saving ? 'Saving...' : 'Save Suite'}
                 </button>
               </div>
@@ -554,7 +554,7 @@ export default function UnitsAdmin() {
               <input type="date" required value={newBlock.start_date} onChange={(e) => setNewBlock({ ...newBlock, start_date: e.target.value })} className={inp} />
               <input type="date" required value={newBlock.end_date} onChange={(e) => setNewBlock({ ...newBlock, end_date: e.target.value })} className={inp} />
               <input type="number" min={1} max={blockModalUnit.total_units} value={newBlock.units_blocked} onChange={(e) => setNewBlock({ ...newBlock, units_blocked: e.target.value })} className={inp} placeholder="Units" />
-              <button type="submit" className="bg-volcanic hover:bg-lush text-white rounded-xl text-xs font-bold uppercase">
+              <button type="submit" className="bg-volcanic hover:bg-lush text-white hover:text-[#0e1a28] rounded-xl text-xs font-bold uppercase">
                 Add Block
               </button>
             </form>

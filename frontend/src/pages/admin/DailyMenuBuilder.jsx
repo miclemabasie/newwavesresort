@@ -405,7 +405,7 @@ export default function DailyMenuBuilder() {
             <button
               type="button"
               onClick={handleClonePreviousDay}
-              className="px-4 py-2 rounded-xl border border-sand hover:border-ocean text-xs font-bold text-ocean inline-flex items-center gap-1.5"
+              className="px-4 py-2 rounded-xl bg-white border border-ocean/25 hover:border-ocean text-xs font-bold text-ocean inline-flex items-center gap-1.5"
             >
               <Copy className="w-3.5 h-3.5" /> Copy Yesterday
             </button>
@@ -421,7 +421,7 @@ export default function DailyMenuBuilder() {
               type="button"
               disabled={saving}
               onClick={() => handleSave('published')}
-              className="px-5 py-2 rounded-xl bg-lush hover:bg-volcanic text-white text-xs font-black uppercase tracking-wider inline-flex items-center gap-1.5 shadow"
+              className="px-5 py-2 rounded-xl bg-lush hover:bg-volcanic text-[#0e1a28] hover:text-white text-xs font-black uppercase tracking-wider inline-flex items-center gap-1.5 shadow"
             >
               <Globe className="w-3.5 h-3.5" /> Save & Publish
             </button>

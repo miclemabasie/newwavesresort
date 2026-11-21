@@ -328,7 +328,7 @@ export default function GalleryAdmin() {
             </label>
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-xl bg-volcanic hover:bg-lush text-white text-xs font-bold uppercase tracking-wider"
+              className="px-5 py-2.5 rounded-xl bg-volcanic hover:bg-lush text-white hover:text-[#0e1a28] text-xs font-bold uppercase tracking-wider"
             >
               Publish Video
             </button>

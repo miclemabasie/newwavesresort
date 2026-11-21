@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import Navbar from '../components/Navbar';
@@ -15,15 +15,16 @@ import { buildBreadcrumbSchema, buildRoomSchema } from '../lib/seoSchemas.js';
 export default function Accommodations() {
   const { t, i18n } = useTranslation();
   const { formatPrice } = useCurrency();
+  const [searchParams] = useSearchParams();
   const lang = i18n.language?.startsWith('fr') ? 'fr' : 'en';
 
   const [selectedSuite, setSelectedSuite] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [sortBy, setSortBy] = useState('default');
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
-  const [adults, setAdults] = useState(1);
+  const [checkIn, setCheckIn] = useState(() => searchParams.get('checkIn') || '');
+  const [checkOut, setCheckOut] = useState(() => searchParams.get('checkOut') || '');
+  const [adults, setAdults] = useState(() => Math.max(1, Number(searchParams.get('adults')) || 1));
 
   const { roomTypes, availabilityMap, loading, checkingAvailability } = useRoomTypes({
     checkIn,
@@ -175,8 +176,8 @@ export default function Accommodations() {
                   onClick={() => setCategoryFilter('all')}
                   className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
                     categoryFilter === 'all'
-                      ? 'bg-ocean text-white'
-                      : 'bg-sand/50 text-volcanic/70 hover:bg-sand'
+                      ? 'bg-ocean text-white shadow-sm'
+                      : 'bg-sand/70 border border-volcanic/10 text-volcanic hover:bg-sand'
                   }`}
                 >
                   {t('accommodations.all_categories')}
@@ -188,8 +189,8 @@ export default function Accommodations() {
                     onClick={() => setCategoryFilter(cat.value)}
                     className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
                       categoryFilter === cat.value
-                        ? 'bg-lush text-white'
-                        : 'bg-sand/50 text-volcanic/70 hover:bg-sand'
+                        ? 'bg-lush text-[#0e1a28] shadow-sm'
+                        : 'bg-sand/70 border border-volcanic/10 text-volcanic hover:bg-sand'
                     }`}
                   >
                     {lang === 'fr' ? cat.labelFr : cat.labelEn}
@@ -325,7 +326,7 @@ export default function Accommodations() {
                             type="button"
                             disabled={isUnavailable}
                             onClick={() => setSelectedSuite(suite)}
-                            className="w-full bg-volcanic hover:bg-lush text-white font-black py-3.5 rounded-xl transition-all shadow-md uppercase text-[10px] tracking-[0.25em] disabled:opacity-40"
+                            className="w-full bg-volcanic hover:bg-lush text-white hover:text-[#0e1a28] font-black py-3.5 rounded-xl transition-all shadow-md uppercase text-[10px] tracking-[0.25em] disabled:opacity-40"
                           >
                             {t('accommodations.reserve')}
                           </button>

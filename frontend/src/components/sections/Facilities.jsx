@@ -108,7 +108,7 @@ export default function Facilities() {
             })}
           </div>
 
-          <div className="lg:col-span-8 bg-sand/20 rounded-[4rem] p-24 relative min-h-[650px] border border-sand shadow-inner flex flex-col">
+          <div className="lg:col-span-8 bg-sand/20 rounded-3xl p-10 xl:p-16 relative min-h-[520px] border border-sand shadow-inner flex flex-col">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}

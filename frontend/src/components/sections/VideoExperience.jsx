@@ -38,8 +38,8 @@ export default function VideoExperience() {
   };
 
   return (
-    <section className="relative w-full py-24 md:py-32 bg-volcanic overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+    <section className="relative w-full py-24 md:py-32 bg-midnight overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top,rgba(242,159,71,0.12),transparent_55%)]" />
 
       <div className="container mx-auto px-6 lg:max-w-7xl relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">

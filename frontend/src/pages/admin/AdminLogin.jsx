@@ -245,7 +245,7 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={submitting || !isSupabaseConfigured}
-              className="w-full bg-lush hover:bg-volcanic text-white font-black py-4 rounded-xl uppercase text-xs tracking-[0.25em] transition-all disabled:opacity-50"
+              className="w-full bg-lush hover:bg-volcanic text-[#0e1a28] hover:text-white font-black py-4 rounded-xl uppercase text-xs tracking-[0.25em] transition-all disabled:opacity-50"
             >
               {submitting ? 'Creating Admin...' : 'Create Admin & Enter Portal'}
             </button>
@@ -299,7 +299,7 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={submitting || !isSupabaseConfigured}
-              className="w-full bg-volcanic hover:bg-lush text-white font-black py-4 rounded-xl uppercase text-xs tracking-[0.25em] transition-all disabled:opacity-50"
+              className="w-full bg-volcanic hover:bg-lush text-white hover:text-[#0e1a28] font-black py-4 rounded-xl uppercase text-xs tracking-[0.25em] transition-all disabled:opacity-50"
             >
               {submitting ? 'Signing In...' : 'Sign In'}
             </button>

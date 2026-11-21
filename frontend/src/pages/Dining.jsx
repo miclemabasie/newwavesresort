@@ -174,7 +174,9 @@ export default function Dining() {
                 type="button"
                 onClick={() => setMealPeriod('all')}
                 className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
-                  mealPeriod === 'all' ? 'bg-ocean text-white' : 'bg-white border border-sand text-volcanic/70'
+                  mealPeriod === 'all'
+                    ? 'bg-ocean text-white shadow-sm'
+                    : 'bg-white border border-volcanic/15 text-volcanic/80 hover:border-ocean'
                 }`}
               >
                 {t('dining.meal_periods.all')}
@@ -186,8 +188,8 @@ export default function Dining() {
                   onClick={() => setMealPeriod(mp.value)}
                   className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
                     mealPeriod === mp.value
-                      ? 'bg-ocean text-white'
-                      : 'bg-white border border-sand text-volcanic/70 hover:border-ocean/40'
+                      ? 'bg-ocean text-white shadow-sm'
+                      : 'bg-white border border-volcanic/15 text-volcanic/80 hover:border-ocean'
                   }`}
                 >
                   {lang === 'fr' ? mp.labelFr : mp.labelEn}
@@ -203,8 +205,8 @@ export default function Dining() {
                 onClick={() => setCategoryFilter('all')}
                 className={`px-4 py-2 rounded-full border text-xs uppercase tracking-wider transition-all ${
                   categoryFilter === 'all'
-                    ? 'bg-lush border-lush text-white font-bold'
-                    : 'bg-white border-sand/60 text-volcanic/70 hover:border-lush/50'
+                    ? 'bg-lush border-lush text-[#0e1a28] font-bold shadow-sm'
+                    : 'bg-white border-volcanic/15 text-volcanic/80 hover:border-ocean'
                 }`}
               >
                 {t('dining.filters.all')}
@@ -218,8 +220,8 @@ export default function Dining() {
                   onClick={() => setCategoryFilter(cat.value)}
                   className={`px-4 py-2 rounded-full border text-xs uppercase tracking-wider transition-all ${
                     categoryFilter === cat.value
-                      ? 'bg-lush border-lush text-white font-bold'
-                      : 'bg-white border-sand/60 text-volcanic/70 hover:border-lush/50'
+                      ? 'bg-lush border-lush text-[#0e1a28] font-bold shadow-sm'
+                      : 'bg-white border-volcanic/15 text-volcanic/80 hover:border-ocean'
                   }`}
                 >
                   {lang === 'fr' ? cat.labelFr : cat.labelEn}
@@ -235,16 +237,16 @@ export default function Dining() {
                   placeholder={t('dining.search_placeholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-11 pr-4 py-2.5 rounded-full border border-sand/60 bg-white text-sm text-volcanic placeholder:text-volcanic/40 focus:outline-none focus:border-lush"
+                  className="w-full pl-11 pr-4 py-2.5 rounded-full border border-volcanic/15 bg-white text-sm text-volcanic placeholder:text-volcanic/40 focus:outline-none focus:border-ocean"
                 />
               </div>
               <button
                 type="button"
                 onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-xs uppercase tracking-wider ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-xs uppercase tracking-wider transition-all ${
                   activeDietary.length > 0
-                    ? 'bg-lush text-white border-lush font-bold'
-                    : 'bg-white border-sand/60 text-volcanic/70'
+                    ? 'bg-lush text-[#0e1a28] border-lush font-bold shadow-sm'
+                    : 'bg-white border-volcanic/15 text-volcanic/80 hover:border-ocean'
                 }`}
               >
                 <Leaf className="w-4 h-4" />
@@ -343,19 +345,22 @@ export default function Dining() {
                             </span>
                           )}
                         </div>
-                        <div className="absolute top-3 right-3 flex flex-wrap gap-1.5">
-                          {tags.slice(0, 3).map((tag) => (
-                            <span
-                              key={tag}
-                              className="bg-white/95 backdrop-blur-sm text-volcanic text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"
-                            >
-                              {getOptionLabel(DIETARY_TAGS, tag, lang)}
-                            </span>
-                          ))}
-                        </div>
                       </div>
 
                       <div className="p-7 flex-1 flex flex-col">
+                        {tags.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mb-2.5">
+                            {tags.slice(0, 3).map((tag) => (
+                              <span
+                                key={tag}
+                                className="bg-sand/70 text-volcanic/80 text-[9px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider"
+                              >
+                                {getOptionLabel(DIETARY_TAGS, tag, lang)}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
                         <div className="flex justify-between items-start gap-4 mb-2">
                           <h3 className="text-xl font-serif text-volcanic group-hover:text-lush transition-colors">
                             {name}

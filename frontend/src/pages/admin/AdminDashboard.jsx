@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase.js';
 import { useAuth } from '../../context/authHelpers.js';
@@ -21,6 +21,7 @@ export default function AdminDashboard() {
 
   const [stats, setStats] = useState({
     pendingBookings: null,
+    totalBookings: null,
     todayMenuStatus: null,
     todayDishCount: 0,
     activeDishes: null,
@@ -30,100 +31,136 @@ export default function AdminDashboard() {
     newInquiries: null,
   });
 
+  const fetchOverviewStats = useCallback(async () => {
+    if (!supabase || !role) return null;
+
+    const next = {
+      pendingBookings: null,
+      totalBookings: null,
+      todayMenuStatus: null,
+      todayDishCount: 0,
+      activeDishes: null,
+      publishedSuites: null,
+      galleryPhotos: null,
+      galleryVideos: null,
+      newInquiries: null,
+    };
+
+    const tasks = [];
+
+    if (['admin', 'manager', 'front_desk'].includes(role)) {
+      tasks.push(
+        supabase
+          .from('booking_requests')
+          .select('id', { count: 'exact', head: true })
+          .eq('status', 'pending')
+          .then(({ count }) => {
+            next.pendingBookings = count ?? 0;
+          }),
+      );
+      tasks.push(
+        supabase
+          .from('booking_requests')
+          .select('id', { count: 'exact', head: true })
+          .then(({ count }) => {
+            next.totalBookings = count ?? 0;
+          }),
+      );
+      tasks.push(
+        supabase
+          .from('contact_inquiries')
+          .select('id', { count: 'exact', head: true })
+          .eq('status', 'new')
+          .then(({ count }) => {
+            next.newInquiries = count ?? 0;
+          }),
+      );
+    }
+
+    if (['admin', 'manager', 'chef'].includes(role)) {
+      tasks.push(
+        supabase
+          .from('menu_items')
+          .select('id', { count: 'exact', head: true })
+          .eq('is_active', true)
+          .then(({ count }) => {
+            next.activeDishes = count ?? 0;
+          }),
+      );
+      tasks.push(
+        supabase
+          .from('daily_menus')
+          .select('id, status, daily_menu_entries(count)')
+          .eq('service_date', todayISO)
+          .maybeSingle()
+          .then(({ data }) => {
+            next.todayMenuStatus = data?.status || 'not created';
+            next.todayDishCount = data?.daily_menu_entries?.[0]?.count ?? 0;
+          }),
+      );
+    }
+
+    if (['admin', 'manager'].includes(role)) {
+      tasks.push(
+        supabase
+          .from('room_types')
+          .select('id', { count: 'exact', head: true })
+          .eq('is_published', true)
+          .then(({ count }) => {
+            next.publishedSuites = count ?? 0;
+          }),
+      );
+      tasks.push(
+        supabase
+          .from('gallery_media')
+          .select('media_type')
+          .eq('is_published', true)
+          .then(({ data }) => {
+            const rows = data || [];
+            next.galleryPhotos = rows.filter((r) => r.media_type === 'image').length;
+            next.galleryVideos = rows.filter((r) => r.media_type === 'youtube').length;
+          }),
+      );
+    }
+
+    await Promise.all(tasks);
+    return next;
+  }, [role, todayISO]);
+
   useEffect(() => {
     if (!supabase || !role) return;
     let active = true;
 
-    async function loadOverview() {
-      const next = {
-        pendingBookings: null,
-        todayMenuStatus: null,
-        todayDishCount: 0,
-        activeDishes: null,
-        publishedSuites: null,
-        galleryPhotos: null,
-        galleryVideos: null,
-        newInquiries: null,
+    const refresh = () => {
+      fetchOverviewStats().then((next) => {
+        if (active && next) setStats(next);
+      });
+    };
+
+    refresh();
+
+    if (!['admin', 'manager', 'front_desk'].includes(role)) {
+      return () => {
+        active = false;
       };
-
-      const tasks = [];
-
-      if (['admin', 'manager', 'front_desk'].includes(role)) {
-        tasks.push(
-          supabase
-            .from('booking_requests')
-            .select('id', { count: 'exact', head: true })
-            .eq('status', 'pending')
-            .then(({ count }) => {
-              next.pendingBookings = count ?? 0;
-            }),
-        );
-        tasks.push(
-          supabase
-            .from('contact_inquiries')
-            .select('id', { count: 'exact', head: true })
-            .eq('status', 'new')
-            .then(({ count }) => {
-              next.newInquiries = count ?? 0;
-            }),
-        );
-      }
-
-      if (['admin', 'manager', 'chef'].includes(role)) {
-        tasks.push(
-          supabase
-            .from('menu_items')
-            .select('id', { count: 'exact', head: true })
-            .eq('is_active', true)
-            .then(({ count }) => {
-              next.activeDishes = count ?? 0;
-            }),
-        );
-        tasks.push(
-          supabase
-            .from('daily_menus')
-            .select('id, status, daily_menu_entries(count)')
-            .eq('service_date', todayISO)
-            .maybeSingle()
-            .then(({ data }) => {
-              next.todayMenuStatus = data?.status || 'not created';
-              next.todayDishCount = data?.daily_menu_entries?.[0]?.count ?? 0;
-            }),
-        );
-      }
-
-      if (['admin', 'manager'].includes(role)) {
-        tasks.push(
-          supabase
-            .from('room_types')
-            .select('id', { count: 'exact', head: true })
-            .eq('is_published', true)
-            .then(({ count }) => {
-              next.publishedSuites = count ?? 0;
-            }),
-        );
-        tasks.push(
-          supabase
-            .from('gallery_media')
-            .select('media_type')
-            .eq('is_published', true)
-            .then(({ data }) => {
-              const rows = data || [];
-              next.galleryPhotos = rows.filter((r) => r.media_type === 'image').length;
-              next.galleryVideos = rows.filter((r) => r.media_type === 'youtube').length;
-            }),
-        );
-      }
-
-      await Promise.all(tasks);
-      if (active) setStats(next);
     }
 
-    loadOverview();
+    const channel = supabase
+      .channel('overview-bookings-live')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'booking_requests' },
+        () => {
+          refresh();
+        },
+      )
+      .subscribe();
+
     return () => {
       active = false;
+      supabase.removeChannel(channel);
     };
-  }, [role, todayISO]);
+  }, [role, fetchOverviewStats]);
 
   const actions = [
     {
@@ -132,7 +169,10 @@ export default function AdminDashboard() {
       desc: 'Review incoming guest reservations, confirm bookings & message via WhatsApp.',
       icon: CalendarCheck,
       roles: ['admin', 'manager', 'front_desk'],
-      badge: stats.pendingBookings !== null ? `${stats.pendingBookings} pending` : null,
+      badge:
+        stats.pendingBookings !== null
+          ? `${stats.pendingBookings} pending • ${stats.totalBookings ?? 0} total`
+          : null,
     },
     {
       to: '/admin/daily-menu',
@@ -214,7 +254,7 @@ export default function AdminDashboard() {
         <Link
           to="/"
           target="_blank"
-          className="px-5 py-2.5 rounded-xl bg-sand/60 hover:bg-ocean hover:text-white text-ocean text-xs font-bold uppercase tracking-wider self-start transition-colors"
+          className="px-5 py-2.5 rounded-xl bg-white border border-ocean/25 hover:bg-ocean hover:text-white text-ocean text-xs font-bold uppercase tracking-wider self-start transition-colors"
         >
           Open Public Website
         </Link>

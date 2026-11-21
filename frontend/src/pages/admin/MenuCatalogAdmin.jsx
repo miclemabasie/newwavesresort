@@ -202,7 +202,7 @@ export default function MenuCatalogAdmin() {
         <button
           type="button"
           onClick={() => setEditing({ ...emptyDish })}
-          className="bg-volcanic hover:bg-lush text-white px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-widest inline-flex items-center gap-2 self-start"
+          className="bg-volcanic hover:bg-lush text-white hover:text-[#0e1a28] px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-widest inline-flex items-center gap-2 self-start"
         >
           <Plus className="w-4 h-4" /> Add Dish
         </button>
@@ -472,7 +472,7 @@ export default function MenuCatalogAdmin() {
                         onClick={() => toggleArrayValue('dietary_tags', tag.value)}
                         className={`px-3 py-1 rounded-full text-xs font-semibold border ${
                           active
-                            ? 'bg-lush text-white border-lush'
+                            ? 'bg-lush text-[#0e1a28] border-lush'
                             : 'bg-white border-sand text-volcanic/70'
                         }`}
                       >
@@ -535,14 +535,14 @@ export default function MenuCatalogAdmin() {
                 <button
                   type="button"
                   onClick={() => setEditing(null)}
-                  className="px-5 py-2.5 rounded-xl border border-sand text-xs font-bold uppercase tracking-wider"
+                  className="px-5 py-2.5 rounded-xl bg-white text-volcanic border border-volcanic/20 hover:bg-sand/50 text-xs font-bold uppercase tracking-wider"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-6 py-2.5 rounded-xl bg-volcanic hover:bg-lush text-white text-xs font-bold uppercase tracking-wider disabled:opacity-60"
+                  className="px-6 py-2.5 rounded-xl bg-volcanic hover:bg-lush text-white hover:text-[#0e1a28] text-xs font-bold uppercase tracking-wider disabled:opacity-60"
                 >
                   {saving ? 'Saving...' : 'Save Dish'}
                 </button>

@@ -3,31 +3,47 @@ import { supabase } from '../lib/supabase.js';
 import { FALLBACK_ROOM_TYPES } from '../lib/fallbackData.js';
 
 export function useRoomTypes({ checkIn = '', checkOut = '', adults = 1, children = 0 } = {}) {
-  const [roomTypes, setRoomTypes] = useState(FALLBACK_ROOM_TYPES);
+  const [roomTypes, setRoomTypes] = useState(() => (supabase ? [] : FALLBACK_ROOM_TYPES));
   const [availabilityMap, setAvailabilityMap] = useState({});
   const [loading, setLoading] = useState(Boolean(supabase));
   const [checkingAvailability, setCheckingAvailability] = useState(false);
+  const [error, setError] = useState(null);
+  const [isFallback, setIsFallback] = useState(!supabase);
 
   const loadRooms = useCallback(async () => {
     if (!supabase) {
       setRoomTypes(FALLBACK_ROOM_TYPES);
+      setIsFallback(true);
       setLoading(false);
       return;
     }
     setLoading(true);
+    setError(null);
     try {
-      const { data, error } = await supabase
+      const { data, error: fetchError } = await supabase
         .from('room_types')
         .select('*')
         .eq('is_published', true)
         .order('sort_order', { ascending: true })
         .order('base_price', { ascending: true });
 
-      if (!error && Array.isArray(data) && data.length > 0) {
-        setRoomTypes(data);
-      } else {
+      if (fetchError) {
+        console.error('Failed to load room types from Supabase:', fetchError);
+        setError(fetchError);
         setRoomTypes(FALLBACK_ROOM_TYPES);
+        setIsFallback(true);
+      } else if (Array.isArray(data) && data.length > 0) {
+        setRoomTypes(data);
+        setIsFallback(false);
+      } else {
+        setRoomTypes([]);
+        setIsFallback(false);
       }
+    } catch (err) {
+      console.error('Unexpected error loading room types:', err);
+      setError(err);
+      setRoomTypes(FALLBACK_ROOM_TYPES);
+      setIsFallback(true);
     } finally {
       setLoading(false);
     }
@@ -76,6 +92,8 @@ export function useRoomTypes({ checkIn = '', checkOut = '', adults = 1, children
     availabilityMap,
     loading,
     checkingAvailability,
+    error,
+    isFallback,
     reload: loadRooms,
   };
 }

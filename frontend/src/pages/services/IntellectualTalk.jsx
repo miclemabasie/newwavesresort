@@ -201,7 +201,7 @@ export default function IntellectualTalks() {
               <button
                 type="button"
                 onClick={() => setShowAllTalks(true)}
-                className="inline-flex items-center gap-2 bg-volcanic text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider text-xs hover:bg-lush transition-colors"
+                className="inline-flex items-center gap-2 bg-volcanic text-white hover:text-[#0e1a28] px-8 py-4 rounded-full font-bold uppercase tracking-wider text-xs hover:bg-lush transition-colors"
               >
                 {t('service_pages.intellectual_talks.load_all', { count: pastTalks.length })}{' '}
                 <ArrowRight className="w-4 h-4" />
@@ -233,7 +233,7 @@ export default function IntellectualTalks() {
                     </div>
                     <Link
                       to="/contact"
-                      className="bg-lush text-volcanic px-8 py-3 rounded-full text-xs font-black uppercase tracking-wider hover:bg-white transition-colors whitespace-nowrap"
+                      className="bg-lush text-volcanic hover:text-volcanic px-8 py-3 rounded-full text-xs font-black uppercase tracking-wider hover:bg-white transition-colors whitespace-nowrap"
                     >
                       {t('common.reserve_seat')}
                     </Link>
@@ -286,13 +286,13 @@ export default function IntellectualTalks() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all"
+                className="inline-flex items-center justify-center gap-3 bg-lush text-volcanic hover:text-white px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic transition-all"
               >
                 {cta_button} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/gallery"
-                className="inline-flex items-center justify-center gap-3 border-2 border-volcanic text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all"
+                className="inline-flex items-center justify-center gap-3 border-2 border-volcanic text-volcanic hover:text-white px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic transition-all"
               >
                 <Youtube className="w-4 h-4" /> {youtube_button}
               </Link>
@@ -320,7 +320,7 @@ export default function IntellectualTalks() {
                   <button
                     type="button"
                     onClick={() => setSelectedVideo(null)}
-                    className="absolute top-4 right-4 z-10 bg-volcanic text-white p-2 rounded-full hover:bg-lush transition-colors"
+                    className="absolute top-4 right-4 z-10 bg-volcanic text-white p-2 rounded-full hover:bg-lush hover:text-[#0e1a28] transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>

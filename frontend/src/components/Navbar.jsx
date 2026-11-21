@@ -2,17 +2,13 @@ import { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Lock, LayoutDashboard } from 'lucide-react';
 import logo from '../assets/general/logo1.png';
-import { useAuth } from '../context/authHelpers.js';
 import LanguageSwitcher from './LanguageSwitcher';
 import CurrencySwitcher from './CurrencySwitcher';
 
 export default function Navbar() {
   const { t } = useTranslation();
-  const { user, role } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const isSignedInStaff = Boolean(user && role);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'unset';
@@ -32,16 +28,16 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-ocean/5">
+    <nav className="sticky top-0 z-50 bg-ivory/95 backdrop-blur-xl shadow-[0_1px_0_rgba(14,26,40,0.06)]">
       <div className="container flex items-center justify-between h-20 gap-3">
-        {/* Brand Logo + Fixed Resort Caption (notes.md items 1-3) */}
+        {/* Brand Logo + Fixed Resort Caption */}
         <Link to="/" className="flex items-center gap-3 z-[70] min-w-0">
           <img src={logo} alt="New Waves Resort Logo" className="w-11 h-11 object-contain shrink-0" />
           <div className="hidden sm:flex flex-col leading-tight min-w-0">
-            <span className="text-xs md:text-sm font-serif font-bold text-ocean truncate">
+            <span className="text-sm md:text-base font-serif font-semibold text-midnight truncate tracking-tight">
               {t('nav.brand_name', 'New Waves Resort, Ngeme Limbe')}
             </span>
-            <span className="text-[10px] uppercase tracking-wider text-volcanic/60 font-semibold truncate">
+            <span className="text-[10px] uppercase tracking-[0.16em] text-volcanic/60 font-semibold truncate">
               {t('nav.brand_tagline', 'A Resort Designed by & for Professionals')}
             </span>
           </div>
@@ -58,21 +54,11 @@ export default function Navbar() {
 
         {/* Action Button, Currency, Language Switcher & Hamburger */}
         <div className="flex items-center gap-2.5 shrink-0">
-          <Link to="/rooms" className="btn-pay py-2! px-4! text-xs whitespace-nowrap hidden sm:inline-block">
-            {t('common.plan_your_stay')}
-          </Link>
-
           <Link
-            to={isSignedInStaff ? '/admin' : '/admin/login'}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-ocean/20 hover:border-lush text-ocean hover:text-lush text-xs font-bold whitespace-nowrap transition-colors"
-            title={isSignedInStaff ? t('nav.staff_dashboard') : t('nav.staff_portal')}
+            to="/rooms"
+            className="hidden sm:inline-flex items-center justify-center rounded-full bg-lush hover:bg-[#0e1a28] text-[#0e1a28] hover:text-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider shadow-sm transition-all whitespace-nowrap"
           >
-            {isSignedInStaff ? (
-              <LayoutDashboard className="w-3.5 h-3.5 shrink-0" />
-            ) : (
-              <Lock className="w-3.5 h-3.5 shrink-0" />
-            )}
-            <span>{isSignedInStaff ? t('nav.staff_dashboard') : t('nav.staff_portal')}</span>
+            {t('common.plan_your_stay')}
           </Link>
 
           <CurrencySwitcher />
@@ -111,7 +97,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-volcanic/40 backdrop-blur-sm z-[60] xl:hidden"
+              className="fixed inset-0 bg-midnight/50 backdrop-blur-sm z-[60] xl:hidden"
             />
 
             <motion.div
@@ -152,26 +138,13 @@ export default function Navbar() {
                   >
                     {t('nav.track_booking')}
                   </Link>
-
-                  <Link
-                    to={isSignedInStaff ? '/admin' : '/admin/login'}
-                    onClick={() => setIsOpen(false)}
-                    className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-lush hover:text-ocean pt-1"
-                  >
-                    {isSignedInStaff ? (
-                      <LayoutDashboard className="w-4 h-4 shrink-0" />
-                    ) : (
-                      <Lock className="w-4 h-4 shrink-0" />
-                    )}
-                    <span>{isSignedInStaff ? t('nav.staff_dashboard') : t('nav.staff_portal')}</span>
-                  </Link>
                 </div>
 
                 <div className="mt-12 pt-8 border-t border-ocean/10">
                   <Link
                     to="/rooms"
                     onClick={() => setIsOpen(false)}
-                    className="btn-pay w-full text-xs uppercase tracking-widest mb-6"
+                    className="block w-full rounded-full bg-lush hover:bg-[#0e1a28] text-[#0e1a28] hover:text-white py-3.5 text-center text-xs font-bold uppercase tracking-widest mb-6 transition-all"
                   >
                     {t('common.plan_your_stay')}
                   </Link>

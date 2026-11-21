@@ -133,7 +133,7 @@ export default function VolcanicExpeditions() {
             <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">{cta_sub}</p>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all"
+              className="inline-flex items-center gap-3 bg-lush text-volcanic hover:text-white px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic transition-all"
             >
               {cta_button} <ArrowRight className="w-4 h-4" />
             </Link>

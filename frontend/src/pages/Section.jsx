@@ -153,7 +153,7 @@ export default function Services() {
               <button
                 type="button"
                 onClick={() => navigate('/contact')}
-                className="bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-[11px] hover:bg-white hover:scale-105 transition-all shadow-xl"
+                className="bg-lush text-volcanic hover:text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-[11px] hover:bg-white hover:scale-105 transition-all shadow-xl"
               >
                 {t('services.bespoke.button')}
               </button>

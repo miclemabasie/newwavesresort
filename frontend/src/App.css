@@ -2,22 +2,31 @@
 
 @theme {
   /* --- Typography --- */
+  --font-serif: "Cormorant Garamond", Georgia, serif;
   --font-sans:
-    "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
   /* --- Limbe Resort Color Palette --- */
   --color-ocean: #1e6baf;
   --color-sand: #f4f1ea;
+  --color-ivory: #faf8f4;
   --color-volcanic: #2d2d2d;
+  --color-midnight: #0e1a28;
   --color-lush: #f29f47;
 
   /* --- UI Polish --- */
   --shadow-resort: 0 4px 20px rgba(26, 95, 122, 0.08);
+  --shadow-luxury: 0 24px 60px -15px rgba(14, 26, 40, 0.16);
 }
 
 /* --- Base Styles --- */
 @layer base {
+  :root {
+    --color-midnight: #0e1a28;
+    --color-ivory: #faf8f4;
+  }
+
   html,
   body {
     @apply bg-sand text-volcanic antialiased;
@@ -62,7 +71,7 @@
 /* --- Component Shortcuts --- */
 @layer components {
   .btn-primary {
-    @apply px-8 py-4 bg-ocean text-white rounded-lg font-semibold 
+    @apply px-8 py-4 bg-ocean text-white hover:text-white rounded-lg font-semibold 
            hover:bg-volcanic hover:shadow-lg inline-block text-center;
   }
 
@@ -72,8 +81,8 @@
   }
 
   .btn-outline {
-    @apply px-8 py-4 border-2 border-volcanic text-volcanic rounded-lg font-semibold 
-           hover:bg-lush hover:text-white inline-block text-center;
+    @apply px-8 py-4 border-2 border-volcanic text-volcanic hover:text-white rounded-lg font-semibold 
+           hover:bg-lush hover:border-lush inline-block text-center;
   }
 
   .container {
@@ -91,5 +100,14 @@
   .card {
     @apply bg-white rounded-2xl p-6 shadow-[var(--shadow-resort)];
     border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

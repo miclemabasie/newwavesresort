@@ -154,7 +154,7 @@ export default function AtlanticGastronomy() {
                 </ul>
                 <Link
                   to="/contact"
-                  className="mt-8 inline-block bg-lush text-volcanic px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs hover:bg-white transition-all"
+                  className="mt-8 inline-block bg-lush text-volcanic hover:text-volcanic px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs hover:bg-white transition-all"
                 >
                   {chef_table.button}
                 </Link>
@@ -191,13 +191,13 @@ export default function AtlanticGastronomy() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/services/dining"
-                className="inline-flex items-center justify-center gap-3 bg-ocean text-white px-10 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic transition-all"
+                className="inline-flex items-center justify-center gap-3 bg-ocean text-white hover:text-white px-10 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic transition-all"
               >
                 {view_full_menu || t('culinary.button')} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-3 bg-lush text-volcanic px-10 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all"
+                className="inline-flex items-center justify-center gap-3 bg-lush text-volcanic hover:text-white px-10 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic transition-all"
               >
                 {cta_button} <ArrowRight className="w-4 h-4" />
               </Link>

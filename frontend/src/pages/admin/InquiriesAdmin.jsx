@@ -224,7 +224,7 @@ export default function InquiriesAdmin() {
                     <div className="flex flex-wrap items-center gap-2">
                       <a
                         href={mailto}
-                        className="px-3 py-1.5 rounded-lg bg-ocean text-white text-[11px] font-bold inline-flex items-center gap-1 hover:bg-volcanic"
+                        className="px-3 py-1.5 rounded-lg bg-ocean text-white hover:text-white text-[11px] font-bold inline-flex items-center gap-1 hover:bg-volcanic"
                       >
                         <Mail className="w-3.5 h-3.5" /> Email
                       </a>
@@ -233,7 +233,7 @@ export default function InquiriesAdmin() {
                           href={waUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-3 py-1.5 rounded-lg bg-[#25D366] text-white text-[11px] font-bold inline-flex items-center gap-1 hover:bg-[#1ebe5d]"
+                          className="px-3 py-1.5 rounded-lg bg-[#15803D] text-white hover:text-white text-[11px] font-bold inline-flex items-center gap-1 hover:bg-[#166534]"
                         >
                           <MessageCircle className="w-3.5 h-3.5" /> WhatsApp
                         </a>

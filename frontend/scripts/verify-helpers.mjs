@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 import { extractYouTubeId, getYouTubeThumbnail, getYouTubeEmbedUrl } from '../src/lib/youtube.js';
 import { formatCurrency, getLimbeTodayISO } from '../src/lib/currency.js';
-import { buildBookingWhatsAppUrl, sanitizeWhatsAppNumber } from '../src/lib/whatsapp.js';
+import { buildBookingWhatsAppUrl, buildInquiryWhatsAppUrl, sanitizeWhatsAppNumber } from '../src/lib/whatsapp.js';
 import { buildResortSchema, buildRoomSchema, buildMenuSchema, buildGallerySchema } from '../src/lib/seoSchemas.js';
 import { FALLBACK_ROOM_TYPES, FALLBACK_MENU_ITEMS, FALLBACK_GALLERY_MEDIA } from '../src/lib/fallbackData.js';
 
@@ -49,6 +49,20 @@ const waUrl = buildBookingWhatsAppUrl({
 assert.ok(waUrl.startsWith('https://wa.me/237677123456?text='));
 assert.ok(decodeURIComponent(waUrl).includes('WEB-20261119-4821'));
 
+const inqWaUrl = buildInquiryWhatsAppUrl({
+  phone: '+237 677 123 456',
+  inquiry: {
+    fullName: 'Dr. Amadou K.',
+    email: 'amadou@example.org',
+    phone: '+237670000001',
+    inquiryType: 'Executive Residency',
+    message: 'Interested in 2 weeks stay',
+  },
+  language: 'en',
+});
+assert.ok(inqWaUrl.startsWith('https://wa.me/237677123456?text='));
+assert.ok(decodeURIComponent(inqWaUrl).includes('Dr. Amadou K.'));
+
 // 4. JSON-LD schemas
 const resortSchema = buildResortSchema();
 assert.equal(resortSchema['@type'], 'Resort');
@@ -65,6 +79,8 @@ assert.ok(enJson.nav.brand_name);
 assert.ok(frJson.nav.brand_name);
 assert.ok(enJson.booking_status.title);
 assert.ok(frJson.booking_status.title);
+assert.ok(enJson.accommodations.modal.proceed_to_whatsapp);
+assert.ok(frJson.accommodations.modal.proceed_to_whatsapp);
 
 // 6. Build output SEO artifacts (dist/sitemap.xml & prerendered HTMLs)
 const distDir = path.join(frontendDir, 'dist');

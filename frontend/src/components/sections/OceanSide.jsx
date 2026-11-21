@@ -7,8 +7,8 @@ function OceanSide() {
   const { t } = useTranslation();
 
   return (
-    <section className="py-20 md:py-35 text-center bg-volcanic relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+    <section className="py-24 md:py-32 text-center bg-midnight relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(242,159,71,0.14),transparent_60%)]" />
 
       <div className="container max-w-4xl mx-auto px-6 relative z-10">
         <motion.div
@@ -41,7 +41,7 @@ function OceanSide() {
           <div className="flex justify-center">
             <Link
               to="/services/intellectual-talks"
-              className="bg-white text-volcanic px-14 py-6 rounded-2xl font-black uppercase text-[11px] tracking-[0.4em] hover:bg-lush hover:text-white transition-all duration-500 shadow-2xl inline-block"
+              className="bg-lush text-[#0e1a28] hover:text-[#0e1a28] px-12 py-5 rounded-full font-black uppercase text-[11px] tracking-[0.3em] hover:bg-white transition-all duration-500 shadow-2xl inline-block"
             >
               {t('ocean_side.button')}
             </Link>

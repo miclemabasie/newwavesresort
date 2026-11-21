@@ -69,7 +69,33 @@
         "title": "Designed by and for Professionals",
         "subtitle": "A resort engineered for those who lead. We provide the silent efficiency required for high-stakes work, inspired by nature, designed for you."
       }
-    ]
+    ],
+    "location_badge": "Ngeme • Limbe • Gulf of Guinea",
+    "daily_menu_cta": "Today's Daily Menu",
+    "quick_book": {
+      "check_in": "Check-In",
+      "check_out": "Check-Out",
+      "guests": "Guests",
+      "search_cta": "Check Availability"
+    }
+  },
+  "home_highlights": {
+    "organic": {
+      "title": "100% Organic Harvest",
+      "subtitle": "Grown in fertile Fako volcanic soil"
+    },
+    "starlink": {
+      "title": "Starlink & 24/7 Solar",
+      "subtitle": "Redundant executive connectivity"
+    },
+    "transfer": {
+      "title": "90 Min from Douala (DLA)",
+      "subtitle": "Private coastal chauffeur transfers"
+    },
+    "impact": {
+      "title": "20% Foundation Impact",
+      "subtitle": "Supporting youth via FFLC"
+    }
   },
   "impact": {
     "section_tag": "Fisiy Foundation Partnership",
@@ -293,12 +319,18 @@
         "price": "To be determined"
       }
     ],
-    "button": "View Full Menu"
+    "button": "View Full Menu",
+    "todays_menu_cta": "Explore Full Daily Menu",
+    "whatsapp_dining_cta": "Reserve Table / Order on WhatsApp",
+    "chef_note_label": "Chef's Note for Today",
+    "dishes_count": "{{count}} dishes"
   },
   "suites": {
     "section_tag": "Accommodations",
     "title": "Designed for Luxury & Excellence",
     "subtitle": "Whether for a high-level summit or a nomadic retreat, our suites offer a sanctuary of productivity.",
+    "view_all": "View All Suites",
+    "book_now": "Book Now",
     "suites": [
       {
         "name": "The Atlantic Horizon",
@@ -500,17 +532,23 @@
       "first_name": "First Name",
       "last_name": "Last Name",
       "email": "Email Address",
-      "phone": "Phone Number",
+      "phone": "Phone / WhatsApp Number",
       "whatsapp": "WhatsApp Number (optional)",
       "nationality": "Nationality",
       "company_name": "Organization / Company (optional)",
+      "optional_details": "Add company name or special requests (optional)",
       "estimated_total": "Estimated Stay Total",
-      "submit_request": "Submit Booking Request",
-      "submitting": "Submitting Request...",
-      "confirmed_title": "Booking Request Logged",
-      "confirmed_subtitle": "Your request has been received by our front desk system and queued for confirmation.",
+      "submit_request": "Confirm Booking Request",
+      "submitting": "Saving Request...",
+      "confirmed_title": "Booking Request Received!",
+      "confirmed_subtitle": "Your booking is saved with our Front Desk. Tap below to message reception on WhatsApp for instant confirmation — no need to wait for email.",
       "reference_code": "Reference Code",
       "confirm_whatsapp": "Confirm Instantly on WhatsApp",
+      "proceed_to_whatsapp": "Proceed to WhatsApp",
+      "send_order_whatsapp": "Proceed to WhatsApp",
+      "whatsapp_ready_hint": "Opens WhatsApp with your booking order already filled in — simply press Send.",
+      "whatsapp_followup_note": "Send your booking order straight to our Front Desk on WhatsApp so reception can confirm availability and assist you immediately.",
+      "whatsapp_hint_form": "Your order is saved immediately — then tap Proceed to WhatsApp for fast confirmation.",
       "track_status": "Track Booking Status",
       "close": "Done"
     },
@@ -574,7 +612,8 @@
       "foundation": "Foundation",
       "foundation_email": "impact@fisiyfoundation.org"
     },
-    "whatsapp_cta": "Message Concierge on WhatsApp"
+    "whatsapp_cta": "Message Concierge on WhatsApp",
+    "proceed_to_whatsapp": "Proceed to WhatsApp"
   },
   "dining": {
     "section_tag": "Volcanic Harvest & Purity",

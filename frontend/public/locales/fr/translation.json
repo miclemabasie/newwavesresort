@@ -69,7 +69,33 @@
         "title": "Conçu par et pour les professionnels",
         "subtitle": "Un resort conçu pour ceux qui dirigent. Nous offrons l'efficacité silencieuse nécessaire au travail à enjeux élevés dans un sanctuaire de paix."
       }
-    ]
+    ],
+    "location_badge": "Ngeme • Limbe • Golfe de Guinée",
+    "daily_menu_cta": "Menu du Jour",
+    "quick_book": {
+      "check_in": "Arrivée",
+      "check_out": "Départ",
+      "guests": "Voyageurs",
+      "search_cta": "Vérifier la disponibilité"
+    }
+  },
+  "home_highlights": {
+    "organic": {
+      "title": "Récolte 100 % Bio",
+      "subtitle": "Issue des terres volcaniques du Fako"
+    },
+    "starlink": {
+      "title": "Starlink & Solaire 24/7",
+      "subtitle": "Connectivité exécutive redondante"
+    },
+    "transfer": {
+      "title": "90 Min de Douala (DLA)",
+      "subtitle": "Transferts côtiers avec chauffeur"
+    },
+    "impact": {
+      "title": "20 % Impact Fondation",
+      "subtitle": "Soutien aux jeunes via la FFLC"
+    }
   },
   "impact": {
     "section_tag": "Partenariat avec la Fondation Fisiy",
@@ -292,12 +318,18 @@
         "price": "À déterminer"
       }
     ],
-    "button": "Voir le menu complet"
+    "button": "Voir le menu complet",
+    "todays_menu_cta": "Découvrir tout le Menu du Jour",
+    "whatsapp_dining_cta": "Réserver une table / Commander sur WhatsApp",
+    "chef_note_label": "Mot du Chef aujourd'hui",
+    "dishes_count": "{{count}} plats"
   },
   "suites": {
     "section_tag": "Hébergements",
     "title": "Conçu pour le luxe et l'excellence",
     "subtitle": "Que ce soit pour un sommet de haut niveau ou une retraite de nomade, nos suites offrent un sanctuaire de productivité.",
+    "view_all": "Voir toutes les suites",
+    "book_now": "Réserver",
     "suites": [
       {
         "name": "L'Horizon Atlantique",
@@ -499,17 +531,23 @@
       "first_name": "Prénom",
       "last_name": "Nom",
       "email": "Adresse Email",
-      "phone": "Numéro de Téléphone",
+      "phone": "Téléphone / WhatsApp",
       "whatsapp": "Numéro WhatsApp (optionnel)",
       "nationality": "Nationalité",
       "company_name": "Organisation / Entreprise (optionnel)",
+      "optional_details": "Ajouter une organisation ou des demandes spéciales (optionnel)",
       "estimated_total": "Total Estimé du Séjour",
-      "submit_request": "Envoyer la Demande",
-      "submitting": "Envoi en cours...",
-      "confirmed_title": "Demande Enregistrée",
-      "confirmed_subtitle": "Votre demande a été transmise à notre réception et mise en file d'attente pour confirmation.",
+      "submit_request": "Confirmer la Demande",
+      "submitting": "Enregistrement en cours...",
+      "confirmed_title": "Demande de Réservation Reçue !",
+      "confirmed_subtitle": "Votre demande est enregistrée à notre réception. Cliquez ci-dessous pour continuer sur WhatsApp et obtenir une confirmation immédiate — sans attendre d'email.",
       "reference_code": "Code de Référence",
       "confirm_whatsapp": "Confirmer sur WhatsApp",
+      "proceed_to_whatsapp": "Continuer sur WhatsApp",
+      "send_order_whatsapp": "Continuer sur WhatsApp",
+      "whatsapp_ready_hint": "Ouvre WhatsApp avec votre commande déjà remplie — appuyez simplement sur Envoyer.",
+      "whatsapp_followup_note": "Envoyez votre commande directement à notre réception sur WhatsApp pour une confirmation rapide et un suivi personnalisé.",
+      "whatsapp_hint_form": "Votre demande est enregistrée immédiatement — puis cliquez sur Continuer sur WhatsApp pour une confirmation rapide.",
       "track_status": "Suivre ma Réservation",
       "close": "Fermer"
     },
@@ -573,7 +611,8 @@
       "foundation": "Fondation",
       "foundation_email": "impact@fisiyfoundation.org"
     },
-    "whatsapp_cta": "Écrire à la Conciergerie sur WhatsApp"
+    "whatsapp_cta": "Écrire à la Conciergerie sur WhatsApp",
+    "proceed_to_whatsapp": "Continuer sur WhatsApp"
   },
   "dining": {
     "section_tag": "Récolte volcanique et pureté",

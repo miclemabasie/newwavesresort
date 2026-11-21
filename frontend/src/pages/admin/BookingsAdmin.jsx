@@ -255,14 +255,14 @@ export default function BookingsAdmin() {
                           href={guestWa}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#25D366] text-white text-[10px] font-bold uppercase hover:bg-[#1ebe5d]"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#15803D] text-white hover:text-white text-[10px] font-bold uppercase hover:bg-[#166534]"
                         >
                           <MessageCircle className="w-3 h-3" /> WA
                         </a>
                         <button
                           type="button"
                           onClick={() => setSelected({ ...b })}
-                          className="px-2.5 py-1 rounded-lg bg-sand/70 hover:bg-ocean hover:text-white text-xs font-bold"
+                          className="px-2.5 py-1 rounded-lg bg-sand/70 text-volcanic hover:bg-ocean hover:text-white text-xs font-bold"
                         >
                           Manage
                         </button>
@@ -364,14 +364,14 @@ export default function BookingsAdmin() {
                 <button
                   type="button"
                   onClick={() => setSelected(null)}
-                  className="px-4 py-2 rounded-xl border border-sand text-xs font-bold uppercase"
+                  className="px-4 py-2 rounded-xl bg-white text-volcanic border border-volcanic/20 hover:bg-sand/50 text-xs font-bold uppercase"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-6 py-2 rounded-xl bg-volcanic hover:bg-lush text-white text-xs font-bold uppercase disabled:opacity-60"
+                  className="px-6 py-2 rounded-xl bg-volcanic hover:bg-lush text-white hover:text-[#0e1a28] text-xs font-bold uppercase disabled:opacity-60"
                 >
                   {saving ? 'Saving...' : 'Save Changes'}
                 </button>

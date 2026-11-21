@@ -7,7 +7,7 @@ export default function ServiceGrid() {
   const services = Array.isArray(rawServices) ? rawServices : [];
 
   return (
-    <section className="container mx-auto py-24 bg-sand lg:max-w-7xl px-6">
+    <section className="container mx-auto py-24 md:py-28 bg-sand lg:max-w-7xl px-6">
       <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
         <div className="max-w-xl">
           <span className="text-lush font-black tracking-[0.4em] uppercase text-[10px]">

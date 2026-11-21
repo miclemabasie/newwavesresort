@@ -107,7 +107,7 @@ export default function BookingStatus() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-volcanic hover:bg-lush text-white font-black py-4 rounded-xl uppercase text-xs tracking-[0.25em] flex items-center justify-center gap-2 transition-all"
+            className="w-full bg-volcanic hover:bg-ocean text-white font-black py-4 rounded-xl uppercase text-xs tracking-[0.25em] flex items-center justify-center gap-2 transition-all"
           >
             <Search className="w-4 h-4" />
             {loading ? t('booking_status.checking') : t('booking_status.submit')}
@@ -164,7 +164,7 @@ export default function BookingStatus() {
               href={whatsappHelpUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all"
+              className="mt-4 w-full bg-[#15803D] hover:bg-[#166534] text-white hover:text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all"
             >
               <MessageCircle className="w-4 h-4" />
               {t('booking_status.whatsapp_help')}

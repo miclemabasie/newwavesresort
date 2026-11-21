@@ -52,10 +52,10 @@ export default function Partnerships() {
               <Link to="/contact" className="block">
                 <motion.div
                   whileHover={{ scale: 0.98 }}
-                  className="p-8 h-full bg-lush rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer"
+                  className="p-8 h-full bg-lush rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer shadow-sm"
                 >
-                  <p className="text-white font-serif italic text-lg mb-2">{t('partnerships.cta')}</p>
-                  <span className="text-[9px] text-sand/80 uppercase tracking-[0.2em]">
+                  <p className="text-[#0e1a28] font-serif italic font-semibold text-lg mb-2">{t('partnerships.cta')}</p>
+                  <span className="text-[10px] font-bold text-[#0e1a28]/80 uppercase tracking-[0.2em]">
                     {t('partnerships.cta_sub')}
                   </span>
                 </motion.div>

@@ -5,10 +5,10 @@ import toast from 'react-hot-toast';
 import SEO from '../components/SEO';
 import Navbar from '../components/Navbar';
 import Footer from '../components/sections/Footer';
-import { Send, MapPin, Globe, Shield, MessageCircle } from 'lucide-react';
-import { supabase } from '../lib/supabase.js';
+import { Send, MapPin, Globe, Shield, MessageCircle, ExternalLink } from 'lucide-react';
+import { supabase, isSupabaseConfigured } from '../lib/supabase.js';
 import { useSiteSettings } from '../hooks/useSiteSettings.js';
-import { buildGeneralWhatsAppUrl } from '../lib/whatsapp.js';
+import { buildGeneralWhatsAppUrl, buildInquiryWhatsAppUrl } from '../lib/whatsapp.js';
 import { buildBreadcrumbSchema } from '../lib/seoSchemas.js';
 
 export default function ContactPage() {
@@ -17,6 +17,7 @@ export default function ContactPage() {
   const lang = i18n.language?.startsWith('fr') ? 'fr' : 'en';
 
   const [formStatus, setFormStatus] = useState('idle');
+  const [submittedInquiry, setSubmittedInquiry] = useState(null);
   const [form, setForm] = useState({
     fullName: '',
     email: '',
@@ -29,16 +30,19 @@ export default function ContactPage() {
     e.preventDefault();
     setFormStatus('sending');
     try {
-      if (supabase) {
-        const { error } = await supabase.from('contact_inquiries').insert({
-          full_name: form.fullName.trim(),
-          email: form.email.trim(),
-          phone: form.phone.trim(),
-          inquiry_type: form.inquiryType,
-          message: form.message.trim(),
-        });
+      const payload = {
+        full_name: form.fullName.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim(),
+        inquiry_type: form.inquiryType,
+        message: form.message.trim(),
+      };
+      if (isSupabaseConfigured) {
+        if (!supabase) throw new Error('Unable to connect to inquiry service.');
+        const { error } = await supabase.from('contact_inquiries').insert(payload);
         if (error) throw error;
       }
+      setSubmittedInquiry({ ...form });
       setFormStatus('success');
       toast.success(t('common.inquiry_received'));
     } catch (err) {
@@ -54,6 +58,14 @@ export default function ContactPage() {
         ? 'Bonjour New Waves Resort, je souhaite obtenir des informations sur un séjour ou un événement.'
         : 'Hello New Waves Resort, I would like to inquire about a residency or event.',
   });
+
+  const submittedWhatsappUrl = submittedInquiry
+    ? buildInquiryWhatsAppUrl({
+        phone: settings.whatsapp_number,
+        inquiry: submittedInquiry,
+        language: lang,
+      })
+    : whatsappUrl;
 
   return (
     <div className="bg-sand min-h-screen overflow-x-hidden">
@@ -108,31 +120,46 @@ export default function ContactPage() {
                     key="success"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="text-center py-16"
+                    className="text-center py-12 space-y-6"
                   >
-                    <div className="w-20 h-20 bg-lush/10 rounded-full flex items-center justify-center mx-auto mb-8">
-                      <Send className="text-lush w-8 h-8" />
+                    <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto">
+                      <Send className="text-emerald-700 w-8 h-8" />
                     </div>
-                    <h3 className="text-3xl font-serif text-ocean mb-4">{t('common.inquiry_received')}</h3>
-                    <p className="text-volcanic/60 text-sm max-w-xs mx-auto leading-relaxed">
-                      {t('common.inquiry_success')}
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setForm({
-                          fullName: '',
-                          email: '',
-                          phone: '',
-                          inquiryType: t('contact.form.inquiry_options.executive'),
-                          message: '',
-                        });
-                        setFormStatus('idle');
-                      }}
-                      className="mt-10 text-lush font-black text-[10px] uppercase tracking-[0.3em] border-b-2 border-lush pb-1 hover:text-volcanic hover:border-volcanic transition-colors"
-                    >
-                      {t('common.submit_another')}
-                    </button>
+                    <div>
+                      <h3 className="text-3xl font-serif text-ocean mb-3">{t('common.inquiry_received')}</h3>
+                      <p className="text-volcanic/70 text-sm max-w-md mx-auto leading-relaxed mb-0">
+                        {t('common.inquiry_success')}
+                      </p>
+                    </div>
+                    <div className="max-w-sm mx-auto pt-2 space-y-4">
+                      <a
+                        href={submittedWhatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full bg-[#15803D] hover:bg-[#166534] text-white hover:text-white font-extrabold py-4 px-6 rounded-xl uppercase text-xs tracking-[0.18em] flex items-center justify-center gap-3 shadow-lg transition-all"
+                      >
+                        <MessageCircle className="w-5 h-5 shrink-0" />
+                        <span>{t('contact.proceed_to_whatsapp')}</span>
+                        <ExternalLink className="w-4 h-4 shrink-0" />
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setForm({
+                            fullName: '',
+                            email: '',
+                            phone: '',
+                            inquiryType: t('contact.form.inquiry_options.executive'),
+                            message: '',
+                          });
+                          setSubmittedInquiry(null);
+                          setFormStatus('idle');
+                        }}
+                        className="text-ocean font-bold text-xs uppercase tracking-[0.2em] border-b-2 border-ocean/40 pb-1 hover:text-volcanic hover:border-volcanic transition-colors"
+                      >
+                        {t('common.submit_another')}
+                      </button>
+                    </div>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-8">
@@ -194,7 +221,7 @@ export default function ContactPage() {
                       <button
                         type="submit"
                         disabled={formStatus === 'sending'}
-                        className="flex-1 bg-volcanic hover:bg-lush text-white font-black py-5 px-6 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-4 uppercase text-[11px] tracking-[0.3em] group disabled:opacity-70"
+                        className="flex-1 bg-volcanic hover:bg-ocean text-white font-black py-5 px-6 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-4 uppercase text-[11px] tracking-[0.25em] group disabled:opacity-70"
                       >
                         {formStatus === 'sending' ? t('common.sending') : t('contact.form.submit')}
                         <Send className="w-4 h-4" />
@@ -204,7 +231,7 @@ export default function ContactPage() {
                         href={whatsappUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black py-5 px-6 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-3 uppercase text-[11px] tracking-[0.2em]"
+                        className="bg-[#15803D] hover:bg-[#166534] text-white hover:text-white font-black py-5 px-6 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-3 uppercase text-[11px] tracking-[0.2em]"
                       >
                         <MessageCircle className="w-4 h-4" />
                         <span>WhatsApp</span>
