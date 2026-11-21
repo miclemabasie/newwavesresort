@@ -1,10 +1,10 @@
-import React from "react";
 import { useTranslation } from 'react-i18next';
-import ServiceDiscoveryCard from "../ui/ServiceDiscoveryCard";
+import ServiceDiscoveryCard from '../ui/ServiceDiscoveryCard';
 
 export default function ServiceGrid() {
   const { t } = useTranslation();
-  const services = t('service_grid.services', { returnObjects: true });
+  const rawServices = t('service_grid.services', { returnObjects: true });
+  const services = Array.isArray(rawServices) ? rawServices : [];
 
   return (
     <section className="container mx-auto py-24 bg-sand lg:max-w-7xl px-6">
@@ -25,13 +25,13 @@ export default function ServiceGrid() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {services.map((service, index) => (
-          <ServiceDiscoveryCard 
-            key={index} 
-            title={service.title} 
-            subtitle={service.subtitle} 
-            category={service.category} 
-            image={service.image} 
-            to={service.to} 
+          <ServiceDiscoveryCard
+            key={index}
+            title={service.title}
+            subtitle={service.subtitle}
+            category={service.category}
+            image={service.image}
+            to={service.to}
           />
         ))}
       </div>

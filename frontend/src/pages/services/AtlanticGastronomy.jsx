@@ -1,20 +1,48 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/sections/Footer";
-import { ChefHat, Clock, MapPin, ArrowRight, Sun, Sunset, Moon } from "lucide-react";
+import SEO from '../../components/SEO';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/sections/Footer';
+import { buildBreadcrumbSchema } from '../../lib/seoSchemas.js';
+import { ChefHat, Clock, MapPin, ArrowRight, Sun, Sunset, Moon } from 'lucide-react';
 
 export default function AtlanticGastronomy() {
   const { t } = useTranslation();
-  const page = t('service_pages.atlantic_gastronomy', { returnObjects: true });
-  const { hero, experiences_title, experiences_sub, experiences, menu_title, menu_sub, menuHighlights, view_full_menu, chef_table, testimonials_title, testimonials, cta_title, cta_sub, cta_button } = page;
+  const page = t('service_pages.atlantic_gastronomy', { returnObjects: true }) || {};
+  const {
+    hero = {},
+    experiences_title,
+    experiences_sub,
+    experiences = [],
+    menu_title,
+    menu_sub,
+    menuHighlights = [],
+    view_full_menu,
+    chef_table = { features: [] },
+    testimonials_title,
+    testimonials = [],
+    cta_title,
+    cta_sub,
+    cta_button,
+  } = page;
 
   return (
     <div className="bg-sand/30 min-h-screen">
+      <SEO
+        title={hero.title || 'Atlantic Gastronomy'}
+        description={hero.description}
+        path="/services/culinary"
+        schemas={[
+          buildBreadcrumbSchema([
+            { name: t('nav.home'), path: '/' },
+            { name: t('nav.experiences'), path: '/experiences' },
+            { name: hero.title || 'Atlantic Gastronomy', path: '/services/culinary' },
+          ]),
+        ]}
+      />
       <Navbar />
-      <main className="pt-32 pb-20">
-        {/* Hero */}
+      <main className="pt-28 pb-20">
         <section className="container mx-auto px-6 mb-20">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
@@ -54,13 +82,12 @@ export default function AtlanticGastronomy() {
           </div>
         </section>
 
-        {/* Dining Experiences */}
         <section className="container mx-auto px-6 mb-20">
           <div className="bg-white rounded-[3rem] p-12 md:p-20 shadow-xl border border-sand/40">
             <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">{experiences_title}</h2>
             <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">{experiences_sub}</p>
             <div className="grid md:grid-cols-3 gap-8">
-              {experiences.map((exp, idx) => (
+              {(Array.isArray(experiences) ? experiences : []).map((exp, idx) => (
                 <div key={idx} className="text-center">
                   <div className="bg-lush/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <div className="text-lush">
@@ -77,58 +104,66 @@ export default function AtlanticGastronomy() {
           </div>
         </section>
 
-        {/* Menu Highlights */}
-        <section className="container mx-auto px-6 mb-20">
-          <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">{menu_title}</h2>
-          <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">{menu_sub}</p>
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {menuHighlights.map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-white p-6 rounded-2xl border border-sand/40 flex justify-between items-start gap-4"
+        {Array.isArray(menuHighlights) && menuHighlights.length > 0 && (
+          <section className="container mx-auto px-6 mb-20">
+            <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">{menu_title}</h2>
+            <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">{menu_sub}</p>
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {menuHighlights.map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="bg-white p-6 rounded-2xl border border-sand/40 flex justify-between items-start gap-4"
+                >
+                  <div>
+                    <h3 className="text-xl font-serif text-volcanic mb-1">{item.name}</h3>
+                    <p className="text-volcanic/60 text-sm">{item.description}</p>
+                  </div>
+                  <span className="text-lush font-serif text-lg whitespace-nowrap">
+                    {Number(item.price || 0).toLocaleString()} XAF
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <Link
+                to="/services/dining"
+                className="inline-flex items-center gap-2 text-lush font-bold uppercase tracking-wider text-sm hover:gap-3 transition-all"
               >
-                <div>
-                  <h3 className="text-xl font-serif text-volcanic mb-1">{item.name}</h3>
-                  <p className="text-volcanic/60 text-sm">{item.description}</p>
-                </div>
-                <span className="text-lush font-serif text-lg whitespace-nowrap">{item.price.toLocaleString()} XAF</span>
-              </motion.div>
-            ))}
-          </div>
-          <div className="text-center mt-8">
-            <Link to="/dining/menu" className="inline-flex items-center gap-2 text-lush font-bold uppercase tracking-wider text-sm hover:gap-3 transition-all">
-              {view_full_menu} <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </section>
+                {view_full_menu} <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </section>
+        )}
 
-        {/* Chef's Table */}
         <section className="container mx-auto px-6 mb-20">
           <div className="bg-volcanic rounded-[3rem] p-12 md:p-16 text-white relative overflow-hidden">
-            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `radial-gradient(circle at 20% 30%, #7aa65a 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
             <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">{chef_table.title}</h2>
                 <p className="text-white/70 text-lg leading-relaxed mb-6">{chef_table.description}</p>
                 <ul className="space-y-3 text-white/80">
-                  {chef_table.features.map((feature, idx) => (
+                  {(Array.isArray(chef_table.features) ? chef_table.features : []).map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-3">
                       <span className="text-lush w-5 h-5 mt-1 flex-shrink-0">✦</span>
                       <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
-                <button className="mt-8 bg-lush text-volcanic px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs hover:bg-white transition-all">
+                <Link
+                  to="/contact"
+                  className="mt-8 inline-block bg-lush text-volcanic px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs hover:bg-white transition-all"
+                >
                   {chef_table.button}
-                </button>
+                </Link>
               </div>
               <div className="h-[300px] md:h-[400px] rounded-2xl overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0f?auto=format&fit=crop&q=80&w=800" 
+                <img
+                  src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0f?auto=format&fit=crop&q=80&w=800"
                   alt="Chef's table"
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -136,28 +171,37 @@ export default function AtlanticGastronomy() {
           </div>
         </section>
 
-        {/* Testimonials */}
         <section className="container mx-auto px-6 mb-20">
           <h2 className="text-3xl md:text-4xl font-serif text-volcanic mb-12 text-center">{testimonials_title}</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {testimonials.map((t, idx) => (
+            {(Array.isArray(testimonials) ? testimonials : []).map((item, idx) => (
               <div key={idx} className="bg-white p-8 rounded-2xl border border-sand/40">
-                <div className="flex text-lush mb-4">{"★".repeat(5)}</div>
-                <p className="text-volcanic/80 italic mb-4">"{t.quote}"</p>
-                <p className="text-volcanic/60 font-bold">{t.author}</p>
+                <div className="flex text-lush mb-4">{'★'.repeat(5)}</div>
+                <p className="text-volcanic/80 italic mb-4">"{item.quote}"</p>
+                <p className="text-volcanic/60 font-bold">{item.author}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* CTA */}
         <section className="container mx-auto px-6">
           <div className="text-center">
             <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">{cta_title}</h2>
             <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">{cta_sub}</p>
-            <Link to="/contact" className="inline-flex items-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all">
-              {cta_button} <ArrowRight className="w-4 h-4" />
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/services/dining"
+                className="inline-flex items-center justify-center gap-3 bg-ocean text-white px-10 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic transition-all"
+              >
+                {view_full_menu || t('culinary.button')} <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/contact"
+                className="inline-flex items-center justify-center gap-3 bg-lush text-volcanic px-10 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all"
+              >
+                {cta_button} <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
         </section>
       </main>

@@ -1,20 +1,33 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/sections/Footer";
-import { Car, Users, Map, ArrowRight } from "lucide-react";
+import SEO from '../../components/SEO';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/sections/Footer';
+import { buildBreadcrumbSchema } from '../../lib/seoSchemas.js';
+import { Car, Users, Map, ArrowRight } from 'lucide-react';
 
 export default function PremiumFleet() {
   const { t } = useTranslation();
-  const page = t('service_pages.premium_fleet', { returnObjects: true });
-  const { hero, fleet_title, fleet_sub, vehicles, services_title, services, cta_title, cta_sub, cta_button } = page;
+  const page = t('service_pages.premium_fleet', { returnObjects: true }) || {};
+  const { hero = {}, fleet_title, fleet_sub, vehicles = [], services_title, services = [], cta_title, cta_sub, cta_button } = page;
 
   return (
     <div className="bg-sand/30 min-h-screen">
+      <SEO
+        title={hero.title || 'Premium Fleet'}
+        description={hero.description}
+        path="/services/fleet"
+        schemas={[
+          buildBreadcrumbSchema([
+            { name: t('nav.home'), path: '/' },
+            { name: t('nav.experiences'), path: '/experiences' },
+            { name: hero.title || 'Premium Fleet', path: '/services/fleet' },
+          ]),
+        ]}
+      />
       <Navbar />
-      <main className="pt-32 pb-20">
-        {/* Hero */}
+      <main className="pt-28 pb-20">
         <section className="container mx-auto px-6 mb-20">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
@@ -38,37 +51,48 @@ export default function PremiumFleet() {
           </div>
         </section>
 
-        {/* Vehicle Grid */}
         <section className="container mx-auto px-6 mb-20">
           <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">{fleet_title}</h2>
           <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">{fleet_sub}</p>
           <div className="grid md:grid-cols-3 gap-8">
-            {vehicles.map((v, idx) => (
-              <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }} className="bg-white rounded-2xl overflow-hidden border border-sand/40">
-                <img src={v.image} alt={v.name} className="h-48 w-full object-cover" />
+            {(Array.isArray(vehicles) ? vehicles : []).map((v, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                className="bg-white rounded-2xl overflow-hidden border border-sand/40"
+              >
+                <img src={v.image} alt={v.name} loading="lazy" className="h-48 w-full object-cover" />
                 <div className="p-6">
                   <h3 className="text-xl font-serif text-volcanic mb-1">{v.name}</h3>
-                  <p className="text-lush text-sm mb-3">{v.type} • {v.capacity} seats</p>
+                  <p className="text-lush text-sm mb-3">
+                    {v.type} • {v.capacity} seats
+                  </p>
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {v.features.map((f, i) => (
-                      <span key={i} className="bg-sand/30 text-volcanic/70 text-xs px-2 py-1 rounded-full">{f}</span>
+                    {(Array.isArray(v.features) ? v.features : []).map((f, i) => (
+                      <span key={i} className="bg-sand/30 text-volcanic/70 text-xs px-2 py-1 rounded-full">
+                        {f}
+                      </span>
                     ))}
                   </div>
-                  <button className="text-lush font-bold uppercase tracking-wider text-xs flex items-center gap-1 group">
+                  <Link
+                    to="/contact"
+                    className="text-lush font-bold uppercase tracking-wider text-xs inline-flex items-center gap-1 group"
+                  >
                     {t('common.view_details')} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition" />
-                  </button>
+                  </Link>
                 </div>
               </motion.div>
             ))}
           </div>
         </section>
 
-        {/* Service Options */}
         <section className="container mx-auto px-6 mb-20">
           <div className="bg-white rounded-[3rem] p-12 md:p-16 shadow-xl border border-sand/40">
             <h2 className="text-3xl md:text-4xl font-serif text-volcanic mb-12 text-center">{services_title}</h2>
             <div className="grid md:grid-cols-3 gap-8">
-              {services.map((s, idx) => (
+              {(Array.isArray(services) ? services : []).map((s, idx) => (
                 <div key={idx} className="text-center">
                   <div className="bg-lush/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <div className="text-lush">
@@ -85,12 +109,14 @@ export default function PremiumFleet() {
           </div>
         </section>
 
-        {/* CTA */}
         <section className="container mx-auto px-6">
           <div className="text-center">
             <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">{cta_title}</h2>
             <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">{cta_sub}</p>
-            <Link to="/contact" className="inline-flex items-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all">
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all"
+            >
               {cta_button} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

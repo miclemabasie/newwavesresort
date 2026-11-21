@@ -1,24 +1,49 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { motion } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Navbar from "../components/Navbar";
-import Footer from "../components/sections/Footer";
-import { ArrowUpRight, Waves, Wind, Leaf, Mic2, Utensils, PlaneTakeoff, Car, Compass, BookOpen, Wifi, ShieldCheck } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import SEO from '../components/SEO';
+import Navbar from '../components/Navbar';
+import Footer from '../components/sections/Footer';
+import { buildBreadcrumbSchema } from '../lib/seoSchemas.js';
+import {
+  ArrowUpRight,
+  Waves,
+  Wind,
+  Leaf,
+  Mic2,
+  Utensils,
+  PlaneTakeoff,
+  Car,
+  Compass,
+  BookOpen,
+  Wifi,
+  ShieldCheck,
+} from 'lucide-react';
 
 export default function Services() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const services = t('services.service_list', { returnObjects: true });
+  const rawServices = t('services.service_list', { returnObjects: true });
+  const services = Array.isArray(rawServices) ? rawServices : [];
 
   return (
     <div className="bg-sand/30 min-h-screen">
+      <SEO
+        title={`${t('services.hero.title')} ${t('services.hero.title_italic')}`}
+        description={t('services.hero.description')}
+        path="/experiences"
+        schemas={[
+          buildBreadcrumbSchema([
+            { name: t('nav.home'), path: '/' },
+            { name: t('nav.experiences'), path: '/experiences' },
+          ]),
+        ]}
+      />
       <Navbar />
-      <main className="pt-32 pb-20">
-        {/* Hero Header */}
-        <section className="container mx-auto px-6 mb-24">
+      <main className="pt-28 pb-20">
+        <section className="container mx-auto px-6 mb-20">
           <div className="max-w-4xl">
-            <motion.span 
+            <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -26,15 +51,16 @@ export default function Services() {
             >
               {t('services.hero.tag')}
             </motion.span>
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
               className="text-5xl md:text-8xl font-serif text-volcanic leading-tight mb-8"
             >
-              {t('services.hero.title')} <span className="italic text-lush">{t('services.hero.title_italic')}</span>
+              {t('services.hero.title')}{' '}
+              <span className="italic text-lush">{t('services.hero.title_italic')}</span>
             </motion.h1>
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -45,7 +71,6 @@ export default function Services() {
           </div>
         </section>
 
-        {/* Services Grid */}
         <section className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
@@ -53,47 +78,46 @@ export default function Services() {
                 key={service.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.08 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -8 }}
-                className="group bg-white rounded-[2.5rem] overflow-hidden border border-sand/50 shadow-lg hover:shadow-2xl transition-all duration-500 relative"
+                className="group bg-white rounded-[2.5rem] overflow-hidden border border-sand/50 shadow-lg hover:shadow-2xl transition-all duration-500 relative flex flex-col"
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-lush/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10" />
-                
                 <div className="h-64 overflow-hidden relative">
-                  <img 
-                    src={service.image} 
+                  <img
+                    src={service.image}
                     alt={service.title}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-volcanic/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md p-3 rounded-2xl text-lush shadow-lg">
-                    {/* Icon placeholder - we could map based on id */}
-                    {service.id === 'intellectual-talks' && <Mic2 className="w-8 h-8" />}
-                    {service.id === 'dining' && <Utensils className="w-8 h-8" />}
-                    {service.id === 'transfers' && <PlaneTakeoff className="w-8 h-8" />}
-                    {service.id === 'expeditions' && <Compass className="w-8 h-8" />}
-                    {service.id === 'fleet' && <Car className="w-8 h-8" />}
-                    {service.id === 'library' && <BookOpen className="w-8 h-8" />}
+                    {service.id === 'intellectual-talks' && <Mic2 className="w-7 h-7" />}
+                    {service.id === 'dining' && <Utensils className="w-7 h-7" />}
+                    {service.id === 'transfers' && <PlaneTakeoff className="w-7 h-7" />}
+                    {service.id === 'expeditions' && <Compass className="w-7 h-7" />}
+                    {service.id === 'fleet' && <Car className="w-7 h-7" />}
+                    {service.id === 'library' && <BookOpen className="w-7 h-7" />}
                   </div>
                 </div>
 
-                <div className="p-10 relative z-20">
+                <div className="p-9 relative z-20 flex-1 flex flex-col">
                   <span className="text-lush font-bold uppercase tracking-[0.3em] text-[10px] mb-3 block">
                     {service.category}
                   </span>
                   <h3 className="text-2xl font-serif text-volcanic mb-4 group-hover:text-lush transition-colors">
                     {service.title}
                   </h3>
-                  <p className="text-volcanic/60 leading-relaxed text-sm mb-8">
+                  <p className="text-volcanic/60 leading-relaxed text-sm mb-8 flex-1">
                     {service.description}
                   </p>
-                  
-                  <Link 
-                    to={`/services/${service.id}`}
-                    className="inline-flex items-center gap-2 text-volcanic font-black uppercase tracking-widest text-[9px] border-b border-lush pb-2 group-hover:gap-4 transition-all group-hover:text-lush"
+
+                  <Link
+                    to={`/services/${service.id === 'dining' ? 'culinary' : service.id}`}
+                    className="inline-flex items-center gap-2 text-volcanic font-black uppercase tracking-widest text-[9px] border-b border-lush pb-2 group-hover:gap-4 transition-all group-hover:text-lush self-start"
                   >
-                    {t('common.learn_more')} <ArrowUpRight className="w-4 h-4 text-lush group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    {t('common.learn_more')}{' '}
+                    <ArrowUpRight className="w-4 h-4 text-lush group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </Link>
                 </div>
               </motion.div>
@@ -101,21 +125,14 @@ export default function Services() {
           </div>
         </section>
 
-        {/* Bespoke Concierge Section */}
-        <section className="container mx-auto px-6 mt-32">
-          <motion.div 
+        <section className="container mx-auto px-6 mt-28">
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
             className="bg-volcanic rounded-[4rem] p-12 md:p-24 text-center relative overflow-hidden"
           >
-            <div className="absolute inset-0 opacity-10" style={{
-              backgroundImage: `radial-gradient(circle at 20% 30%, #7aa65a 1px, transparent 1px), 
-                                radial-gradient(circle at 80% 70%, #7aa65a 1px, transparent 1px)`,
-              backgroundSize: '60px 60px'
-            }} />
-            
             <div className="absolute top-0 right-0 opacity-10">
               <Waves className="w-96 h-96 text-white" />
             </div>
@@ -133,22 +150,26 @@ export default function Services() {
               <p className="text-white/60 text-lg mb-12 leading-relaxed">
                 {t('services.bespoke.description')}
               </p>
-              <button onClick={() => navigate('/contact')} className="bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-[11px] hover:bg-white hover:scale-105 transition-all shadow-xl hover:shadow-2xl">
+              <button
+                type="button"
+                onClick={() => navigate('/contact')}
+                className="bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-[11px] hover:bg-white hover:scale-105 transition-all shadow-xl"
+              >
                 {t('services.bespoke.button')}
               </button>
             </div>
           </motion.div>
         </section>
 
-        {/* Service Philosophy */}
-        <section className="container mx-auto px-6 mt-32">
+        <section className="container mx-auto px-6 mt-28">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
               <span className="text-lush font-black tracking-[0.5em] uppercase text-[10px] mb-4 block">
                 {t('services.philosophy.tag')}
               </span>
               <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">
-                {t('services.philosophy.title')} <span className="italic text-lush">{t('services.philosophy.title_italic')}</span>
+                {t('services.philosophy.title')}{' '}
+                <span className="italic text-lush">{t('services.philosophy.title_italic')}</span>
               </h2>
               <p className="text-volcanic/70 text-lg leading-relaxed">
                 {t('services.philosophy.description')}
@@ -157,13 +178,21 @@ export default function Services() {
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-white p-8 rounded-3xl shadow-sm border border-sand/40 text-center">
                 <Wifi className="w-8 h-8 text-lush mx-auto mb-4" />
-                <div className="text-2xl font-serif text-volcanic">{t('services.philosophy.badges.wifi')}</div>
-                <div className="text-xs text-volcanic/50 uppercase tracking-wider">{t('services.philosophy.badges.wifi_sub')}</div>
+                <div className="text-2xl font-serif text-volcanic">
+                  {t('services.philosophy.badges.wifi')}
+                </div>
+                <div className="text-xs text-volcanic/50 uppercase tracking-wider">
+                  {t('services.philosophy.badges.wifi_sub')}
+                </div>
               </div>
               <div className="bg-white p-8 rounded-3xl shadow-sm border border-sand/40 text-center">
                 <ShieldCheck className="w-8 h-8 text-lush mx-auto mb-4" />
-                <div className="text-2xl font-serif text-volcanic">{t('services.philosophy.badges.security')}</div>
-                <div className="text-xs text-volcanic/50 uppercase tracking-wider">{t('services.philosophy.badges.security_sub')}</div>
+                <div className="text-2xl font-serif text-volcanic">
+                  {t('services.philosophy.badges.security')}
+                </div>
+                <div className="text-xs text-volcanic/50 uppercase tracking-wider">
+                  {t('services.philosophy.badges.security_sub')}
+                </div>
               </div>
             </div>
           </div>

@@ -1,0 +1,225 @@
+openapi: 3.0.3
+info:
+  title: New Waves Resort Website Convenience API (pms-api)
+  version: 1.0.0
+  description: |
+    Loosely-coupled convenience REST API exposed via Supabase Edge Functions (`pms-api`).
+    Allows an external property management system or facility manager to optionally pull
+    website booking requests, push room availability/rates, publish daily menus, and post
+    gallery media. Authenticated via the `x-api-key` header generated in `/admin/integrations`.
+servers:
+  - url: https://{projectRef}.supabase.co/functions/v1/pms-api
+    variables:
+      projectRef:
+        default: your-project-ref
+security:
+  - ApiKeyAuth: []
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+paths:
+  /bookings:
+    get:
+      summary: Pull website booking requests
+      parameters:
+        - in: query
+          name: sync_status
+          schema:
+            type: string
+            enum: [pending, pulled, synced, ignored]
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [pending, confirmed, declined, checked_in, checked_out, cancelled, no_show]
+        - in: query
+          name: since
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 50
+      responses:
+        '200':
+          description: List of booking requests
+  /bookings/ack:
+    post:
+      summary: Batch-mark booking requests as pulled or synced
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ids]
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                sync_status:
+                  type: string
+                  enum: [pulled, synced, ignored]
+                  default: pulled
+      responses:
+        '200':
+          description: Updated booking references
+  /bookings/{id}:
+    patch:
+      summary: Update booking status or attach external reservation reference
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                external_sync_status:
+                  type: string
+                external_reference:
+                  type: string
+                internal_notes:
+                  type: string
+      responses:
+        '200':
+          description: Updated booking request
+  /rooms:
+    get:
+      summary: List room types published/configured on the website
+      responses:
+        '200':
+          description: Room type list
+    post:
+      summary: Upsert a room type (by external_ref or slug)
+      responses:
+        '201':
+          description: Upserted room type
+  /rooms/{id}:
+    patch:
+      summary: Update room type rate, total_units, or availability_status
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Updated room type
+  /rooms/{id}/unavailability:
+    put:
+      summary: Sync unavailable date blocks for a room type
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                external_ref:
+                  type: string
+                replace_all:
+                  type: boolean
+                blocks:
+                  type: array
+                  items:
+                    type: object
+                    required: [start_date, end_date]
+                    properties:
+                      start_date:
+                        type: string
+                        format: date
+                      end_date:
+                        type: string
+                        format: date
+                      units_blocked:
+                        type: integer
+                      reason:
+                        type: string
+      responses:
+        '200':
+          description: Unavailability blocks updated
+  /menu:
+    get:
+      summary: List master kitchen catalog items
+      responses:
+        '200':
+          description: Menu item catalog
+    post:
+      summary: Create or update a dish in the master catalog (by slug)
+      responses:
+        '201':
+          description: Upserted dish
+  /daily-menu/{date}:
+    get:
+      summary: Fetch daily menu for YYYY-MM-DD
+      parameters:
+        - in: path
+          name: date
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Daily menu details
+    put:
+      summary: Create or replace a daily menu for YYYY-MM-DD
+      parameters:
+        - in: path
+          name: date
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Saved daily menu
+  /gallery:
+    get:
+      summary: List gallery items (photos & YouTube videos)
+      responses:
+        '200':
+          description: Gallery list
+    post:
+      summary: Publish a photo URL or YouTube video reference to the gallery
+      responses:
+        '201':
+          description: Created gallery entry
+  /gallery/{id}:
+    delete:
+      summary: Remove a gallery entry
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Deleted

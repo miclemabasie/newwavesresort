@@ -1,20 +1,45 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/sections/Footer";
-import { PlaneTakeoff, Car, Shield, Clock, MapPin, Wifi, Coffee, ArrowRight } from "lucide-react";
+import SEO from '../../components/SEO';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/sections/Footer';
+import { buildBreadcrumbSchema } from '../../lib/seoSchemas.js';
+import { PlaneTakeoff, Shield, Clock, MapPin, Wifi, Coffee, ArrowRight } from 'lucide-react';
 
 export default function DiplomaticTransfers() {
   const { t } = useTranslation();
-  const page = t('service_pages.diplomatic_transfers', { returnObjects: true });
-  const { hero, features_title, features_sub, features, fleet_title, vehicles, testimonials_title, testimonials, cta_title, cta_sub, cta_button } = page;
+  const page = t('service_pages.diplomatic_transfers', { returnObjects: true }) || {};
+  const {
+    hero = {},
+    features_title,
+    features_sub,
+    features = [],
+    fleet_title,
+    vehicles = [],
+    testimonials_title,
+    testimonials = [],
+    cta_title,
+    cta_sub,
+    cta_button,
+  } = page;
 
   return (
     <div className="bg-sand/30 min-h-screen">
+      <SEO
+        title={hero.title || 'Diplomatic Transfers'}
+        description={hero.description}
+        path="/services/transfers"
+        schemas={[
+          buildBreadcrumbSchema([
+            { name: t('nav.home'), path: '/' },
+            { name: t('nav.experiences'), path: '/experiences' },
+            { name: hero.title || 'Diplomatic Transfers', path: '/services/transfers' },
+          ]),
+        ]}
+      />
       <Navbar />
-      <main className="pt-32 pb-20">
-        {/* Hero */}
+      <main className="pt-28 pb-20">
         <section className="container mx-auto px-6 mb-20">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
@@ -41,20 +66,19 @@ export default function DiplomaticTransfers() {
             >
               <img
                 src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=1200"
-                alt="Luxury car"
+                alt="Luxury transfer fleet"
                 className="w-full h-full object-cover"
               />
             </motion.div>
           </div>
         </section>
 
-        {/* Fleet Features */}
         <section className="container mx-auto px-6 mb-20">
           <div className="bg-white rounded-[3rem] p-12 md:p-20 shadow-xl border border-sand/40">
             <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">{features_title}</h2>
             <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">{features_sub}</p>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {features.map((feat, idx) => (
+              {(Array.isArray(features) ? features : []).map((feat, idx) => (
                 <div key={idx} className="text-center">
                   <div className="bg-lush/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <div className="text-lush">
@@ -71,13 +95,12 @@ export default function DiplomaticTransfers() {
           </div>
         </section>
 
-        {/* Vehicle Options */}
         <section className="container mx-auto px-6 mb-20">
           <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-12 text-center">{fleet_title}</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {vehicles.map((vehicle, idx) => (
+            {(Array.isArray(vehicles) ? vehicles : []).map((vehicle, idx) => (
               <div key={idx} className="bg-white rounded-2xl overflow-hidden border border-sand/40">
-                <img src={vehicle.image} alt={vehicle.name} className="h-48 w-full object-cover" />
+                <img src={vehicle.image} alt={vehicle.name} loading="lazy" className="h-48 w-full object-cover" />
                 <div className="p-6">
                   <h3 className="text-xl font-serif text-volcanic mb-2">{vehicle.name}</h3>
                   <p className="text-volcanic/60">Capacity: {vehicle.capacity} passengers</p>
@@ -87,25 +110,26 @@ export default function DiplomaticTransfers() {
           </div>
         </section>
 
-        {/* Testimonials */}
         <section className="container mx-auto px-6 mb-20">
           <h2 className="text-3xl md:text-4xl font-serif text-volcanic mb-12 text-center">{testimonials_title}</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {testimonials.map((t, idx) => (
+            {(Array.isArray(testimonials) ? testimonials : []).map((item, idx) => (
               <div key={idx} className="bg-white p-8 rounded-2xl border border-sand/40">
-                <p className="text-volcanic/80 italic mb-4">"{t.quote}"</p>
-                <p className="text-volcanic/60 font-bold">{t.author}</p>
+                <p className="text-volcanic/80 italic mb-4">"{item.quote}"</p>
+                <p className="text-volcanic/60 font-bold">{item.author}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* CTA */}
         <section className="container mx-auto px-6">
           <div className="text-center">
             <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">{cta_title}</h2>
             <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">{cta_sub}</p>
-            <Link to="/contact" className="inline-flex items-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all">
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all"
+            >
               {cta_button} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

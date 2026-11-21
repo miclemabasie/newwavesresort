@@ -1,20 +1,44 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/sections/Footer";
-import { BookOpen, Search, Globe, Clock, Users, Award, ArrowRight, BookMarked } from "lucide-react";
+import SEO from '../../components/SEO';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/sections/Footer';
+import { buildBreadcrumbSchema } from '../../lib/seoSchemas.js';
+import { BookOpen, Search, Globe, Clock, Users, Award, ArrowRight, BookMarked } from 'lucide-react';
 
 export default function FisiyLibrary() {
   const { t } = useTranslation();
-  const page = t('service_pages.fisiy_library', { returnObjects: true });
-  const { hero, collection_title, collection_sub, collection_highlights, services_title, services, residency, cta_title, cta_sub, cta_button } = page;
+  const page = t('service_pages.fisiy_library', { returnObjects: true }) || {};
+  const {
+    hero = {},
+    collection_title,
+    collection_sub,
+    collection_highlights = [],
+    services_title,
+    services = [],
+    residency = { features: [] },
+    cta_title,
+    cta_sub,
+    cta_button,
+  } = page;
 
   return (
     <div className="bg-sand/30 min-h-screen">
+      <SEO
+        title={hero.title || 'The Fisiy Research Library'}
+        description={hero.description}
+        path="/services/library"
+        schemas={[
+          buildBreadcrumbSchema([
+            { name: t('nav.home'), path: '/' },
+            { name: t('nav.experiences'), path: '/experiences' },
+            { name: hero.title || 'The Fisiy Research Library', path: '/services/library' },
+          ]),
+        ]}
+      />
       <Navbar />
-      <main className="pt-32 pb-20">
-        {/* Hero */}
+      <main className="pt-28 pb-20">
         <section className="container mx-auto px-6 mb-20">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
@@ -48,13 +72,12 @@ export default function FisiyLibrary() {
           </div>
         </section>
 
-        {/* Collection Highlights */}
         <section className="container mx-auto px-6 mb-20">
           <div className="bg-white rounded-[3rem] p-12 md:p-16 shadow-xl border border-sand/40">
             <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-4 text-center">{collection_title}</h2>
             <p className="text-volcanic/60 text-lg text-center max-w-2xl mx-auto mb-12">{collection_sub}</p>
             <div className="grid md:grid-cols-4 gap-8">
-              {collection_highlights.map((item, idx) => (
+              {(Array.isArray(collection_highlights) ? collection_highlights : []).map((item, idx) => (
                 <div key={idx} className="text-center">
                   <div className="bg-lush/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <div className="text-lush">
@@ -72,11 +95,10 @@ export default function FisiyLibrary() {
           </div>
         </section>
 
-        {/* Library Services */}
         <section className="container mx-auto px-6 mb-20">
           <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-12 text-center">{services_title}</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {services.map((s, idx) => (
+            {(Array.isArray(services) ? services : []).map((s, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
@@ -98,27 +120,29 @@ export default function FisiyLibrary() {
           </div>
         </section>
 
-        {/* Residency Info */}
         <section className="container mx-auto px-6 mb-20">
           <div className="bg-volcanic rounded-[3rem] p-12 md:p-16 text-white relative overflow-hidden">
-            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `radial-gradient(circle at 20% 30%, #7aa65a 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
             <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">{residency.title}</h2>
                 <p className="text-white/70 text-lg leading-relaxed mb-6">{residency.description}</p>
                 <ul className="space-y-3 text-white/80">
-                  {residency.features.map((feature, idx) => (
+                  {(Array.isArray(residency.features) ? residency.features : []).map((feature, idx) => (
                     <li key={idx}>• {feature}</li>
                   ))}
                 </ul>
-                <button className="mt-8 bg-lush text-volcanic px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs hover:bg-white transition-all">
+                <Link
+                  to="/contact"
+                  className="mt-8 inline-block bg-lush text-volcanic px-8 py-4 rounded-full font-black uppercase tracking-widest text-xs hover:bg-white transition-all"
+                >
                   {residency.button}
-                </button>
+                </Link>
               </div>
               <div className="h-[300px] rounded-2xl overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=800" 
+                <img
+                  src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=800"
                   alt="Reading room"
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -126,12 +150,14 @@ export default function FisiyLibrary() {
           </div>
         </section>
 
-        {/* CTA */}
         <section className="container mx-auto px-6">
           <div className="text-center">
             <h2 className="text-4xl md:text-5xl font-serif text-volcanic mb-6">{cta_title}</h2>
             <p className="text-volcanic/70 text-lg max-w-2xl mx-auto mb-10">{cta_sub}</p>
-            <Link to="/contact" className="inline-flex items-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all">
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-3 bg-lush text-volcanic px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-volcanic hover:text-white transition-all"
+            >
               {cta_button} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

@@ -10,7 +10,7 @@ i18n
   .init({
     fallbackLng: "en",
     nonExplicitSupportedLngs: true, // allows en-US to fallback to en
-    debug: process.env.NODE_ENV === "development",
+    debug: import.meta.env.DEV,
     load: "languageOnly",
     interpolation: {
       escapeValue: false, // React already safes from XSS

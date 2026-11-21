@@ -1,238 +1,357 @@
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Navbar from "../components/Navbar";
-import Footer from "../components/sections/Footer";
-import { Check, X, Calendar, Users, Coffee, Waves, Search, ArrowUpDown } from "lucide-react";
+import SEO from '../components/SEO';
+import Navbar from '../components/Navbar';
+import Footer from '../components/sections/Footer';
+import BookingModal from '../components/booking/BookingModal';
+import { Check, Search, ArrowUpDown, Calendar, Users, BedDouble, ArrowRight } from 'lucide-react';
+import { useRoomTypes } from '../hooks/useRoomTypes.js';
+import { useCurrency } from '../context/currencyHelpers.js';
+import { SUITE_CATEGORIES, AVAILABILITY_STATUSES, getOptionLabel } from '../lib/constants.js';
+import { buildBreadcrumbSchema, buildRoomSchema } from '../lib/seoSchemas.js';
 
 export default function Accommodations() {
-  const { t } = useTranslation();
-  const suitesData = t('accomodations.suites', { returnObjects: true });
-  const [selectedSuite, setSelectedSuite] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [sortBy, setSortBy] = useState("default");
+  const { t, i18n } = useTranslation();
+  const { formatPrice } = useCurrency();
+  const lang = i18n.language?.startsWith('fr') ? 'fr' : 'en';
 
-  // Add image URLs if not present in translation
-  const suites = suitesData.map((suite, idx) => ({
-    ...suite,
-    image: suite.image || [
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1000",
-      "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=1000"
-    ][idx % 4],
-    amenities: suite.amenities || t(`facilities.categories.${idx === 0 ? 'living' : idx === 1 ? 'wellness' : 'tech'}.items`, { returnObjects: true }).slice(0, 5)
-  }));
+  const [selectedSuite, setSelectedSuite] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('default');
+  const [checkIn, setCheckIn] = useState('');
+  const [checkOut, setCheckOut] = useState('');
+  const [adults, setAdults] = useState(1);
+
+  const { roomTypes, availabilityMap, loading, checkingAvailability } = useRoomTypes({
+    checkIn,
+    checkOut,
+    adults,
+    children: 0,
+  });
+
+  const hasValidRange = Boolean(checkIn && checkOut && checkOut > checkIn);
 
   const filteredSuites = useMemo(() => {
-    let filtered = suites.filter(suite =>
-      suite.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      suite.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    let list = roomTypes.filter((suite) => {
+      if (categoryFilter !== 'all' && suite.suite_category !== categoryFilter) {
+        return false;
+      }
 
-    if (sortBy === "low-high") {
-      filtered = [...filtered].sort((a, b) => a.price - b.price);
-    } else if (sortBy === "high-low") {
-      filtered = [...filtered].sort((a, b) => b.price - a.price);
+      if (hasValidRange && availabilityMap[suite.id]) {
+        if (availabilityMap[suite.id].available_units < 1) return false;
+      }
+
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        const title = (lang === 'fr' ? suite.name_fr : suite.name_en || '').toLowerCase();
+        const desc = (
+          lang === 'fr'
+            ? suite.description_fr || suite.short_description_fr
+            : suite.description_en || suite.short_description_en || ''
+        ).toLowerCase();
+        if (!title.includes(q) && !desc.includes(q)) return false;
+      }
+
+      return true;
+    });
+
+    if (sortBy === 'low-high') {
+      list = [...list].sort((a, b) => Number(a.base_price) - Number(b.base_price));
+    } else if (sortBy === 'high-low') {
+      list = [...list].sort((a, b) => Number(b.base_price) - Number(a.base_price));
     }
 
-    return filtered;
-  }, [searchQuery, sortBy, suites]);
+    return list;
+  }, [roomTypes, categoryFilter, hasValidRange, availabilityMap, searchQuery, sortBy, lang]);
+
+  const schemas = useMemo(() => {
+    return [
+      buildBreadcrumbSchema([
+        { name: t('nav.home'), path: '/' },
+        { name: t('nav.accommodations'), path: '/rooms' },
+      ]),
+      ...roomTypes.slice(0, 4).map((r) => buildRoomSchema(r, lang)),
+    ];
+  }, [roomTypes, lang, t]);
 
   return (
     <div className="bg-sand/30 min-h-screen">
+      <SEO
+        title={t('accommodations.title')}
+        description={t('accommodations.subtitle')}
+        path="/rooms"
+        schemas={schemas}
+      />
       <Navbar />
 
-      <main className="pt-32 pb-24">
+      <main className="pt-28 pb-24">
         <section className="container mx-auto px-6 mb-12 text-center">
-          <motion.span 
-            initial={{ opacity: 0 }} 
+          <motion.span
+            initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="text-lush font-black tracking-[0.5em] uppercase text-[10px] block mb-4"
           >
             {t('accommodations.section_tag')}
           </motion.span>
-          <h1 className="text-5xl md:text-7xl font-serif text-volcanic italic">{t('accommodations.title')}</h1>
+          <h1 className="text-5xl md:text-7xl font-serif text-volcanic italic">
+            {t('accommodations.title')}
+          </h1>
           <p className="text-volcanic/60 mt-6 max-w-2xl mx-auto text-lg">
             {t('accommodations.subtitle')}
           </p>
         </section>
 
-        <section className="container mx-auto px-6 mb-12">
-          <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
-            <div className="relative w-full md:w-96">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-volcanic/40" />
-              <input
-                type="text"
-                placeholder={t('accommodations.search_placeholder')}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-full border border-sand/60 bg-white text-volcanic placeholder:text-volcanic/40 focus:outline-none focus:border-lush"
-              />
-            </div>
+        {/* Date Availability & Filter Bar */}
+        <section className="container mx-auto px-6 mb-10">
+          <div className="bg-white rounded-3xl p-6 shadow-sm border border-sand space-y-5">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+              <div>
+                <label className="block text-[10px] font-black uppercase tracking-widest text-lush mb-1.5">
+                  <Calendar className="inline w-3.5 h-3.5 mr-1" />
+                  {t('accommodations.check_in')}
+                </label>
+                <input
+                  type="date"
+                  min={new Date().toISOString().slice(0, 10)}
+                  value={checkIn}
+                  onChange={(e) => setCheckIn(e.target.value)}
+                  className="w-full bg-sand/30 border border-sand rounded-xl px-4 py-2.5 text-sm text-volcanic outline-none focus:border-lush"
+                />
+              </div>
 
-            <div className="flex items-center gap-3">
-              <ArrowUpDown className="w-4 h-4 text-volcanic/60" />
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="bg-white border border-sand/60 rounded-full py-3 px-5 text-sm text-volcanic focus:outline-none focus:border-lush"
-              >
-                <option value="default">{t('accommodations.sort_by')}</option>
-                <option value="low-high">{t('accommodations.sort_low_high')}</option>
-                <option value="high-low">{t('accommodations.sort_high_low')}</option>
-              </select>
-            </div>
-          </div>
+              <div>
+                <label className="block text-[10px] font-black uppercase tracking-widest text-lush mb-1.5">
+                  <Calendar className="inline w-3.5 h-3.5 mr-1" />
+                  {t('accommodations.check_out')}
+                </label>
+                <input
+                  type="date"
+                  min={checkIn || new Date().toISOString().slice(0, 10)}
+                  value={checkOut}
+                  onChange={(e) => setCheckOut(e.target.value)}
+                  className="w-full bg-sand/30 border border-sand rounded-xl px-4 py-2.5 text-sm text-volcanic outline-none focus:border-lush"
+                />
+              </div>
 
-          <p className="text-volcanic/50 text-sm mt-4 text-center md:text-left">
-            {filteredSuites.length} {filteredSuites.length === 1 ? t('accommodations.suites_available') : t('accommodations.suites_available_plural')}
-          </p>
-        </section>
-
-        <section className="container mx-auto px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <AnimatePresence>
-              {filteredSuites.map((suite, idx) => (
-                <motion.div 
-                  key={suite.id}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ delay: idx * 0.05 }}
-                  className="bg-white rounded-2xl overflow-hidden shadow-reset border border-sand group hover:shadow-2xl transition-shadow flex flex-col"
+              <div>
+                <label className="block text-[10px] font-black uppercase tracking-widest text-lush mb-1.5">
+                  <Users className="inline w-3.5 h-3.5 mr-1" />
+                  {t('accommodations.adults')}
+                </label>
+                <select
+                  value={adults}
+                  onChange={(e) => setAdults(Number(e.target.value))}
+                  className="w-full bg-sand/30 border border-sand rounded-xl px-4 py-2.5 text-sm text-volcanic outline-none focus:border-lush"
                 >
-                  <div className="h-48 overflow-hidden relative">
-                    <img 
-                      src={suite.image} 
-                      alt={suite.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full shadow-lg">
-                      <span className="text-lush font-serif font-bold text-sm">${suite.price}</span>
-                      <span className="text-[8px] text-volcanic/60 uppercase tracking-widest ml-1">/ night</span>
-                    </div>
-                  </div>
+                  {[1, 2, 3, 4, 5, 6].map((n) => (
+                    <option key={n} value={n}>
+                      {n} {t('accommodations.adults')}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-                  <div className="p-5 flex-1 flex flex-col">
-                    <h3 className="text-xl font-serif text-volcanic mb-3">{suite.title}</h3>
-                    <p className="text-volcanic/60 text-xs leading-relaxed mb-4 line-clamp-3">
-                      {suite.description}
-                    </p>
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-volcanic/40" />
+                  <input
+                    type="text"
+                    placeholder={t('accommodations.search_placeholder')}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-sand bg-sand/30 text-sm text-volcanic placeholder:text-volcanic/40 focus:outline-none focus:border-lush"
+                  />
+                </div>
+              </div>
+            </div>
 
-                    <div className="space-y-2 mb-5">
-                      <p className="text-[8px] uppercase tracking-[0.3em] font-black text-lush mb-2">{t('accommodations.amenities')}</p>
-                      <div className="grid grid-cols-1 gap-2">
-                        {suite.amenities.slice(0, 3).map((item, i) => (
-                          <div key={i} className="flex items-center gap-2">
-                            <Check className="w-3 h-3 text-lush flex-shrink-0" strokeWidth={3} />
-                            <span className="text-[9px] font-bold text-volcanic/80 uppercase tracking-tighter truncate">{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+            <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center pt-3 border-t border-sand/60">
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => setCategoryFilter('all')}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
+                    categoryFilter === 'all'
+                      ? 'bg-ocean text-white'
+                      : 'bg-sand/50 text-volcanic/70 hover:bg-sand'
+                  }`}
+                >
+                  {t('accommodations.all_categories')}
+                </button>
+                {SUITE_CATEGORIES.filter((c) => c.value !== 'conference').map((cat) => (
+                  <button
+                    key={cat.value}
+                    type="button"
+                    onClick={() => setCategoryFilter(cat.value)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
+                      categoryFilter === cat.value
+                        ? 'bg-lush text-white'
+                        : 'bg-sand/50 text-volcanic/70 hover:bg-sand'
+                    }`}
+                  >
+                    {lang === 'fr' ? cat.labelFr : cat.labelEn}
+                  </button>
+                ))}
+              </div>
 
-                    <button 
-                      onClick={() => setSelectedSuite(suite)}
-                      className="w-full bg-volcanic hover:bg-lush text-white font-black py-4 rounded-xl transition-all shadow-md uppercase text-[9px] tracking-[0.3em] mt-auto"
-                    >
-                      {t('accommodations.reserve')}
-                    </button>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+              <div className="flex items-center gap-3 self-end md:self-auto">
+                <ArrowUpDown className="w-4 h-4 text-volcanic/60" />
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="bg-sand/30 border border-sand rounded-full py-2 px-4 text-xs font-semibold text-volcanic focus:outline-none focus:border-lush"
+                >
+                  <option value="default">{t('accommodations.sort_by')}</option>
+                  <option value="low-high">{t('accommodations.sort_low_high')}</option>
+                  <option value="high-low">{t('accommodations.sort_high_low')}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between mt-4 px-2">
+            <p className="text-volcanic/60 text-sm">
+              {checkingAvailability
+                ? '...'
+                : `${filteredSuites.length} ${
+                    filteredSuites.length === 1
+                      ? t('accommodations.suites_available')
+                      : t('accommodations.suites_available_plural')
+                  }`}
+            </p>
+            <Link to="/booking-status" className="text-xs font-bold text-ocean hover:text-lush">
+              {t('nav.track_booking')} →
+            </Link>
           </div>
         </section>
 
-        {filteredSuites.length === 0 && (
-          <div className="text-center py-20">
-            <p className="text-volcanic/40 text-lg">No suites match your search.</p>
-          </div>
-        )}
+        {/* Suites Grid */}
+        <section className="container mx-auto px-6">
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1, 2, 3, 4].map((n) => (
+                <div key={n} className="bg-white rounded-2xl h-96 animate-pulse border border-sand" />
+              ))}
+            </div>
+          ) : filteredSuites.length === 0 ? (
+            <div className="text-center py-20 bg-white rounded-3xl border border-sand">
+              <p className="text-volcanic/50 text-lg">{t('accommodations.no_results')}</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <AnimatePresence>
+                {filteredSuites.map((suite, idx) => {
+                  const title = lang === 'fr' ? suite.name_fr : suite.name_en;
+                  const desc =
+                    lang === 'fr'
+                      ? suite.short_description_fr || suite.description_fr
+                      : suite.short_description_en || suite.description_en;
+                  const availInfo = availabilityMap[suite.id];
+                  const availLabel = getOptionLabel(AVAILABILITY_STATUSES, suite.availability_status, lang);
+                  const amenities = Array.isArray(suite.amenities) ? suite.amenities : [];
+                  const isUnavailable =
+                    suite.availability_status === 'booked' || suite.availability_status === 'maintenance';
+
+                  return (
+                    <motion.div
+                      key={suite.id}
+                      layout
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ delay: idx * 0.04 }}
+                      className="bg-white rounded-2xl overflow-hidden shadow-resort border border-sand group hover:shadow-2xl transition-shadow flex flex-col"
+                    >
+                      <Link to={`/rooms/${suite.slug}`} className="h-52 overflow-hidden relative block">
+                        <img
+                          src={suite.cover_image_url || '/assets/general/image14.jpeg'}
+                          alt={title}
+                          loading="lazy"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        />
+                        <div className="absolute top-3 left-3 bg-volcanic/85 backdrop-blur-md px-3 py-1 rounded-full text-white text-[10px] font-bold uppercase tracking-wider">
+                          {availInfo
+                            ? t('accommodations.available_count', { count: availInfo.available_units })
+                            : availLabel}
+                        </div>
+                        <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full shadow-lg">
+                          <span className="text-ocean font-serif font-bold text-sm">
+                            {formatPrice(suite.base_price)}
+                          </span>
+                          <span className="text-[9px] text-volcanic/60 uppercase tracking-wider ml-1">
+                            {t('accommodations.per_night')}
+                          </span>
+                        </div>
+                      </Link>
+
+                      <div className="p-5 flex-1 flex flex-col">
+                        <div className="flex items-center gap-3 text-[11px] text-lush font-bold uppercase tracking-wider mb-1.5">
+                          <span className="inline-flex items-center gap-1">
+                            <BedDouble className="w-3.5 h-3.5" />
+                            {suite.bedrooms}{' '}
+                            {suite.bedrooms === 1 ? t('accommodations.bedroom') : t('accommodations.bedrooms')}
+                          </span>
+                          {suite.size_sqm && <span>• {suite.size_sqm} m²</span>}
+                        </div>
+
+                        <Link to={`/rooms/${suite.slug}`}>
+                          <h3 className="text-xl font-serif text-volcanic mb-2 group-hover:text-ocean transition-colors">
+                            {title}
+                          </h3>
+                        </Link>
+                        <p className="text-volcanic/60 text-xs leading-relaxed mb-4 line-clamp-3">{desc}</p>
+
+                        <div className="space-y-2 mb-5">
+                          <p className="text-[9px] uppercase tracking-[0.25em] font-black text-lush">
+                            {t('accommodations.amenities')}
+                          </p>
+                          <div className="grid grid-cols-1 gap-1.5">
+                            {amenities.slice(0, 3).map((item, i) => (
+                              <div key={i} className="flex items-center gap-2">
+                                <Check className="w-3 h-3 text-lush flex-shrink-0" strokeWidth={3} />
+                                <span className="text-[11px] font-medium text-volcanic/80 truncate">
+                                  {typeof item === 'string' ? item : lang === 'fr' ? item.name_fr : item.name_en}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="mt-auto space-y-2">
+                          <button
+                            type="button"
+                            disabled={isUnavailable}
+                            onClick={() => setSelectedSuite(suite)}
+                            className="w-full bg-volcanic hover:bg-lush text-white font-black py-3.5 rounded-xl transition-all shadow-md uppercase text-[10px] tracking-[0.25em] disabled:opacity-40"
+                          >
+                            {t('accommodations.reserve')}
+                          </button>
+                          <Link
+                            to={`/rooms/${suite.slug}`}
+                            className="w-full inline-flex items-center justify-center gap-1.5 py-2 text-xs font-bold text-ocean hover:text-lush"
+                          >
+                            {t('accommodations.view_suite')} <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
+          )}
+        </section>
       </main>
 
-      {/* Reservation Modal */}
-      <AnimatePresence>
-        {selectedSuite && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6">
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedSuite(null)}
-              className="absolute inset-0 bg-volcanic/60 backdrop-blur-sm"
-            />
-            
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="relative bg-sand w-full max-w-4xl rounded-[3rem] overflow-hidden shadow-2xl grid lg:grid-cols-2"
-            >
-              <button 
-                onClick={() => setSelectedSuite(null)}
-                className="absolute top-6 right-6 z-20 bg-volcanic text-white p-2 rounded-full hover:bg-lush transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="hidden lg:block relative bg-volcanic p-12 text-white">
-                <div className="absolute inset-0 opacity-20">
-                  <Waves className="w-full h-full text-white p-20" />
-                </div>
-                <div className="relative z-10">
-                  <span className="text-lush font-black tracking-widest text-[10px] uppercase">{t('accommodations.modal.title')}</span>
-                  <h2 className="text-4xl font-serif mt-4 mb-6">{selectedSuite.title}</h2>
-                  <p className="text-white/60 mb-8 italic">"{t('accommodations.modal.description')}"</p>
-                  
-                  <div className="space-y-6">
-                    <div className="flex items-center gap-4">
-                      <Coffee className="text-lush" />
-                      <span className="text-sm font-medium">{t('accommodations.modal.breakfast')}</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <Users className="text-lush" />
-                      <span className="text-sm font-medium">{t('accommodations.modal.concierge')}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-8 md:p-12 bg-white">
-                <h3 className="text-2xl font-serif text-volcanic mb-8">{t('accommodations.modal.booking_title')}</h3>
-                <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label className="text-[9px] font-black uppercase tracking-widest text-lush">{t('accommodations.modal.arrival')}</label>
-                      <input type="date" className="w-full bg-sand/50 border border-sand/60 rounded-xl p-4 text-sm outline-none focus:border-lush transition-colors" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[9px] font-black uppercase tracking-widest text-lush">{t('accommodations.modal.departure')}</label>
-                      <input type="date" className="w-full bg-sand/50 border border-sand/60 rounded-xl p-4 text-sm outline-none focus:border-lush transition-colors" />
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="text-[9px] font-black uppercase tracking-widest text-lush">{t('accommodations.modal.full_name')}</label>
-                    <input type="text" placeholder="Dr. Julian F." className="w-full bg-sand/50 border border-sand/60 rounded-xl p-4 text-sm outline-none focus:border-lush transition-colors" />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-[9px] font-black uppercase tracking-widest text-lush">{t('accommodations.modal.special_requirements')}</label>
-                    <textarea placeholder={t('accommodations.modal.special_placeholder')} className="w-full bg-sand/50 border border-sand/60 rounded-xl p-4 text-sm outline-none focus:border-lush transition-colors resize-none" rows="3" />
-                  </div>
-
-                  <button className="w-full bg-lush hover:bg-volcanic text-white font-black py-5 rounded-xl uppercase text-[10px] tracking-[0.3em] transition-all">
-                    {t('accommodations.modal.confirm')}
-                  </button>
-                </form>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      <BookingModal
+        room={selectedSuite}
+        initialDates={{ checkIn, checkOut, adults }}
+        isOpen={Boolean(selectedSuite)}
+        onClose={() => setSelectedSuite(null)}
+      />
 
       <Footer />
     </div>
