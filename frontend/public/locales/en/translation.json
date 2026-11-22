@@ -86,9 +86,9 @@
       "title": "100% Organic Harvest",
       "subtitle": "Grown in fertile Fako volcanic soil"
     },
-    "starlink": {
-      "title": "Starlink & 24/7 Solar",
-      "subtitle": "Redundant executive connectivity"
+    "connectivity": {
+      "title": "24/7 Internet & Solar",
+      "subtitle": "Reliable high-speed connectivity"
     },
     "transfer": {
       "title": "90 Min from Douala (DLA)",
@@ -608,7 +608,7 @@
       "address_title": "Coastal Residency",
       "address": "Ngeme, Mile 4 Coastal Road, Limbe, Cameroon",
       "secure_title": "Secure Infrastructure",
-      "secure_desc": "Equipped with Starlink enterprise-grade connectivity to ensure 24/7 high-speed dialogue for global professional missions.",
+      "secure_desc": "Equipped with enterprise-grade 24/7 high-speed internet connectivity to ensure uninterrupted dialogue for global professional missions.",
       "concierge": "Concierge",
       "concierge_email": "residency@newwavesresort.com",
       "foundation": "Foundation",

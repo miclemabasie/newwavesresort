@@ -48,6 +48,9 @@ Expected passing checks:
    - `supabase/migrations/0001_initial_schema.sql`
    - `supabase/migrations/0002_storage_buckets.sql`
    - `supabase/migrations/0003_seed_data.sql`
+   - `supabase/migrations/0004_fix_anon_rls_policies.sql`
+   - `supabase/migrations/0005_menu_orders.sql`
+   - `supabase/migrations/0006_fix_create_menu_order_record.sql`
 
 2. **Upload Starter Images to Supabase Storage (Optional)**
    ```bash
@@ -72,25 +75,26 @@ Expected passing checks:
    - Provider secrets: `META_WHATSAPP_TOKEN` + `META_WHATSAPP_PHONE_ID` **or** `TWILIO_ACCOUNT_SID` + `TWILIO_AUTH_TOKEN` + `TWILIO_WHATSAPP_FROM`
 
 5. **Create First Admin & Team Logins Directly Inside Website UI**
-   - Click **Staff Portal** in the top navigation bar (or `/admin/login`).
+   - Navigate directly to `/admin/login` (public navbar and footer intentionally contain zero admin links).
    - On a fresh database, `/admin/login` automatically renders **Create Resort Admin Account** — enter name, email, and password (min 8 chars) to initialize your Admin account without visiting Supabase Dashboard.
    - Sign in, open **Staff & Roles (`/admin/staff`)**, and create accounts for **Chefs** (`chef`), **Front Desk** (`front_desk`), **Managers** (`manager`), or additional **Admins** (`admin`).
 
 6. **Configure Initial Site Settings in `/admin/integrations`**
    - Open **Resort Settings (`/admin/integrations`)**.
-   - Set **WhatsApp Concierge Number** (digits with country code, e.g. `2376XXXXXXXX`), public phone/email, **YouTube Channel ID** (`UC...`), and upload the **Saker Landing Heritage Photo** for `/story`.
+   - Set **WhatsApp Concierge Number** (digits with country code, e.g. `2376XXXXXXXX`), optional **Kitchen / Chef WhatsApp Number** (routes menu orders straight to Chef's phone; falls back to Concierge WhatsApp if left empty), public phone/email, **YouTube Channel ID** (`UC...`), and upload the **Saker Landing Heritage Photo** for `/story`.
 
 ---
 
 ## 3. Staff Operations Guide (`/admin`)
 
 - **All Staff (`admin`, `manager`, `front_desk`, `chef`)**:
-  - Click **Staff Portal** in the top header or footer link, sign in, and start on **Overview (`/admin/overview`)** showing live metrics and quick cards tailored to your role.
+  - Open `/admin` or `/admin/login` directly in your browser (hidden from public navigation), sign in, and start on **Overview (`/admin/overview`)** showing live metrics and quick cards tailored to your role.
 - **Chefs (`chef`, `manager`, `admin`)**:
   - Add/edit recipes in **Dish Catalog (`/admin/menu-catalog`)** with EN/FR names, FCFA prices, dietary tags, allergens, prep station, and Storage photos.
   - Every morning in **Daily Menu (`/admin/daily-menu`)**, pick the service date (`Africa/Douala`), drag dishes from the left palette into `All Day`, `Breakfast`, `Lunch`, or `Dinner` (or click **Copy Yesterday**), toggle **Available / Sold Out**, add a Chef's Note, and click **Save & Publish**.
+  - Monitor incoming guest food orders in real time under **Menu Orders (`/admin/orders`)**, or open any WhatsApp order ticket link (`/order/ORD-YYYYMMDD-XXXX?t=...`) directly while signed in as staff to confirm orders, update preparation status (`Confirmed` -> `Preparing` -> `Ready` -> `Completed`), add internal kitchen notes, message the guest on WhatsApp, or print kitchen tickets.
 - **Front Desk (`front_desk`, `manager`, `admin`)**:
-  - Open **Booking Requests (`/admin/bookings`)** (updates in real time when guests submit requests).
+  - Open **Booking Requests (`/admin/bookings`)** and **Menu Orders (`/admin/orders`)** (both update in real time when guests submit bookings or food orders).
   - Confirm requests, record external reservation codes, or click **WA** to open WhatsApp directly with the guest pre-filled with their reference (`WEB-YYYYMMDD-XXXX`).
   - Review and respond to contact messages in **Inquiries & Mailing (`/admin/inquiries`)**.
 - **Managers (`manager`, `admin`)**:

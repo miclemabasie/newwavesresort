@@ -71,7 +71,7 @@ INSERT INTO public.room_types (
   'Wake up to sweeping Atlantic vistas from two spacious ocean-facing suites, complete with conference-ready dining room, deep soak bathtub, and private entrance.',
   'Réveillez-vous face à l''Atlantique dans deux suites spacieuses avec salle à manger de réunion, baignoire profonde et entrée privée.',
   210000, 'XAF', 2, 4, 2, 'king', 2, 120, 'sea',
-  '["Panoramic Sea View", "2 King Bedrooms", "Private Terrace", "Deep Soak Bathtub", "Smart TV", "24/7 Power & Starlink"]'::jsonb,
+  '["Panoramic Sea View", "2 King Bedrooms", "Private Terrace", "Deep Soak Bathtub", "Smart TV", "24/7 Power & Internet"]'::jsonb,
   '/assets/general/image11.jpeg',
   '[{"url":"/assets/general/image11.jpeg","caption_en":"Atlantic horizon view","caption_fr":"Vue Horizon Atlantique","is_cover":true,"display_order":0}]'::jsonb,
   2, 'available', true, true, 3

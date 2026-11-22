@@ -12,8 +12,18 @@ All notable changes to the **New Waves Resort** website, Supabase backend, staff
 - Replace placeholder WhatsApp number, YouTube Channel ID (`UC...`), Saker Landing photo in `/admin/integrations`, and set production hosting env vars (`VITE_SITE_URL`).
 
 ### Added
+- **Interactive Menu Ordering, Direct WhatsApp Kitchen Handoff & Live Online Order Ticket (`2026-11-21`)**:
+  - Applied live Supabase migrations `0005_menu_orders.sql` & `0006_fix_create_menu_order_record.sql`: added `public.menu_orders` (`ORD-YYYYMMDD-XXXX` + unguessable `view_token`, `dine_in` / `room_service` / `takeaway` fulfillment) and `public.menu_order_items` (dish snapshots, dietary/allergen metadata, `item_notes`), indexed foreign keys/queues, added `public.menu_orders` to `supabase_realtime`, seeded `kitchen_whatsapp_number` in `site_settings`, enforced staff-only table RLS, and added public RPCs `create_menu_order(...)` (server-side pricing & sold-out checks) and `get_menu_order_by_token(...)` (masking staff notes & prep stations for unauthenticated guests).
+  - Created `MenuCartContext` (`menuCartHelpers.js`) persisting guest selections in `sessionStorage` (`nwr_menu_cart_v1`) and added `+ Add to Order` / `- qty +` steppers on both `/` (`Cultinary.jsx` `#daily-menu` + smart `Place Order` Action Bar) and `/services/dining` (`Dining.jsx` + floating sticky tray bar, plus `/menu` redirect).
+  - Created `MenuOrderModal.jsx` with itemized quantity & preparation-note editing, fulfillment/location/preferred-time inputs, verified backend saving, and a single primary emerald **"Proceed to WhatsApp"** button pre-filled with the complete Chef order breakdown and clickable direct online ticket URL (`/order/ORD-YYYYMMDD-XXXX?t=...`).
+  - Created `OrderDetail.jsx` (`/order/:referenceCode`) rendering a live 4-step kitchen preparation tracker, visual itemized dish list with allergen alerts and preparation notes, guest WhatsApp kitchen re-contact CTA, print styling, and strictly role-gated (`admin`, `manager`, `chef`, `front_desk`) Chef controls (`Confirm`, `Start Preparing`, `Mark Ready`, `Complete`, `Cancel`, internal kitchen notes, `WhatsApp Guest`, `Print Ticket`, and `/admin/orders` link).
+  - Added Staff Portal **Menu Orders Inbox** (`MenuOrdersAdmin.jsx` at `/admin/orders`) with `supabase_realtime` updates, updated `AdminLayout.jsx` navigation, added live active/total order counts & Realtime subscription to `AdminDashboard.jsx`, and added optional `kitchen_whatsapp_number` configuration in `IntegrationsAdmin.jsx`.
+- **Home Redesign, Live Home Daily Menu, Booking-to-WhatsApp Order Flow & Private Admin Route (`2026-11-21`)**:
+  - Upgraded `Hero.jsx` into a full-bleed luxury coastal hero featuring `Cormorant Garamond` display typography, dark midnight overlays, a smooth anchor CTA to `#daily-menu`, and a **Floating Quick-Availability Bar** forwarding check-in/check-out/adult parameters to `/rooms`.
+  - Added a **4-Pillar Coastal Signature Strip** (`Home.jsx`), upgraded `Suites.jsx` with direct **Book Now** modal triggers on Home cards, redesigned `GalleryPreview.jsx` as an editorial 5-tile bento showcase, polished `ImpactSection.jsx` (overlapping stat callout), `Facilities.jsx`, `VideoExperience.jsx`, `OceanSide.jsx`, and balanced alternating ivory/sand/midnight/ocean bands across `Home.jsx`.
+  - Replaced the static 3-item summary in `Cultinary.jsx` with a dedicated live **Today's Daily Menu** showcase (`#daily-menu`) featuring Meal Period tabs, `Africa/Douala` live date & Chef's Daily Note, dietary tags, highlight badges, live Sold Out indicators, and direct **Reserve Table / Order on WhatsApp** CTA (`buildDiningWhatsAppUrl`).
+  - Enhanced `whatsapp.js` (`buildBookingWhatsAppMessage`, `buildDiningWhatsAppUrl`) and `BookingModal.jsx` so guests immediately receive a structured **Send Booking Order to WhatsApp** Front Desk button plus a **Copy Order Details** action after placing a booking request.
 - **Self-Contained Website Staff Portal & First-Time Setup (`2026-11-19`)**:
-  - Added prominent **Staff Portal** (`Staff Portal` / `Espace Staff`) and **Dashboard** (`Dashboard` / `Gestion`) links in [Navbar.jsx](../frontend/src/components/Navbar.jsx) (desktop + mobile drawer) and upgraded the [Footer.jsx](../frontend/src/components/sections/Footer.jsx) link so staff can access `/admin/login` or `/admin` directly from any page.
   - Created & deployed `staff-management` Edge Function (`supabase/functions/staff-management/index.ts`, `verify_jwt = false`) providing public zero-PII setup status check (`status`), one-time first-admin creation (`bootstrap` — automatically locks once an admin exists), and admin-only team management (`list`, `create`, `update_role`, `reset_password`, `delete`).
   - Added First-Time Admin Setup flow inside `/admin/login` (`AdminLogin.jsx`) so the owner can create the very first Admin account directly from the website UI with zero external tools.
   - Added role-tailored Overview Dashboard (`AdminDashboard.jsx` at `/admin/overview`), Contact Inquiries & Newsletter Manager (`InquiriesAdmin.jsx` at `/admin/inquiries`), and Staff & Role Manager (`StaffAdmin.jsx` at `/admin/staff`).
@@ -24,12 +34,26 @@ All notable changes to the **New Waves Resort** website, Supabase backend, staff
   - Configured gitignored `frontend/.env` with live `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`.
 
 ### Changed
+- Removed all public-facing **Staff Portal** / **Dashboard** links and buttons from `Navbar.jsx` and `Footer.jsx` while keeping `/admin` and `/admin/login` active by direct URL so public visitors see zero staff/admin UI entry points.
+- Loaded `Cormorant Garamond` and `Plus Jakarta Sans` Google Fonts in `frontend/index.html` and added `--color-midnight`, `--color-ivory`, `--shadow-luxury`, and `.no-scrollbar` tokens in `frontend/src/App.css`.
+- Wired `Accomodations.jsx` to read `checkIn`, `checkOut`, and `adults` URL search parameters from the Hero Quick-Availability Bar.
 - Replaced `clone_daily_menu` RPC call in `DailyMenuBuilder.jsx` (`Copy Yesterday`) with native direct Supabase queries loading the previous date's menu and dishes cleanly in the browser UI (removing any manual SQL step).
 - Updated `getDefaultAdminRoute` (`authHelpers.js`) and `AdminLayout.jsx` sidebar to land all staff roles on `/admin/overview` with unified navigation and clear `"Resort Settings"` / optional external API framing in `IntegrationsAdmin.jsx`.
 - Connected local Vite frontend configuration (`frontend/.env`) to the live `xuggbcfuvxvabatumtoj` Supabase backend.
 
 ### Fixed
-- *(Add bug fixes here as work progresses)*
+- **Public Anon RLS Permissions & Reliable Booking Persistence (`2026-11-21`)**:
+  - Added migration `supabase/migrations/0004_fix_anon_rls_policies.sql` (applied live to `xuggbcfuvxvabatumtoj`) removing `private.get_staff_role()` from the 6 public `SELECT` RLS policies (`site_settings`, `room_types`, `menu_items`, `daily_menus`, `daily_menu_entries`, `gallery_media`) while preserving `authenticated` staff access via `front_desk_read_all_room_types` and `*_manage_*` policies. Eliminated the `42501: permission denied for function get_staff_role` HTTP `401` errors seen by unauthenticated visitors.
+  - Updated `useRoomTypes.js` and `Suites.jsx` so suites do not pre-populate with `fallback-*` IDs while Supabase is still loading.
+  - Updated `BookingModal.jsx` and `Contact.jsx` so live orders strictly persist to Supabase (`room.slug` UUID resolution safety net, inline validation/server error banner, never faking local confirmation when Supabase is configured).
+  - Updated `AdminDashboard.jsx` to display both pending and total booking counts (`X pending • Y total`) with a `supabase_realtime` listener on `public.booking_requests`.
+- **Streamlined Booking UX & Direct "Proceed to WhatsApp" Handoff (`2026-11-21`)**:
+  - Redesigned `BookingModal.jsx` into scannable **Stay Details** + **Guest Contact** blocks (+ mobile summary header, single Phone/WhatsApp input, automatic check-out date advance, and collapsible optional notes).
+  - Removed the manual "Copy Order Details" step from `BookingModal.jsx` and replaced it with one prominent **Proceed to WhatsApp** button (`Continuer sur WhatsApp` in French) opening WhatsApp pre-filled with the formatted order so guests only need to press Send.
+  - Added a matching **Proceed to WhatsApp** handoff on `Contact.jsx` inquiry confirmation (`buildInquiryWhatsAppUrl`).
+- **Site-Wide Button Visibility & Contrast Audit (`2026-11-21`)**:
+  - Removed unused Vite boilerplate `frontend/src/index.css` and added `:root` fallback definitions for `--color-midnight` and `--color-ivory` plus explicit `hover:text-white` safeguards in `App.css`.
+  - Standardized button/CTA contrast across public & admin components (`Hero`, `Navbar`, `Suites`, `Cultinary`, `ImpactSection`, `OceanSide`, `Partnerships`, `Footer`, `Accomodations`, `UnitDetail`, `Dining`, `BookingStatus`, `Contact`, `Section`, service subpages, and all `/admin/*` views), replacing white-on-amber and faint-green button pairings with crisp high-contrast tokens and fixing dining badge overlap on cards.
 
 ---
 

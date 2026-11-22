@@ -11,24 +11,25 @@ flowchart TB
   subgraph Public["Public Website (React 19 + Vite SPA, EN / FR)"]
     Home["/ Home"]
     Rooms["/rooms & /rooms/:slug"]
-    Dining["/services/dining (Today's Menu)"]
+    Dining["/services/dining (Interactive Menu Ordering)"]
+    OrderTicket["/order/:referenceCode (Live Kitchen Ticket)"]
     Gallery["/gallery (Photos + YouTube)"]
     Status["/booking-status"]
   end
 
-  subgraph Admin["Lazy-Loaded Staff Portal (/admin, Linked from Navbar & Footer)"]
+  subgraph Admin["Lazy-Loaded Staff Portal (/admin, Direct URL Only — Hidden from Public Nav)"]
     Overview["/admin/overview (Role Dashboard)"]
-    Chef["/admin/daily-menu & /admin/menu-catalog"]
+    Chef["/admin/daily-menu, /admin/menu-catalog & /admin/orders"]
     Desk["/admin/bookings (Realtime Inbox) & /admin/inquiries"]
     Mgr["/admin/units & /admin/gallery"]
     Sys["/admin/staff (Team & Roles) & /admin/integrations (Settings)"]
   end
 
   subgraph Supabase["Standalone Supabase Platform"]
-    PG[("Postgres (13 Tables + RLS + RPCs)")]
+    PG[("Postgres (15 Tables + RLS + RPCs)")]
     Auth["Supabase Auth + staff_profiles"]
     Storage["Storage: resort-units, resort-menu, resort-gallery"]
-    RT["Realtime (booking_requests)"]
+    RT["Realtime (booking_requests, menu_orders)"]
     EF["Edge Functions: pms-api, notify-booking, youtube-channel-feed, staff-management"]
   end
 
@@ -37,6 +38,7 @@ flowchart TB
   Public -->|"Anon RLS + Safe RPCs"| PG
   Public --> Storage
   Rooms -->|"wa.me Click-to-Chat"| WA["WhatsApp App"]
+  Dining -->|"wa.me Itemized Order + Ticket URL"| WA
   Admin --> Auth
   Admin --> PG
   Admin --> Storage
@@ -53,12 +55,12 @@ flowchart TB
 
 A `private` schema holds `private.get_staff_role()` (`SECURITY DEFINER`, `SET search_path = ''`, execute granted only to `authenticated`) so role checks remain fast and avoid recursive RLS lookups.
 
-### Public Tables (13 Total — RLS Enabled on All)
+### Public Tables (15 Total — RLS Enabled on All)
 
 | Table | Purpose | Public Access (`anon`) | Staff Access (`authenticated`) |
 | :--- | :--- | :--- | :--- |
 | `staff_profiles` | Links `auth.users` ID to role (`admin`, `manager`, `front_desk`, `chef`) | None | Read own row; `admin` manages all |
-| `site_settings` | Public property info, WhatsApp number, YouTube Channel ID, check-in/out times, currency rates, `saker_landing_image_url` | `SELECT` where `is_public = true` | `admin`, `manager` CRUD |
+| `site_settings` | Public property info, WhatsApp number, optional Kitchen WhatsApp number, YouTube Channel ID, check-in/out times, currency rates, `saker_landing_image_url` | `SELECT` where `is_public = true` | `admin`, `manager` CRUD |
 | `room_types` | 1-/2-/3-bedroom suites, canonical `XAF` price, capacity, amenities, Storage photo JSON, optional `external_ref` | `SELECT` where `is_published = true` | `admin`, `manager` CRUD (`front_desk` reads all) |
 | `room_unavailability` | Date blocks (`[start_date, end_date)`) with optional `external_ref` | `SELECT` | `admin`, `manager`, `front_desk` CRUD |
 | `booking_requests` | Website/WhatsApp booking requests (`WEB-YYYYMMDD-XXXX`), `external_sync_status`, `external_reference` | **None** (create & lookup via RPCs only) | `admin`, `manager`, `front_desk` read/insert/update; `admin` delete |
@@ -66,6 +68,8 @@ A `private` schema holds `private.get_staff_role()` (`SECURITY DEFINER`, `SET se
 | `menu_item_internal_meta` | Internal kitchen cost (`cost_xaf`), `prep_station`, and `plating_notes` | None | `admin`, `manager`, `chef` CRUD |
 | `daily_menus` | Per-date header (`service_date`, titles, chef notes, `status`: `draft`/`published`/`archived`) | `SELECT` where `status = 'published'` | `admin`, `manager`, `chef` CRUD |
 | `daily_menu_entries` | Dishes placed into `breakfast` / `lunch` / `dinner` / `all_day`, order, price override, `is_available`, badge | `SELECT` via published parent menu | `admin`, `manager`, `chef` CRUD |
+| `menu_orders` | Interactive food orders (`ORD-YYYYMMDD-XXXX`, unguessable `view_token`, fulfillment, location, status timestamps) | **None** (create & view via RPCs only) | `admin`, `manager`, `chef`, `front_desk` read/update |
+| `menu_order_items` | Line-item dish snapshots, dietary/allergen metadata, quantity, unit/line `XAF`, and per-dish preparation notes | **None** (returned via `get_menu_order_by_token`) | `admin`, `manager`, `chef`, `front_desk` read |
 | `gallery_media` | Supabase Storage photos + YouTube video IDs/URLs (`image` \| `youtube`) | `SELECT` where `is_published = true` | `admin`, `manager` CRUD |
 | `contact_inquiries` | Contact page form submissions | `INSERT` only (validated) | `admin`, `manager`, `front_desk` read/update |
 | `newsletter_subscribers` | Footer email signups (`email`, `language`) | `INSERT` only (validated) | `admin`, `manager` read/delete |
@@ -76,6 +80,8 @@ A `private` schema holds `private.get_staff_role()` (`SECURITY DEFINER`, `SET se
 - `public.get_available_room_types(p_check_in, p_check_out, p_adults, p_children)` (`SECURITY INVOKER`) — Computes available unit count per suite using half-open `[check_in, check_out)` overlap logic against `room_unavailability`.
 - `public.create_booking_request(...)` (`SECURITY DEFINER`) — Validates dates, guest details, and remaining unit capacity; creates a collision-retried `WEB-YYYYMMDD-XXXX` booking request; returns a safe confirmation JSON without granting table `SELECT` to `anon`.
 - `public.lookup_booking_status(p_reference_code, p_email)` (`SECURITY DEFINER`) — Returns limited guest-safe booking status metadata only when both reference code and guest email match.
+- `public.create_menu_order(...)` (`SECURITY DEFINER`) — Enforces active catalog pricing/daily overrides server-side, blocks sold-out dishes, persists `menu_orders` + `menu_order_items`, and returns `ORD-YYYYMMDD-XXXX` + unguessable `view_token`.
+- `public.get_menu_order_by_token(p_reference_code, p_token)` (`SECURITY DEFINER`) — Returns itemized order ticket metadata when `view_token` matches (masking `internal_notes` and `prep_station` for non-staff) or when the caller is authenticated staff (`admin`, `manager`, `chef`, `front_desk`).
 - `public.clone_daily_menu(p_source_date, p_target_date)` (`SECURITY INVOKER`) — Allows culinary staff to clone entries from a previous date (e.g. yesterday) into a target date draft.
 
 ### Storage Buckets (`0002_storage_buckets.sql`)
@@ -104,12 +110,13 @@ A `private` schema holds `private.get_staff_role()` (`SECURITY DEFINER`, `SET se
 - **Fallback Mode**: When `VITE_SUPABASE_URL` / `VITE_SUPABASE_PUBLISHABLE_KEY` are absent (`frontend/src/lib/supabase.js`), hooks (`useSiteSettings`, `useRoomTypes`, `useDailyMenu`, `useGallery`) automatically render `frontend/src/lib/fallbackData.js` so demos and builds never crash.
 - **Public Routes**:
   - `/` (`Home`), `/story` (`OurStory`), `/rooms` (`Accommodations`), `/rooms/:slug` (`UnitDetail`), `/booking-status` (`BookingStatus`)
-  - `/experiences` (`Section`), `/services/dining` (`Dining`), `/services/culinary` (`AtlanticGastronomy`), `/services/intellectual-talks` (`IntellectualTalk`), `/services/transfers` (`DiplomaticTransfers`), `/services/expeditions` (`VolcanicExpeditions`), `/services/fleet` (`PremiumFleet`), `/services/library` (`FisiyLibrary`)
-  - `/gallery` (`GalleryPage`), `/contact` (`ContactPage`), `/dialogues` & `/foundation` (`ComingSoon`), redirects `/book` -> `/rooms` and `/dining` -> `/services/dining`, fallback `*` (`NotFound`)
-- **Staff Portal (`/admin`, lazy-loaded chunks; accessible via Navbar "Staff Portal" & Footer)**:
+  - `/experiences` (`Section`), `/services/dining` (`Dining`), `/order/:referenceCode` (`OrderDetail`), `/services/culinary` (`AtlanticGastronomy`), `/services/intellectual-talks` (`IntellectualTalk`), `/services/transfers` (`DiplomaticTransfers`), `/services/expeditions` (`VolcanicExpeditions`), `/services/fleet` (`PremiumFleet`), `/services/library` (`FisiyLibrary`)
+  - `/gallery` (`GalleryPage`), `/contact` (`ContactPage`), `/dialogues` & `/foundation` (`ComingSoon`), redirects `/book` -> `/rooms` and `/dining` & `/menu` -> `/services/dining`, fallback `*` (`NotFound`)
+- **Staff Portal (`/admin`, lazy-loaded chunks; direct URL `/admin` or `/admin/login` — not linked in public navigation)**:
   - `/admin/login` (sign-in + automatic first-time Admin setup when no staff exist) -> role-routed to:
     - `/admin/overview` (`admin`, `manager`, `front_desk`, `chef`)
     - `/admin/bookings` (`admin`, `manager`, `front_desk`)
+    - `/admin/orders` (`admin`, `manager`, `chef`, `front_desk`)
     - `/admin/daily-menu` (`admin`, `manager`, `chef`)
     - `/admin/menu-catalog` (`admin`, `manager`, `chef`)
     - `/admin/units` (`admin`, `manager`)

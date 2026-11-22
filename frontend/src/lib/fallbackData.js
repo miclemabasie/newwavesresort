@@ -135,7 +135,7 @@ export const FALLBACK_ROOM_TYPES = [
       "Private Terrace",
       "Deep Soak Bathtub",
       "Smart TV",
-      "24/7 Power & Starlink",
+      "24/7 Power & Internet",
     ],
     cover_image_url: "/assets/general/image11.jpeg",
     gallery_images: [

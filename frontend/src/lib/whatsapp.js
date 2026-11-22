@@ -48,7 +48,9 @@ export function buildBookingWhatsAppMessage({ booking, language = "en" }) {
         `Merci de confirmer ma réservation :`,
         `• *Référence* : ${ref}`,
         guestName ? `• *Client* : ${guestName}` : null,
-        booking?.guest_phone ? `• *Téléphone / WhatsApp* : ${booking.guest_phone}` : null,
+        booking?.guest_phone
+          ? `• *Téléphone / WhatsApp* : ${booking.guest_phone}`
+          : null,
         booking?.guest_email ? `• *Email* : ${booking.guest_email}` : null,
         booking?.guest_company_name
           ? `• *Organisation* : ${booking.guest_company_name}`
@@ -66,7 +68,9 @@ export function buildBookingWhatsAppMessage({ booking, language = "en" }) {
         `Please confirm my reservation request:`,
         `• *Reference*: ${ref}`,
         guestName ? `• *Guest*: ${guestName}` : null,
-        booking?.guest_phone ? `• *Phone / WhatsApp*: ${booking.guest_phone}` : null,
+        booking?.guest_phone
+          ? `• *Phone / WhatsApp*: ${booking.guest_phone}`
+          : null,
         booking?.guest_email ? `• *Email*: ${booking.guest_email}` : null,
         booking?.guest_company_name
           ? `• *Organization*: ${booking.guest_company_name}`
@@ -116,7 +120,11 @@ export function buildInquiryWhatsAppUrl({ phone, inquiry, language = "en" }) {
   });
 }
 
-export function buildDiningWhatsAppUrl({ phone, dishName = "", language = "en" }) {
+export function buildDiningWhatsAppUrl({
+  phone,
+  dishName = "",
+  language = "en",
+}) {
   const isFr = language === "fr";
   const message = dishName
     ? isFr
@@ -135,7 +143,11 @@ const ORDER_FULFILLMENT_LABELS = {
   takeaway: { en: "Takeaway / Pickup", fr: "À emporter" },
 };
 
-export function buildOrderOnlineUrl({ referenceCode, viewToken = "", origin = "" }) {
+export function buildOrderOnlineUrl({
+  referenceCode,
+  viewToken = "",
+  origin = "",
+}) {
   const cleanRef = encodeURIComponent(String(referenceCode || "").trim());
   const base =
     String(origin || "").replace(/\/+$/, "") ||
@@ -160,7 +172,8 @@ export function buildMenuOrderWhatsAppMessage({
 
   const fulfillmentKey = order.fulfillment_type || "dine_in";
   const fulfillmentLabel =
-    ORDER_FULFILLMENT_LABELS[fulfillmentKey]?.[isFr ? "fr" : "en"] || fulfillmentKey;
+    ORDER_FULFILLMENT_LABELS[fulfillmentKey]?.[isFr ? "fr" : "en"] ||
+    fulfillmentKey;
 
   const resolvedUrl =
     onlineUrl ||
@@ -171,7 +184,9 @@ export function buildMenuOrderWhatsAppMessage({
 
   const itemLines = (order.items || []).map((item) => {
     const qty = Number(item.quantity || 1);
-    const dishName = isFr ? item.name_fr || item.name_en : item.name_en || item.name_fr;
+    const dishName = isFr
+      ? item.name_fr || item.name_en
+      : item.name_en || item.name_fr;
     const lineTotal =
       item.line_total_xaf ?? Number(item.unit_price_xaf || 0) * qty;
     const baseLine = `• ${qty}x ${dishName} — ${formatAmount(lineTotal)}`;
@@ -180,43 +195,43 @@ export function buildMenuOrderWhatsAppMessage({
 
   const lines = isFr
     ? [
-        `🍽️ *Nouvelle Commande Menu — ${order.reference_code}*`,
+        `*Nouvelle Commande Menu — ${order.reference_code}*`,
         `New Waves Resort, Ngeme Limbe`,
         ``,
-        `👤 *Client :* ${order.guest_name || ""}`,
-        `📞 *Téléphone :* ${order.guest_phone || ""}`,
-        `🛎️ *Service :* ${fulfillmentLabel}${order.location_label ? ` (${order.location_label})` : ""}`,
-        `🕒 *Heure souhaitée :* ${order.preferred_time || "Dès que possible"}${order.guests_count ? ` • ${order.guests_count} pers.` : ""}`,
+        `*Client :* ${order.guest_name || ""}`,
+        `*Téléphone :* ${order.guest_phone || ""}`,
+        `*Service :* ${fulfillmentLabel}${order.location_label ? ` (${order.location_label})` : ""}`,
+        `*Heure souhaitée :* ${order.preferred_time || "Dès que possible"}${order.guests_count ? ` • ${order.guests_count} pers.` : ""}`,
         ``,
-        `📋 *Détails de la commande :*`,
+        `*Détails de la commande :*`,
         ...itemLines,
         ...(order.special_instructions
-          ? [``, `📝 *Notes cuisine :* ${order.special_instructions}`]
+          ? [``, `*Notes cuisine :* ${order.special_instructions}`]
           : []),
         ``,
-        `💰 *Total estimé :* ${formatAmount(order.total_xaf)}`,
+        `*Total estimé :* ${formatAmount(order.total_xaf)}`,
         ``,
-        `🔗 *Ouvrir le ticket en ligne (Chef & Suivi) :*`,
+        `*Ouvrir le ticket en ligne (Chef & Suivi) :*`,
         resolvedUrl,
       ]
     : [
-        `🍽️ *New Menu Order — ${order.reference_code}*`,
+        `*New Menu Order — ${order.reference_code}*`,
         `New Waves Resort, Ngeme Limbe`,
         ``,
-        `👤 *Guest:* ${order.guest_name || ""}`,
-        `📞 *Phone:* ${order.guest_phone || ""}`,
-        `🛎️ *Service:* ${fulfillmentLabel}${order.location_label ? ` (${order.location_label})` : ""}`,
-        `🕒 *Preferred Time:* ${order.preferred_time || "As soon as possible"}${order.guests_count ? ` • ${order.guests_count} guests` : ""}`,
+        `*Guest:* ${order.guest_name || ""}`,
+        `*Phone:* ${order.guest_phone || ""}`,
+        `*Service:* ${fulfillmentLabel}${order.location_label ? ` (${order.location_label})` : ""}`,
+        `*Preferred Time:* ${order.preferred_time || "As soon as possible"}${order.guests_count ? ` • ${order.guests_count} guests` : ""}`,
         ``,
-        `📋 *Order Details:*`,
+        `*Order Details:*`,
         ...itemLines,
         ...(order.special_instructions
-          ? [``, `📝 *Kitchen Notes:* ${order.special_instructions}`]
+          ? [``, `*Kitchen Notes:* ${order.special_instructions}`]
           : []),
         ``,
-        `💰 *Estimated Total:* ${formatAmount(order.total_xaf)}`,
+        `*Estimated Total:* ${formatAmount(order.total_xaf)}`,
         ``,
-        `🔗 *View & Update Order Online:*`,
+        `*View & Update Order Online:*`,
         resolvedUrl,
       ];
 

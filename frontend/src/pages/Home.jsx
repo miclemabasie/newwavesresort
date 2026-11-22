@@ -22,7 +22,7 @@ import VideoExperience from '../components/sections/VideoExperience';
 
 const HIGHLIGHT_KEYS = [
   { key: 'organic', icon: Leaf },
-  { key: 'starlink', icon: Wifi },
+  { key: 'connectivity', icon: Wifi },
   { key: 'transfer', icon: Compass },
   { key: 'impact', icon: HeartHandshake },
 ];

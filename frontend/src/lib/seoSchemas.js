@@ -30,7 +30,7 @@ export function buildResortSchema({ phone, email } = {}) {
       longitude: 9.1666,
     },
     amenityFeature: [
-      { '@type': 'LocationFeatureSpecification', name: 'Enterprise High-Speed Wi-Fi & Starlink', value: true },
+      { '@type': 'LocationFeatureSpecification', name: '24/7 High-Speed Internet Connection', value: true },
       { '@type': 'LocationFeatureSpecification', name: 'Ocean-Front Swimming Pool', value: true },
       { '@type': 'LocationFeatureSpecification', name: '24/7 Solar Power Sovereignty', value: true },
       { '@type': 'LocationFeatureSpecification', name: 'Executive Conference & Banquet Facilities', value: true },

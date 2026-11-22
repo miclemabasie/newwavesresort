@@ -86,9 +86,9 @@
       "title": "Récolte 100 % Bio",
       "subtitle": "Issue des terres volcaniques du Fako"
     },
-    "starlink": {
-      "title": "Starlink & Solaire 24/7",
-      "subtitle": "Connectivité exécutive redondante"
+    "connectivity": {
+      "title": "Internet 24/7 & Solaire",
+      "subtitle": "Connectivité haut débit fiable"
     },
     "transfer": {
       "title": "90 Min de Douala (DLA)",
@@ -607,7 +607,7 @@
       "address_title": "Résidence côtière",
       "address": "Ngeme, Mile 4 Coastal Road, Limbé, Cameroun",
       "secure_title": "Infrastructure sécurisée",
-      "secure_desc": "Équipé d'une connectivité Starlink de qualité entreprise pour assurer un dialogue à haut débit 24h/24 pour les missions professionnelles mondiales.",
+      "secure_desc": "Équipé d'une connexion Internet haut débit 24h/24 de qualité entreprise pour assurer un dialogue ininterrompu pour les missions professionnelles mondiales.",
       "concierge": "Conciergerie",
       "concierge_email": "residency@newwavesresort.com",
       "foundation": "Fondation",
