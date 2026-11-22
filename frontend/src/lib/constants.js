@@ -110,6 +110,21 @@ export const BOOKING_STATUSES = [
   { value: 'no_show', labelEn: 'No Show', labelFr: 'Non présenté' },
 ];
 
+export const MENU_ORDER_STATUSES = [
+  { value: 'pending', labelEn: 'Order Received', labelFr: 'Commande reçue' },
+  { value: 'confirmed', labelEn: 'Confirmed', labelFr: 'Confirmée' },
+  { value: 'preparing', labelEn: 'Preparing', labelFr: 'En préparation' },
+  { value: 'ready', labelEn: 'Ready to Serve', labelFr: 'Prête à servir' },
+  { value: 'completed', labelEn: 'Served / Completed', labelFr: 'Servie / Terminée' },
+  { value: 'cancelled', labelEn: 'Cancelled', labelFr: 'Annulée' },
+];
+
+export const FULFILLMENT_TYPES = [
+  { value: 'dine_in', labelEn: 'Dine-In (Restaurant)', labelFr: 'Sur place (Restaurant)' },
+  { value: 'room_service', labelEn: 'Room Service', labelFr: 'Service en chambre' },
+  { value: 'takeaway', labelEn: 'Takeaway / Pickup', labelFr: 'À emporter' },
+];
+
 export const SYNC_STATUSES = [
   { value: 'pending', labelEn: 'Pending Pull', labelFr: 'En attente' },
   { value: 'pulled', labelEn: 'Pulled', labelFr: 'Récupérée' },

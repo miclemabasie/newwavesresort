@@ -5,7 +5,14 @@ import { fileURLToPath } from 'node:url';
 
 import { extractYouTubeId, getYouTubeThumbnail, getYouTubeEmbedUrl } from '../src/lib/youtube.js';
 import { formatCurrency, getLimbeTodayISO } from '../src/lib/currency.js';
-import { buildBookingWhatsAppUrl, buildInquiryWhatsAppUrl, sanitizeWhatsAppNumber } from '../src/lib/whatsapp.js';
+import {
+  buildBookingWhatsAppUrl,
+  buildInquiryWhatsAppUrl,
+  buildOrderOnlineUrl,
+  buildMenuOrderWhatsAppMessage,
+  buildMenuOrderWhatsAppUrl,
+  sanitizeWhatsAppNumber,
+} from '../src/lib/whatsapp.js';
 import { buildResortSchema, buildRoomSchema, buildMenuSchema, buildGallerySchema } from '../src/lib/seoSchemas.js';
 import { FALLBACK_ROOM_TYPES, FALLBACK_MENU_ITEMS, FALLBACK_GALLERY_MEDIA } from '../src/lib/fallbackData.js';
 
@@ -81,6 +88,71 @@ assert.ok(enJson.booking_status.title);
 assert.ok(frJson.booking_status.title);
 assert.ok(enJson.accommodations.modal.proceed_to_whatsapp);
 assert.ok(frJson.accommodations.modal.proceed_to_whatsapp);
+assert.ok(enJson.dining?.order?.proceed_whatsapp);
+assert.ok(frJson.dining?.order?.proceed_whatsapp);
+assert.ok(enJson.dining?.order?.add_to_order);
+assert.ok(frJson.dining?.order?.add_to_order);
+
+// 5b. Menu Order URL & WhatsApp Message Builders (EN & FR)
+const sampleOrder = {
+  reference_code: 'ORD-20261121-ABCD',
+  view_token: 'tok12345',
+  fulfillment_type: 'dine_in',
+  location_label: 'Table 4',
+  preferred_time: 'Lunch (13:00)',
+  guests_count: 2,
+  guest_name: 'Jean Mbarga',
+  guest_phone: '+237670000111',
+  special_instructions: 'Serve starters together',
+  total_xaf: 25000,
+  items: [
+    {
+      name_en: 'Ndole Royal',
+      name_fr: 'Ndole Royal',
+      quantity: 2,
+      unit_price_xaf: 12500,
+      line_total_xaf: 25000,
+      item_notes: 'Mild pepper',
+    },
+  ],
+};
+const orderOnlineUrl = buildOrderOnlineUrl({
+  referenceCode: sampleOrder.reference_code,
+  viewToken: sampleOrder.view_token,
+  origin: 'https://newwavesresort.com',
+});
+assert.equal(
+  orderOnlineUrl,
+  'https://newwavesresort.com/order/ORD-20261121-ABCD?t=tok12345',
+);
+const orderMsgEn = buildMenuOrderWhatsAppMessage({
+  order: sampleOrder,
+  onlineUrl: orderOnlineUrl,
+  language: 'en',
+});
+assert.ok(orderMsgEn.includes('ORD-20261121-ABCD'));
+assert.ok(orderMsgEn.includes('2x Ndole Royal'));
+assert.ok(orderMsgEn.includes('Mild pepper'));
+assert.ok(orderMsgEn.includes('Table 4'));
+assert.ok(orderMsgEn.includes(orderOnlineUrl));
+
+const orderMsgFr = buildMenuOrderWhatsAppMessage({
+  order: sampleOrder,
+  onlineUrl: orderOnlineUrl,
+  language: 'fr',
+});
+assert.ok(orderMsgFr.includes('Nouvelle Commande Menu'));
+assert.ok(orderMsgFr.includes('2x Ndole Royal'));
+assert.ok(orderMsgFr.includes(orderOnlineUrl));
+
+const orderWaUrl = buildMenuOrderWhatsAppUrl({
+  phone: '237670181442',
+  order: sampleOrder,
+  onlineUrl: orderOnlineUrl,
+  language: 'en',
+});
+assert.ok(orderWaUrl.startsWith('https://wa.me/237670181442?text='));
+assert.ok(orderWaUrl.includes('ORD-20261121-ABCD'));
 
 // 6. Build output SEO artifacts (dist/sitemap.xml & prerendered HTMLs)
 const distDir = path.join(frontendDir, 'dist');

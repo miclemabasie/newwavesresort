@@ -35,6 +35,7 @@ const ALL_SCOPES = [
 export default function IntegrationsAdmin() {
   const [settings, setSettings] = useState({
     whatsapp_number: '',
+    kitchen_whatsapp_number: '',
     contact_phone: '',
     contact_email: '',
     info_email: '',
@@ -61,6 +62,8 @@ export default function IntegrationsAdmin() {
       setSettings((prev) => ({
         ...prev,
         whatsapp_number: map.whatsapp_number ?? prev.whatsapp_number,
+        kitchen_whatsapp_number:
+          map.kitchen_whatsapp_number ?? prev.kitchen_whatsapp_number,
         contact_phone: map.contact_phone ?? prev.contact_phone,
         contact_email: map.contact_email ?? prev.contact_email,
         info_email: map.info_email ?? prev.info_email,
@@ -170,6 +173,20 @@ export default function IntegrationsAdmin() {
               type="text"
               value={settings.whatsapp_number}
               onChange={(e) => setSettings({ ...settings, whatsapp_number: e.target.value })}
+              placeholder="2376XXXXXXXX"
+              className={inp}
+            />
+          </div>
+          <div>
+            <label className={lbl}>
+              Kitchen / Chef WhatsApp Number (Optional — defaults to Concierge)
+            </label>
+            <input
+              type="text"
+              value={settings.kitchen_whatsapp_number}
+              onChange={(e) =>
+                setSettings({ ...settings, kitchen_whatsapp_number: e.target.value })
+              }
               placeholder="2376XXXXXXXX"
               className={inp}
             />

@@ -4,7 +4,9 @@ import { Toaster } from 'react-hot-toast';
 import { AuthProvider, ProtectedRoute } from './context/AuthContext.jsx';
 import { useAuth, getDefaultAdminRoute } from './context/authHelpers.js';
 import { CurrencyProvider } from './context/CurrencyContext.jsx';
+import { MenuCartProvider } from './context/MenuCartContext.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
+import MenuOrderModal from './components/dining/MenuOrderModal.jsx';
 
 import Home from './pages/Home';
 import GalleryPage from './pages/GalleryPage';
@@ -13,6 +15,7 @@ import ComingSoon from './pages/ComingSoon';
 import OurStory from './pages/OurStory';
 import Services from './pages/Section';
 import Dining from './pages/Dining';
+import OrderDetail from './pages/OrderDetail';
 import Accommodations from './pages/Accomodations';
 import UnitDetail from './pages/UnitDetail';
 import BookingStatus from './pages/BookingStatus';
@@ -30,6 +33,7 @@ const AdminLayout = lazy(() => import('./pages/admin/AdminLayout.jsx'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard.jsx'));
 const DailyMenuBuilder = lazy(() => import('./pages/admin/DailyMenuBuilder.jsx'));
 const MenuCatalogAdmin = lazy(() => import('./pages/admin/MenuCatalogAdmin.jsx'));
+const MenuOrdersAdmin = lazy(() => import('./pages/admin/MenuOrdersAdmin.jsx'));
 const BookingsAdmin = lazy(() => import('./pages/admin/BookingsAdmin.jsx'));
 const UnitsAdmin = lazy(() => import('./pages/admin/UnitsAdmin.jsx'));
 const GalleryAdmin = lazy(() => import('./pages/admin/GalleryAdmin.jsx'));
@@ -54,32 +58,36 @@ function App() {
   return (
     <AuthProvider>
       <CurrencyProvider>
-        <ScrollToTop />
-        <Toaster position="bottom-right" />
-        <Suspense fallback={<AdminLoader />}>
-          <Routes>
-            {/* Public Website */}
-            <Route path="/" element={<Home />} />
-            <Route path="/story" element={<OurStory />} />
-            <Route path="/rooms" element={<Accommodations />} />
-            <Route path="/rooms/:slug" element={<UnitDetail />} />
-            <Route path="/booking-status" element={<BookingStatus />} />
-            <Route path="/experiences" element={<Services />} />
-            <Route path="/services/dining" element={<Dining />} />
-            <Route path="/services/culinary" element={<AtlanticGastronomy />} />
-            <Route path="/services/intellectual-talks" element={<IntellectualTalks />} />
-            <Route path="/services/transfers" element={<DiplomaticTransfers />} />
-            <Route path="/services/expeditions" element={<VolcanicExpeditions />} />
-            <Route path="/services/fleet" element={<PremiumFleet />} />
-            <Route path="/services/library" element={<FisiyLibrary />} />
-            <Route path="/gallery" element={<GalleryPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/dialogues" element={<ComingSoon />} />
-            <Route path="/foundation" element={<ComingSoon />} />
+        <MenuCartProvider>
+          <ScrollToTop />
+          <Toaster position="bottom-right" />
+          <MenuOrderModal />
+          <Suspense fallback={<AdminLoader />}>
+            <Routes>
+              {/* Public Website */}
+              <Route path="/" element={<Home />} />
+              <Route path="/story" element={<OurStory />} />
+              <Route path="/rooms" element={<Accommodations />} />
+              <Route path="/rooms/:slug" element={<UnitDetail />} />
+              <Route path="/booking-status" element={<BookingStatus />} />
+              <Route path="/experiences" element={<Services />} />
+              <Route path="/services/dining" element={<Dining />} />
+              <Route path="/order/:referenceCode" element={<OrderDetail />} />
+              <Route path="/services/culinary" element={<AtlanticGastronomy />} />
+              <Route path="/services/intellectual-talks" element={<IntellectualTalks />} />
+              <Route path="/services/transfers" element={<DiplomaticTransfers />} />
+              <Route path="/services/expeditions" element={<VolcanicExpeditions />} />
+              <Route path="/services/fleet" element={<PremiumFleet />} />
+              <Route path="/services/library" element={<FisiyLibrary />} />
+              <Route path="/gallery" element={<GalleryPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/dialogues" element={<ComingSoon />} />
+              <Route path="/foundation" element={<ComingSoon />} />
 
-            {/* Friendly Redirects */}
-            <Route path="/book" element={<Navigate to="/rooms" replace />} />
-            <Route path="/dining" element={<Navigate to="/services/dining" replace />} />
+              {/* Friendly Redirects */}
+              <Route path="/book" element={<Navigate to="/rooms" replace />} />
+              <Route path="/dining" element={<Navigate to="/services/dining" replace />} />
+              <Route path="/menu" element={<Navigate to="/services/dining" replace />} />
 
             {/* Staff Operations Portal */}
             <Route path="/admin/login" element={<AdminLogin />} />
@@ -125,6 +133,14 @@ function App() {
                 }
               />
               <Route
+                path="orders"
+                element={
+                  <ProtectedRoute allowedRoles={['admin', 'manager', 'chef', 'front_desk']}>
+                    <MenuOrdersAdmin />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
                 path="units"
                 element={
                   <ProtectedRoute allowedRoles={['admin', 'manager']}>
@@ -166,10 +182,11 @@ function App() {
               />
             </Route>
 
-            {/* 404 Fallback */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+          {/* 404 Fallback */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+        </MenuCartProvider>
       </CurrencyProvider>
     </AuthProvider>
   );

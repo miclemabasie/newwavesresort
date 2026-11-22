@@ -6,6 +6,7 @@ import { useAuth } from '../../context/authHelpers.js';
 import {
   LayoutDashboard,
   CalendarCheck,
+  ClipboardList,
   UtensilsCrossed,
   ChefHat,
   BedDouble,
@@ -31,6 +32,12 @@ const NAV_ITEMS = [
     label: 'Booking Requests',
     icon: CalendarCheck,
     roles: ['admin', 'manager', 'front_desk'],
+  },
+  {
+    to: '/admin/orders',
+    label: 'Menu Orders',
+    icon: ClipboardList,
+    roles: ['admin', 'manager', 'chef', 'front_desk'],
   },
   {
     to: '/admin/daily-menu',

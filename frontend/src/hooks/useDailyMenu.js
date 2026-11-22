@@ -5,8 +5,8 @@ import { buildFallbackDailyMenu, FALLBACK_MENU_ITEMS } from '../lib/fallbackData
 
 export function useDailyMenu() {
   const todayISO = getLimbeTodayISO();
-  const [dailyMenu, setDailyMenu] = useState(buildFallbackDailyMenu);
-  const [catalogItems, setCatalogItems] = useState(FALLBACK_MENU_ITEMS);
+  const [dailyMenu, setDailyMenu] = useState(() => (supabase ? null : buildFallbackDailyMenu()));
+  const [catalogItems, setCatalogItems] = useState(() => (supabase ? [] : FALLBACK_MENU_ITEMS));
   const [isFallbackLatest, setIsFallbackLatest] = useState(false);
   const [loading, setLoading] = useState(Boolean(supabase));
 
@@ -67,6 +67,10 @@ export function useDailyMenu() {
           setIsFallbackLatest(false);
         }
       }
+    } catch {
+      setDailyMenu(buildFallbackDailyMenu());
+      setCatalogItems(FALLBACK_MENU_ITEMS);
+      setIsFallbackLatest(false);
     } finally {
       setLoading(false);
     }

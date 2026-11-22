@@ -9,9 +9,13 @@ import {
   Leaf,
   ArrowRight,
   MessageCircle,
+  Plus,
+  Minus,
+  ShoppingBag,
 } from 'lucide-react';
 import { useDailyMenu } from '../../hooks/useDailyMenu.js';
 import { useCurrency } from '../../context/currencyHelpers.js';
+import { useMenuCart, getMenuCartKey } from '../../context/menuCartHelpers.js';
 import { useSiteSettings } from '../../hooks/useSiteSettings.js';
 import { formatReadableDate } from '../../lib/currency.js';
 import { buildDiningWhatsAppUrl } from '../../lib/whatsapp.js';
@@ -26,6 +30,14 @@ export default function Cultinary() {
   const { t, i18n } = useTranslation();
   const { todayISO, dailyMenu, catalogItems, isFallbackLatest, loading } = useDailyMenu();
   const { formatPrice } = useCurrency();
+  const {
+    itemCount,
+    subtotalXaf,
+    addItem,
+    updateQuantity,
+    getItemQuantity,
+    openCheckout,
+  } = useMenuCart();
   const { settings } = useSiteSettings();
   const lang = i18n.language?.startsWith('fr') ? 'fr' : 'en';
 
@@ -188,6 +200,21 @@ export default function Cultinary() {
                 const badgeLabel = dish.highlight_badge
                   ? getOptionLabel(HIGHLIGHT_BADGES, dish.highlight_badge, lang)
                   : '';
+                const cartKey = getMenuCartKey(dish.id, dish.entry_id);
+                const qty = getItemQuantity(dish.id, dish.entry_id);
+                const dishCartPayload = {
+                  menu_item_id: dish.id,
+                  daily_menu_entry_id: dish.entry_id || null,
+                  slug: dish.slug || '',
+                  name_en: dish.name_en,
+                  name_fr: dish.name_fr,
+                  category: dish.category,
+                  meal_period: dish.meal_period,
+                  image_url: dish.image_url,
+                  dietary_tags: tags,
+                  allergens: Array.isArray(dish.allergens) ? dish.allergens : [],
+                  unit_price_xaf: dish.effective_price_xaf ?? dish.price_xaf,
+                };
 
                 return (
                   <motion.article
@@ -245,9 +272,64 @@ export default function Cultinary() {
                       <h3 className="text-2xl font-serif text-midnight group-hover:text-ocean transition-colors mb-2">
                         {name}
                       </h3>
-                      <p className="text-sm text-volcanic/65 leading-relaxed line-clamp-2 mb-0">
+                      <p className="text-sm text-volcanic/65 leading-relaxed line-clamp-2 mb-4">
                         {desc}
                       </p>
+
+                      <div className="mt-auto pt-3 border-t border-sand/60">
+                        {!dish.is_available ? (
+                          <span className="block w-full text-center py-2 px-4 rounded-full bg-slate-100 text-volcanic/45 text-xs font-bold uppercase tracking-wider">
+                            {t('dining.sold_out')}
+                          </span>
+                        ) : qty > 0 ? (
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="inline-flex items-center rounded-full bg-[#0e1a28] text-white shadow-sm">
+                              <button
+                                type="button"
+                                onClick={() => updateQuantity(cartKey, -1)}
+                                aria-label="Decrease quantity"
+                                className="p-2 text-white hover:text-sand transition-colors cursor-pointer"
+                              >
+                                <Minus className="w-3.5 h-3.5" />
+                              </button>
+                              <span className="px-3 text-xs font-bold text-white min-w-[26px] text-center">
+                                {qty}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => updateQuantity(cartKey, 1)}
+                                aria-label="Increase quantity"
+                                className="p-2 text-white hover:text-sand transition-colors cursor-pointer"
+                              >
+                                <Plus className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            <button
+                              type="button"
+                              onClick={openCheckout}
+                              className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-ocean hover:text-volcanic transition-colors cursor-pointer"
+                            >
+                              <span>{t('dining.order.review_order', 'Review Order')}</span>
+                              <ArrowRight className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              addItem(dishCartPayload, {
+                                dailyMenuId: dailyMenu?.id || null,
+                                serviceDate: dailyMenu?.service_date || todayISO,
+                              })
+                            }
+                            className="w-full inline-flex items-center justify-center gap-2 py-2 px-4 rounded-full bg-[#0e1a28] hover:bg-ocean text-white hover:text-white text-xs font-bold uppercase tracking-[0.14em] transition-all shadow-sm cursor-pointer"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                            <span>{t('dining.order.add_to_order', 'Add to Order')}</span>
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </motion.article>
                 );
@@ -266,15 +348,31 @@ export default function Cultinary() {
             <ArrowRight className="w-4 h-4" />
           </Link>
 
-          <a
-            href={diningWaUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-[#15803D] hover:bg-[#166534] text-white hover:text-white text-xs font-bold uppercase tracking-[0.18em] shadow-lg transition-all"
-          >
-            <MessageCircle className="w-4 h-4" />
-            <span>{t('culinary.whatsapp_dining_cta')}</span>
-          </a>
+          {itemCount > 0 ? (
+            <button
+              type="button"
+              onClick={openCheckout}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-[#15803D] hover:bg-[#166534] text-white hover:text-white text-xs font-bold uppercase tracking-[0.18em] shadow-lg transition-all cursor-pointer"
+            >
+              <ShoppingBag className="w-4 h-4" />
+              <span>
+                {t('dining.order.place_order_count', 'Place Order ({{count}}) • {{total}}', {
+                  count: itemCount,
+                  total: formatPrice(subtotalXaf),
+                })}
+              </span>
+            </button>
+          ) : (
+            <a
+              href={diningWaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-[#15803D] hover:bg-[#166534] text-white hover:text-white text-xs font-bold uppercase tracking-[0.18em] shadow-lg transition-all"
+            >
+              <MessageCircle className="w-4 h-4" />
+              <span>{t('culinary.whatsapp_dining_cta')}</span>
+            </a>
+          )}
         </div>
       </div>
     </section>

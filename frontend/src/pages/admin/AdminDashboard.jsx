@@ -5,6 +5,7 @@ import { useAuth } from '../../context/authHelpers.js';
 import { getLimbeTodayISO } from '../../lib/currency.js';
 import {
   CalendarCheck,
+  ClipboardList,
   ChefHat,
   UtensilsCrossed,
   BedDouble,
@@ -22,6 +23,8 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState({
     pendingBookings: null,
     totalBookings: null,
+    activeMenuOrders: null,
+    totalMenuOrders: null,
     todayMenuStatus: null,
     todayDishCount: 0,
     activeDishes: null,
@@ -37,6 +40,8 @@ export default function AdminDashboard() {
     const next = {
       pendingBookings: null,
       totalBookings: null,
+      activeMenuOrders: null,
+      totalMenuOrders: null,
       todayMenuStatus: null,
       todayDishCount: 0,
       activeDishes: null,
@@ -47,6 +52,26 @@ export default function AdminDashboard() {
     };
 
     const tasks = [];
+
+    if (['admin', 'manager', 'chef', 'front_desk'].includes(role)) {
+      tasks.push(
+        supabase
+          .from('menu_orders')
+          .select('id', { count: 'exact', head: true })
+          .in('status', ['pending', 'confirmed', 'preparing', 'ready'])
+          .then(({ count }) => {
+            next.activeMenuOrders = count ?? 0;
+          }),
+      );
+      tasks.push(
+        supabase
+          .from('menu_orders')
+          .select('id', { count: 'exact', head: true })
+          .then(({ count }) => {
+            next.totalMenuOrders = count ?? 0;
+          }),
+      );
+    }
 
     if (['admin', 'manager', 'front_desk'].includes(role)) {
       tasks.push(
@@ -139,7 +164,7 @@ export default function AdminDashboard() {
 
     refresh();
 
-    if (!['admin', 'manager', 'front_desk'].includes(role)) {
+    if (!['admin', 'manager', 'front_desk', 'chef'].includes(role)) {
       return () => {
         active = false;
       };
@@ -149,12 +174,23 @@ export default function AdminDashboard() {
       .channel('overview-bookings-live')
       .on(
         'postgres_changes',
+        { event: '*', schema: 'public', table: 'menu_orders' },
+        () => {
+          refresh();
+        },
+      );
+
+    if (['admin', 'manager', 'front_desk'].includes(role)) {
+      channel.on(
+        'postgres_changes',
         { event: '*', schema: 'public', table: 'booking_requests' },
         () => {
           refresh();
         },
-      )
-      .subscribe();
+      );
+    }
+
+    channel.subscribe();
 
     return () => {
       active = false;
@@ -172,6 +208,17 @@ export default function AdminDashboard() {
       badge:
         stats.pendingBookings !== null
           ? `${stats.pendingBookings} pending • ${stats.totalBookings ?? 0} total`
+          : null,
+    },
+    {
+      to: '/admin/orders',
+      title: 'Menu Orders',
+      desc: 'Track live guest food orders, update preparation status & coordinate via WhatsApp.',
+      icon: ClipboardList,
+      roles: ['admin', 'manager', 'chef', 'front_desk'],
+      badge:
+        stats.activeMenuOrders !== null
+          ? `${stats.activeMenuOrders} active • ${stats.totalMenuOrders ?? 0} total`
           : null,
     },
     {

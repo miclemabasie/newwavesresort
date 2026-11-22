@@ -4,7 +4,18 @@ import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import Navbar from '../components/Navbar';
 import Footer from '../components/sections/Footer';
-import { Search, Sparkles, Leaf, X, CalendarDays } from 'lucide-react';
+import {
+  Search,
+  Sparkles,
+  Leaf,
+  X,
+  CalendarDays,
+  Plus,
+  Minus,
+  ShoppingBag,
+  ArrowRight,
+} from 'lucide-react';
+import { useMenuCart, getMenuCartKey } from '../context/menuCartHelpers';
 import { useDailyMenu } from '../hooks/useDailyMenu.js';
 import { useCurrency } from '../context/currencyHelpers.js';
 import { formatReadableDate } from '../lib/currency.js';
@@ -23,6 +34,14 @@ export default function Dining() {
   const lang = i18n.language?.startsWith('fr') ? 'fr' : 'en';
   const { formatPrice } = useCurrency();
   const { todayISO, dailyMenu, catalogItems, isFallbackLatest, loading } = useDailyMenu();
+  const {
+    itemCount,
+    subtotalXaf,
+    addItem,
+    updateQuantity,
+    getItemQuantity,
+    openCheckout,
+  } = useMenuCart();
 
   const [viewMode, setViewMode] = useState('today'); // 'today' | 'catalog'
   const [mealPeriod, setMealPeriod] = useState('all');
@@ -313,6 +332,21 @@ export default function Dining() {
                   const badgeLabel = item.highlight_badge
                     ? getOptionLabel(HIGHLIGHT_BADGES, item.highlight_badge, lang)
                     : '';
+                  const cartKey = getMenuCartKey(item.id, item.entry_id);
+                  const qty = getItemQuantity(item.id, item.entry_id);
+                  const dishCartPayload = {
+                    menu_item_id: item.id,
+                    daily_menu_entry_id: item.entry_id || null,
+                    slug: item.slug || '',
+                    name_en: item.name_en,
+                    name_fr: item.name_fr,
+                    category: item.category,
+                    meal_period: item.meal_period,
+                    image_url: item.image_url,
+                    dietary_tags: tags,
+                    allergens,
+                    unit_price_xaf: item.effective_price_xaf,
+                  };
 
                   return (
                     <motion.div
@@ -373,11 +407,66 @@ export default function Dining() {
                         <p className="text-volcanic/65 text-sm leading-relaxed mb-4">{desc}</p>
 
                         {allergens.length > 0 && (
-                          <p className="mt-auto pt-3 border-t border-sand/60 text-[11px] text-volcanic/50">
+                          <p className="pt-3 mb-4 border-t border-sand/60 text-[11px] text-volcanic/50">
                             <span className="font-bold">{t('dining.allergens_label')}:</span>{' '}
                             {allergens.map((a) => getOptionLabel(ALLERGENS, a, lang)).join(', ')}
                           </p>
                         )}
+
+                        <div className="mt-auto pt-3 border-t border-sand/60">
+                          {!item.is_available ? (
+                            <span className="block w-full text-center py-2.5 px-4 rounded-full bg-slate-100 text-volcanic/45 text-xs font-bold uppercase tracking-wider">
+                              {t('dining.sold_out')}
+                            </span>
+                          ) : qty > 0 ? (
+                            <div className="flex items-center justify-between gap-2">
+                              <div className="inline-flex items-center rounded-full bg-[#0e1a28] text-white shadow-sm">
+                                <button
+                                  type="button"
+                                  onClick={() => updateQuantity(cartKey, -1)}
+                                  aria-label="Decrease quantity"
+                                  className="p-2 text-white hover:text-sand transition-colors cursor-pointer"
+                                >
+                                  <Minus className="w-3.5 h-3.5" />
+                                </button>
+                                <span className="px-3 text-xs font-bold text-white min-w-[26px] text-center">
+                                  {qty}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => updateQuantity(cartKey, 1)}
+                                  aria-label="Increase quantity"
+                                  className="p-2 text-white hover:text-sand transition-colors cursor-pointer"
+                                >
+                                  <Plus className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+
+                              <button
+                                type="button"
+                                onClick={openCheckout}
+                                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-ocean hover:text-volcanic transition-colors cursor-pointer"
+                              >
+                                <span>{t('dining.order.review_order', 'Review Order')}</span>
+                                <ArrowRight className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() =>
+                                addItem(dishCartPayload, {
+                                  dailyMenuId: dailyMenu?.id || null,
+                                  serviceDate: dailyMenu?.service_date || todayISO,
+                                })
+                              }
+                              className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-full bg-[#0e1a28] hover:bg-ocean text-white hover:text-white text-xs font-bold uppercase tracking-[0.14em] transition-all shadow-sm cursor-pointer"
+                            >
+                              <Plus className="w-3.5 h-3.5" />
+                              <span>{t('dining.order.add_to_order', 'Add to Order')}</span>
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </motion.div>
                   );
@@ -411,6 +500,38 @@ export default function Dining() {
           </motion.div>
         </section>
       </main>
+
+      {itemCount > 0 && (
+        <div className="fixed bottom-5 inset-x-4 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 z-40 sm:w-full sm:max-w-2xl">
+          <div className="bg-[#0e1a28] text-white rounded-2xl sm:rounded-full px-5 py-3.5 shadow-2xl border border-sand/30 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3 min-w-0">
+              <span className="w-10 h-10 rounded-full bg-sand/20 text-sand flex items-center justify-center shrink-0">
+                <ShoppingBag className="w-5 h-5" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-xs font-bold uppercase tracking-wider text-sand">
+                  {itemCount}{' '}
+                  {itemCount === 1
+                    ? t('dining.order.dish_selected_singular', 'Dish Selected')
+                    : t('dining.order.dish_selected_plural', 'Dishes Selected')}
+                </p>
+                <p className="text-sm font-heading font-semibold text-white truncate">
+                  {formatPrice(subtotalXaf)}
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={openCheckout}
+              className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-lush hover:bg-white text-[#0e1a28] text-xs font-bold uppercase tracking-[0.14em] shadow-md transition-colors cursor-pointer"
+            >
+              <span>{t('dining.order.place_order_cta', 'Place Order')}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>

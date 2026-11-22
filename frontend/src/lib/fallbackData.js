@@ -4,6 +4,7 @@ export const FALLBACK_SITE_SETTINGS = {
   property_name: "New Waves Resort, Ngeme Limbe",
   property_tagline: "A Resort Designed by & for Professionals",
   whatsapp_number: import.meta?.env?.VITE_DEFAULT_WHATSAPP || "237600000000",
+  kitchen_whatsapp_number: "",
   contact_phone: "+237 600 000 001",
   contact_email: "residency@newwavesresort.com",
   info_email: "info@newwavesresort.com",
